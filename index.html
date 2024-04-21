@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <link rel="icon" type="image/png" href="img/icon.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/style-css.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Ciftci Workshop</title>
+	
+</head>
+<body style="font-family: 'Roboto', sans-serif;">
+
+	<div class="menu">
+		<a href="index.html"><img src="img/logo-1.png" alt="Ciftci Workshop Logo"></a>
+		<ul>
+			<li><a href="index.html">Ana Sayfa</a></li>
+			<li><a href="about-us.html">Hakkımızda</a></li>
+			<li><a href="communication.html">İletişim</a></li>
+			<li id="openmenu">
+				<a href="#" onclick="return false;">Çalışmalar</a>
+				<div class="studies">
+					<ul>
+						<li><a href="">Honda FB-7 Stop</a></li>
+						<li><a href="">Honda FB-7 Far</a></li>
+						<li><a href="">Volkswagen Caddy Mk4</a></li>
+						<li><a href="">Volkswagen Transporter T6</a></li>
+						<li><a href="">Volkswagen Golf5</a></li>
+						<li><a href="">Fiat Egea Makyajsız</a></li>
+						<li><a href="">Fiat Doblo D3</a></li>
+						<li><a href="">Renault Kangoo</a></li>
+						<li><a href="">Alfa 155</a></li>
+						<li><a href="">Fiat Marea Meceksiz</a></li>
+						<li><a href="">Fiat Marea Mecekli</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
+			<ul>
+			</ul>
+	<script>
+		$("#openmenu").click(function(){
+		   $(".studies").fadeToggle(500);
+		});
+	</script>
+	<div class="bodycontainer">
+		<div class="last-works">
+			<p>Son Çalışmalarımız</p>
+			<div class="last-works-details">
+				<video id="myVideo" controls autoplay loop muted>
+					<source src="yapilan-isler-img/Fiat_Egea/Fiat Egea makyajız gündüz ledi-2.mp4" type="video/mp4">
+					Tarayıcınız video etiketini desteklemiyor.
+				</video>
+				<video id="myVideo" controls autoplay loop  muted>
+					<source src="yapilan-isler-img/Honda_Vtec1/Honda Vtec1 gündüz ledi-2.mp4" type="video/mp4">
+					Tarayıcınız video etiketini desteklemiyor.
+				</video>
+				<video id="myVideo" controls autoplay loop  muted>
+					<source src="yapilan-isler-img/Fiat_Doblo/Fiat Doblo gündüz lledi-2.mp4" type="video/mp4">
+					Tarayıcınız video etiketini desteklemiyor.
+				</video>
+				<video id="myVideo" controls autoplay loop  muted>
+					<source src="yapilan-isler-img/Honda_FB-7_Stop/Honda FB-7 Stop-3.mp4" type="video/mp4">
+					Tarayıcınız video etiketini desteklemiyor.
+				</video>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

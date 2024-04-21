@@ -1,0 +1,154 @@
+/*MENU-------------------------------------------*/
+.menu{
+	margin: 10px;
+	display: flex;
+	justify-content: space-evenly;
+	align-content: center;
+	font-weight: bold;
+	position: relative;
+}
+.menu img{
+	width: 220px;
+	height: 8%;
+}
+.menu a{
+	margin: 10px;
+	width: 220px;
+	height: 8%;
+}
+.menu ul{
+	display: flex;
+	cursor: pointer;
+}
+.menu ul li a{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+	text-decoration: none;
+	margin-right: 11px;
+	margin-left: 11px;
+	width: 110px;
+	height: 30px;
+	border-radius: 15px;
+	transition: background-color 0.4s ease;
+}
+.menu ul a:hover{
+	background-color:lightskyblue;
+}
+.menu ul li{
+	list-style-type: none;
+}@media only screen and (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        align-items: center; /* Menüyü dikeyde ortala */
+    }
+
+    .menu img,
+    .menu a {
+        width: 100%; /* Resmi ve bağlantıları genişliği dolduracak şekilde ayarlayın */
+        height: auto; /* Yüksekliği otomatik olarak ayarlayın */
+    }
+
+    .menu ul {
+        flex-direction: column; /* Liste öğelerini dikeyde sırala */
+        align-items: center; /* Liste öğelerini dikeyde ortala */
+    }
+
+    .menu ul li a {
+        margin: 5px 0; /* Bağlantılar arasındaki dikey boşluğu azalt */
+        width: auto; /* Bağlantıların genişliğini otomatik olarak ayarla */
+        height: auto; /* Bağlantıların yüksekliğini otomatik olarak ayarla */
+    }
+}
+/*-----------------------------------------------*/
+.studies{
+	display: none;
+	z-index:100;
+	background-color:rgba(0, 0, 0, 0.3) ;
+	position: absolute;
+	border-radius: 15px;
+
+}
+.studies ul{
+	height: 200px; /* Listenin genişliği */
+    overflow: auto; /* İçerik dışına taşan kısmı kaydır */
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+}
+.studies ul li{
+	list-style-type: none;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+.studies ul li a{
+	width: auto;
+	text-decoration: none;
+	color: white;
+}
+/*MENU-------------------------------------------*/
+
+/*BODY-------------------------------------------*/
+.bodycontainer {
+	margin: 10px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+.last-works{
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 15px;
+    border-top: 3px solid red;
+    border-bottom: 3px solid red;
+}
+
+.last-works p{
+    color:red;
+    margin-left: 30px;
+    font-weight:bold;
+    font-size: 20px;
+}
+
+.last-works a{
+    font-weight:bold;
+    font-size: 15px;
+    position: absolute;
+    right: 0;
+    margin-right: 40px;
+    color:blue;
+    text-decoration: none;
+}
+
+.last-works-details { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    height: auto; /* Div'in yüksekliğini otomatik olarak ayarlayın */
+    overflow: hidden; /* İçerik boyutunu görmek için gizli taşma */
+}
+
+.last-works-details video {
+	pointer-events: none;
+    border-radius: 15px;
+    margin: 10px;
+    max-width: calc(50% - 20px); /* videoları yatayda ikiye bölmek için */
+    max-height: 350px; /* Maksimum yükseklik belirleme */
+    width: auto; /* Videoların genişliğini otomatik olarak ayarlayın */
+    height: auto; /* Videoların yüksekliğini otomatik olarak ayarlayın */
+}
+@media only screen and (max-width: 768px) {
+    .last-works-details video {
+        max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
+        max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
+    }
+}
+
+/*BODY-------------------------------------------*/
