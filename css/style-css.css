@@ -134,20 +134,37 @@
     height: auto; /* Div'in yüksekliğini otomatik olarak ayarlayın */
     overflow: hidden; /* İçerik boyutunu görmek için gizli taşma */
 }
-
-.last-works-details video {
+.last-works-details img {
+    object-fit:cover;
+    background-size: cover;
+    background-position: center;
 	pointer-events: none;
     border-radius: 15px;
     margin: 10px;
     max-width: calc(50% - 20px); /* videoları yatayda ikiye bölmek için */
     max-height: 350px; /* Maksimum yükseklik belirleme */
-    width: auto; /* Videoların genişliğini otomatik olarak ayarlayın */
-    height: auto; /* Videoların yüksekliğini otomatik olarak ayarlayın */
+    width: 300px; /* Videoların genişliğini otomatik olarak ayarlayın */
+    height: 550px; /* Videoların yüksekliğini otomatik olarak ayarlayın */
+}
+.last-works-details video {
+    object-fit: cover;
+	pointer-events: none;
+    border-radius: 15px;
+    margin: 10px;
+    max-width: calc(50% - 20px); /* videoları yatayda ikiye bölmek için */
+    max-height: 350px; /* Maksimum yükseklik belirleme */
+    width: 300px; /* Videoların genişliğini otomatik olarak ayarlayın */
+    height: 650px; /* Videoların yüksekliğini otomatik olarak ayarlayın */
 }
 @media only screen and (max-width: 768px) {
     .last-works-details video {
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
-        max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
+        max-height: 550px; /* Telefon ekranında maksimum yükseklik belirleme */
+    }
+    .last-works-details img {
+        max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
+        max-height: 550px
+        550px; /* Telefon ekranında maksimum yükseklik belirleme */
     }
 }
 
