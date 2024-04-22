@@ -112,6 +112,7 @@
     font-weight: bold;
     transition: background-color 0.4s ease;
     border-radius: 15px;
+    color:black;
 }
 .filters button:hover{
 	background-color: lightskyblue;
@@ -185,7 +186,7 @@
     }
     .last-works-details img {
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
-        max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
+        max-height: 250px; /* Telefon ekranında maksimum yükseklik belirleme */
     }
 }
 
