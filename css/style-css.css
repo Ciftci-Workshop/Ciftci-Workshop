@@ -88,6 +88,9 @@
 	text-decoration: none;
 	color: white;
 }
+.studies ul a:hover{
+	background-color:transparent;
+}
 /*MENU-------------------------------------------*/
 
 /*BODY-------------------------------------------*/
@@ -98,6 +101,21 @@
 	flex-direction: column;
 	align-items: center;
 }
+.filters button{
+    background-color: transparent;
+    border: 0px solid red;
+    cursor: pointer;
+    margin: 15px;
+    width: 120px;
+    height: 30px;
+    font-size: 15px;
+    font-weight: bold;
+	transition: background-color 0.4s ease;
+    border-radius: 15px;
+}
+.filters button:hover{
+	background-color: lightskyblue;
+}
 .last-works{
     height: auto;
     margin-top: 20px;
@@ -106,6 +124,10 @@
     border-radius: 15px;
     border-top: 3px solid red;
     border-bottom: 3px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
 }
 
 .last-works p{
@@ -144,27 +166,27 @@
     max-width: calc(50% - 20px); /* videoları yatayda ikiye bölmek için */
     max-height: 350px; /* Maksimum yükseklik belirleme */
     width: 300px; /* Videoların genişliğini otomatik olarak ayarlayın */
-    height: 550px; /* Videoların yüksekliğini otomatik olarak ayarlayın */
+    height: 350px; /* Videoların yüksekliğini otomatik olarak ayarlayın */
 }
 .last-works-details video {
     object-fit: cover;
-    pointer-events: none;
     border-radius: 15px;
     margin: 10px;
     max-width: calc(50% - 20px); /* videoları yatayda ikiye bölmek için */
     max-height: 350px; /* Maksimum yükseklik belirleme */
-    width: auto; /* Videoların genişliğini otomatik olarak ayarlayın */
-    height: auto; /* Videoların yüksekliğini otomatik olarak ayarlayın */
+    width: 300px; /* Videoların genişliğini otomatik olarak ayarlayın */
+    height: 650px; /* Videoların yüksekliğini otomatik olarak ayarlayın */
 }
 @media only screen and (max-width: 768px) {
     .last-works-details video {
-	pointer-events:auto;
+        pointer-events: auto;
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
-        max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
+        max-height: 550px; /* Telefon ekranında maksimum yükseklik belirleme */
     }
     .last-works-details img {
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
-        max-height: 200px;/* Telefon ekranında maksimum yükseklik belirleme */
+        max-height: 550px
+        550px; /* Telefon ekranında maksimum yükseklik belirleme */
     }
 }
 
