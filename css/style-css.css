@@ -181,12 +181,11 @@
     .last-works-details video {
         pointer-events: auto;
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
-        max-height: auto; /* Telefon ekranında maksimum yükseklik belirleme */
+        max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
     }
     .last-works-details img {
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
-        max-height: auto
-        550px; /* Telefon ekranında maksimum yükseklik belirleme */
+        max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
     }
 }
 
