@@ -170,6 +170,7 @@
     height: auto; /* Videoların yüksekliğini otomatik olarak ayarlayın */
 }
 .last-works-details video {
+	autoplay:none;
     pointer-events: auto;
     object-fit: cover;
     border-radius: 15px;
@@ -181,6 +182,7 @@
 }
 @media only screen and (max-width: 768px) {
     .last-works-details video {
+						autoplay:none;
         pointer-events: auto;
         max-width: calc(50% - 20px); /* Telefon ekranında videoları yatayda ikiye bölmek için */
         max-height: 200px; /* Telefon ekranında maksimum yükseklik belirleme */
