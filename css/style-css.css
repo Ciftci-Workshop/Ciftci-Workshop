@@ -170,6 +170,7 @@
     height: auto; /* Videoların yüksekliğini otomatik olarak ayarlayın */
 }
 .last-works-details video {
+    pointer-events: auto;
     object-fit: cover;
     border-radius: 15px;
     margin: 10px;
