@@ -8,41 +8,78 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<title>Ciftci Workshop</title>
+	<script>
+		$(function(){
+			$("#includedContent").load("header.html");
+		});
+	</script>
 	
 </head>
 <body style="font-family: 'Roboto', sans-serif;">
 
-	<div class="menu">
-		<a href="index.html"><img src="img/logo-1.png" alt="Ciftci Workshop Logo"></a>
-		<ul>
-			<li><a href="index.html">Ana Sayfa</a></li>
-			<li><a href="about-us.html">Hakkımızda</a></li>
-			<li><a href="communication.html">İletişim</a></li>
-			<li id="openmenu">
-				<a href="#" onclick="return false;">Çalışmalar</a>
-				<div class="studies">
-					<ul>
-						<li><a href="">Honda FB-7</a></li>
-						<li><a href="">Volkswagen Caddy Mk4</a></li>
-						<li><a href="">Volkswagen Transporter T6</a></li>
-						<li><a href="">Volkswagen Golf5</a></li>
-						<li><a href="">Fiat Egea Makyajsız</a></li>
-						<li><a href="">Fiat Doblo D3</a></li>
-						<li><a href="">Renault Kangoo</a></li>
-						<li><a href="">Alfa 155</a></li>
-						<li><a href="">Fiat Marea Meceksiz</a></li>
-						<li><a href="">Fiat Marea Mecekli</a></li>
-					</ul>
-				</div>
-			</li>
-		</ul>
+	<div id="includedContent">
+		
 	</div>
-	<script>
-		$("#openmenu").click(function(){
-		   $(".studies").fadeToggle(500);
-		});
-	</script>
+
 	<div class="bodycontainer">
+		<div class="last-works" style="height: 100%;">
+			<div class="last-works-details" style="flex-direction: column;">
+				<h3 style="text-decoration: underline; color: rgba(255, 0, 0, 0.6);">Hakkımızda</h2>
+				
+				<p style="color: rgba(0, 0, 0, 0.8)">Tasarım kendimize ait 
+					kişiye özel araç far ve stopların kendimiz tarafından yazılan
+					 animasyonlarla kontrol edilmesi ve isteğe özel uyuglamamız 
+					 tarafından seçilen açılış karşılama ve sinyal modları 
+					 arasında istenilenin seçilip kullanılmasını sağlayarak 
+					 piyasada hazır halde satılan led ve modüllerden farklı 
+					 olanı yapmayı hedefliyoruz. Hazır olarak kullanılan neon
+					 ledler değil kişiye özel kalıp ve 3 boyutlu tasarımlar hedefliyoruz.
+				</p>
+			</div>
+		</div>
+		<!-- Gizlilik Politikası bağlantısı -->
+		<p><span class="privacy-policy-link">Gizlilik Politikamız</span></p>
+
+		<!-- Modal yapısı -->
+		<div id="privacyModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h2 style="color: rgba(0, 0, 0, 0.8);">Gizlilik Politikamız</h2>
+				<p style="color: rgba(255, 255, 255, 0.6);;">Uygulamamız sadece tasarlamış olduğumuz "LED" lerimizi ve 
+					ledler için kartımıza yazılmış olan özel animasyonları 
+					kontrol etmek amaçlı tasarlanmış olup sizden istenilen 
+					konum izni gibi izinlerin herhangi bir şekilde işlenmeyip 
+					sadece oluşturmuş olduğumuz modülümüze bir bağlantı 
+					sağlayıp modüle ledler için gerekli veriyi yollayıp 
+					animasyonlar arasında geçiş yapması için oluşturulmuştur.
+				 </p>
+				<!-- Gizlilik politikasının metnini buraya ekleyin -->
+			</div>
+		</div>
+	
+		<script>
+			// Modal elementi
+			var modal = document.getElementById("privacyModal");
+	
+			// Gizlilik politikası linkine tıklama işlemi
+			var link = document.querySelector(".privacy-policy-link");
+			link.onclick = function() {
+				modal.style.display = "block";
+			}
+	
+			// Kapatma butonu (x)
+			var closeBtn = document.querySelector(".close");
+			closeBtn.onclick = function() {
+				modal.style.display = "none";
+			}
+	
+			// Modal dışında bir yere tıklanırsa kapat
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+		</script>
 	</div>
 
 </body>
