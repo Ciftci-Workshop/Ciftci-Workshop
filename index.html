@@ -11,6 +11,11 @@
 <body>
 	<nav class="navbar">
 		<div class="brand"><a href="#ana"><img style="height:50px;width:150px;" src="img/Ciftci-Workshop-Whitebg.png" /></a></div>
+		<div class="hamburger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
 		<ul class="nav-menu">
 			<li><a href="#ana">Ana Sayfa</a></li>
 			<li><a href="#hakkimizda">Hakkımızda</a></li>
@@ -221,6 +226,22 @@
 			e.preventDefault();
 			alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
 		});
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Menü linklerine tıklayınca menüyü kapat
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
 	</script>
 </body>
 </html>
