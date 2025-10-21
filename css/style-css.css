@@ -62,7 +62,7 @@ body {
             color: #1a1a1a;
         }
 
-/* Hamburger Menu (ba˛lang˝Áta gizli) */
+/* Hamburger Menu (ba√ælang√Ω√ßta gizli) */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -255,6 +255,8 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    height: 750px;
+    border-radius:10px;
 }
 
     .gallery-image img {
@@ -502,10 +504,10 @@ body {
     }
 
 /* ========================================
-   MOB›L UYUMLULUK - RESPONSIVE CSS
+   MOB√ùL UYUMLULUK - RESPONSIVE CSS
    ======================================== */
 
-/* Tablet ekranlar iÁin (1024px ve alt˝) */
+/* Tablet ekranlar i√ßin (1024px ve alt√Ω) */
 @media (max-width: 1024px) {
     .navbar {
         padding: 20px 40px;
@@ -551,7 +553,7 @@ body {
     }
 }
 
-/* Mobil ekranlar iÁin (768px ve alt˝) */
+/* Mobil ekranlar i√ßin (768px ve alt√Ω) */
 @media (max-width: 768px) {
     /* Navigation - Hamburger Menu */
     .navbar {
@@ -779,7 +781,7 @@ body {
     }
 }
 
-/* «ok k¸Á¸k ekranlar iÁin (480px ve alt˝) */
+/* √áok k√º√ß√ºk ekranlar i√ßin (480px ve alt√Ω) */
 @media (max-width: 480px) {
     .hero-title {
         font-size: 32px;
@@ -811,7 +813,7 @@ body {
     }
 }
 
-/* Yatay mod (landscape) iÁin tablet */
+/* Yatay mod (landscape) i√ßin tablet */
 @media (max-width: 1024px) and (orientation: landscape) {
     .hero-section {
         height: 100vh;
@@ -822,7 +824,7 @@ body {
     }
 }
 
-/* Touch cihazlar iÁin hover efektlerini optimize et */
+/* Touch cihazlar i√ßin hover efektlerini optimize et */
 @media (hover: none) {
     .gallery-image:hover .image-overlay {
         opacity: 0;
@@ -979,4 +981,5 @@ body {
         padding: 15px 35px;
         font-size: 1em;
     }
+
 }
