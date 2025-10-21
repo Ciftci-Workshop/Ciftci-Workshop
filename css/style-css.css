@@ -62,7 +62,7 @@ body {
             color: #1a1a1a;
         }
 
-/* Hamburger Menu (ba√ælang√Ω√ßta gizli) */
+/* Hamburger Menu (ba˛lang˝Áta gizli) */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -295,7 +295,7 @@ body {
         opacity: 1;
         background: rgba(0, 0, 0, 0.5);
     }
-    
+
     .gallery-image img {
         filter: brightness(0.7);
     }
@@ -502,10 +502,10 @@ body {
     }
 
 /* ========================================
-   MOB√ùL UYUMLULUK - RESPONSIVE CSS
+   MOB›L UYUMLULUK - RESPONSIVE CSS
    ======================================== */
 
-/* Tablet ekranlar i√ßin (1024px ve alt√Ω) */
+/* Tablet ekranlar iÁin (1024px ve alt˝) */
 @media (max-width: 1024px) {
     .navbar {
         padding: 20px 40px;
@@ -551,7 +551,7 @@ body {
     }
 }
 
-/* Mobil ekranlar i√ßin (768px ve alt√Ω) */
+/* Mobil ekranlar iÁin (768px ve alt˝) */
 @media (max-width: 768px) {
     /* Navigation - Hamburger Menu */
     .navbar {
@@ -779,7 +779,7 @@ body {
     }
 }
 
-/* √áok k√º√ß√ºk ekranlar i√ßin (480px ve alt√Ω) */
+/* «ok k¸Á¸k ekranlar iÁin (480px ve alt˝) */
 @media (max-width: 480px) {
     .hero-title {
         font-size: 32px;
@@ -811,7 +811,7 @@ body {
     }
 }
 
-/* Yatay mod (landscape) i√ßin tablet */
+/* Yatay mod (landscape) iÁin tablet */
 @media (max-width: 1024px) and (orientation: landscape) {
     .hero-section {
         height: 100vh;
@@ -822,7 +822,7 @@ body {
     }
 }
 
-/* Touch cihazlar i√ßin hover efektlerini optimize et */
+/* Touch cihazlar iÁin hover efektlerini optimize et */
 @media (hover: none) {
     .gallery-image:hover .image-overlay {
         opacity: 0;
@@ -833,3 +833,150 @@ body {
     }
 }
 
+
+.app-download-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+    .app-download-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+        animation: float 20s infinite linear;
+    }
+
+@keyframes float {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+.app-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.app-icon {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 25px;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: #667eea;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.app-title {
+    color: white;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.app-description {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    color: #667eea;
+    padding: 20px 50px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+    .download-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .download-btn i {
+        font-size: 1.5em;
+    }
+
+.app-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.feature-item {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    color: white;
+}
+
+    .feature-item i {
+        font-size: 2em;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+.app-info {
+    margin-top: 30px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9em;
+}
+
+/* Navbar'a App butonu ekle */
+.app-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 2em;
+    }
+
+    .download-btn {
+        padding: 15px 35px;
+        font-size: 1em;
+    }
+}
