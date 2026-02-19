@@ -7,7 +7,81 @@
 	<link rel="stylesheet" type="text/css" href="css/style-css.css" />
 	<link rel="icon" type="image/png" href="img/Ciftci-Workshop-Blackbg.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #3a6155;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
 
+        h1 {
+            color: #ff4081;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            color: #ff4081;
+            font-size: 20px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,64,129,0.2);
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: rgba(255,64,129,0.08);
+            border-left: 3px solid #ff4081;
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #666;
+            font-size: 13px;
+        }
+
+        a {
+            color: #ff4081;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+	</style>
 </head>
 <body>
 	<nav class="navbar">
@@ -238,115 +312,110 @@
 			<a href="mailto:ciftciworkshopoffical@gmail.com"><i class="fas fa-envelope"></i></a>
 		</div>
 		<a href="#" onclick="document.getElementById('gizlilikPopup').style.display='flex'">
-		  
-		   Gizlilik Politikası
+
+			Gizlilik Politikası
 		</a>
-		<div id="gizlilikPopup" onclick="this.style.display='none'" 
-     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-            background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;"
-		    <p class="subtitle">Ciftci Workshop LED Controller &mdash; Son güncelleme: 19 Şubat 2026</p>
-			<h1>Gizlilik Politikası</h1>
-		    <h2>1. Genel Bakış</h2>
-		    <p>
-		        Ciftci Workshop LED Controller uygulaması ("Uygulama"), LED şerit ve aydınlatma 
-		        sistemlerini Bluetooth üzerinden kontrol etmek amacıyla geliştirilmiştir. 
-		        Kullanıcılarımızın gizliliğine saygı duyuyor ve kişisel verilerin korunmasını 
-		        önemsiyoruz.
-		    </p>
-		
-		    <div class="highlight">
-		        <strong>Özet:</strong> Bu uygulama kişisel veri toplamaz, saklamaz veya 
-		        üçüncü taraflarla paylaşmaz.
-		    </div>
-		
-		    <h2>2. Toplanan Veriler</h2>
-		    <p>Bu uygulama aşağıdaki bilgileri <strong>yalnızca cihazınızda yerel olarak</strong> kullanır:</p>
-		    <ul>
-		        <li><strong>Bluetooth Bilgileri:</strong> Yakındaki Bluetooth cihazlarının adları ve adresleri yalnızca bağlantı kurmak amacıyla taranır. Bu bilgiler herhangi bir sunucuya gönderilmez.</li>
-		        <li><strong>Uygulama Tercihleri:</strong> Favori animasyonlar ve kullanıcı ayarları yalnızca cihazınızda (SharedPreferences) saklanır.</li>
-		        <li><strong>Arka Plan Görseli:</strong> Seçtiğiniz arka plan görseli yalnızca cihazınızda saklanır.</li>
-		    </ul>
-		
-		    <h2>3. Toplanmayan Veriler</h2>
-		    <p>Bu uygulama aşağıdaki verileri <strong>toplamaz ve hiçbir şekilde erişmez</strong>:</p>
-		    <ul>
-		        <li>Ad, soyad, e-posta adresi veya telefon numarası gibi kişisel bilgiler</li>
-		        <li>Konum verileri (konum izni yalnızca Android'de Bluetooth taraması için gereklidir ve konum bilgisi kaydedilmez)</li>
-		        <li>Kullanım istatistikleri veya analitik veriler</li>
-		        <li>Fotoğraf, video veya medya dosyaları</li>
-		        <li>Finansal bilgiler</li>
-		    </ul>
-		
-		    <h2>4. Bluetooth Kullanımı</h2>
-		    <p>
-		        Uygulama, LED kontrolcüsüne bağlanmak için Bluetooth Low Energy (BLE) ve/veya 
-		        Classic Bluetooth teknolojisini kullanır. Bluetooth bağlantısı yalnızca LED 
-		        kontrolcüsüne komut göndermek amacıyla kullanılır. Bluetooth üzerinden toplanan 
-		        hiçbir veri saklanmaz veya üçüncü taraflarla paylaşılmaz.
-		    </p>
-		
-		    <h2>5. Kamera ve Galeri Erişimi</h2>
-		    <p>
-		        Uygulama, arka plan görseli seçimi için kamera ve galeri erişimi isteyebilir. 
-		        Bu erişim yalnızca kullanıcının seçtiği görseli arka plan olarak ayarlamak 
-		        içindir. Fotoğraflarınız herhangi bir sunucuya yüklenmez.
-		    </p>
-		
-		    <h2>6. Üçüncü Taraf Hizmetleri</h2>
-		    <p>
-		        Bu uygulama üçüncü taraf analitik, reklam veya izleme hizmeti kullanmaz. 
-		        Uygulama tamamen çevrimdışı çalışır ve internet bağlantısı gerektirmez 
-		        (Google Fonts hariç, ilk yüklemede font indirmek için internet gerekebilir).
-		    </p>
-		
-		    <h2>7. Veri Güvenliği</h2>
-		    <p>
-		        Tüm veriler yalnızca cihazınızda saklandığından, verilerinizin güvenliği 
-		        cihazınızın güvenlik ayarlarına bağlıdır. Uygulamayı sildiğinizde tüm 
-		        yerel veriler de silinir.
-		    </p>
-		
-		    <h2>8. Çocukların Gizliliği</h2>
-		    <p>
-		        Bu uygulama çocuklara yönelik değildir ve bilerek 13 yaşın altındaki 
-		        çocuklardan kişisel bilgi toplamaz.
-		    </p>
-		
-		    <h2>9. Değişiklikler</h2>
-		    <p>
-		        Bu gizlilik politikası zaman zaman güncellenebilir. Değişiklikler bu 
-		        sayfada yayınlanacaktır. Uygulamayı kullanmaya devam etmeniz, güncellenmiş 
-		        politikayı kabul ettiğiniz anlamına gelir.
-		    </p>
-		
-		    <h2>10. İletişim</h2>
-		    <p>
-		        Gizlilik politikamız hakkında sorularınız varsa bizimle iletişime geçebilirsiniz:
-		    </p>
-		    <ul>
-		        <li><strong>Geliştirici:</strong> Ciftci Workshop</li>
-		        <li><strong>E-posta:</strong> <a href="mailto:ciftciworkshop@gmail.com">ciftciworkshop@gmail.com</a></li>
-		    </ul>
-		
-		    <div class="footer">
-		        &copy; 2026 Ciftci Workshop. Tüm hakları saklıdır.
-		    </div>
-		</div>
-		
-		<div id="gizlilikPopup" onclick="this.style.display='none'" 
-		     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+
+		<div id="gizlilikPopup" onclick="this.style.display='none'"
+			 style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
 		            background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
-		  <div onclick="event.stopPropagation()" 
-		       style="background:#1a1a2e; border-radius:16px; padding:30px; max-width:600px; 
+			<div onclick="event.stopPropagation()"
+				 style="background:#1a1a2e; border-radius:16px; padding:30px; max-width:600px;
 		              max-height:80vh; overflow-y:auto; color:#e0e0e0; margin:20px;">
-		    <h2 style="color:#ff4081;">Gizlilik Politikası</h2>
-		    <p>Bu uygulama kişisel veri toplamaz, saklamaz veya üçüncü taraflarla paylaşmaz...</p>
-		    <!-- İçeriği buraya koy -->
-		    <br>
-		    <button onclick="this.parentElement.parentElement.style.display='none'" 
-		            style="background:#ff4081; color:white; border:none; padding:10px 24px; 
-		                   border-radius:8px; cursor:pointer;">Kapat</button>
-		  </div>
+				<h2 style="color:#ff4081;">Gizlilik Politikası</h2>
+				<p class="subtitle">Ciftci Workshop LED Controller &mdash; Son güncelleme: 19 Şubat 2026</p>
+				<h1>Gizlilik Politikası</h1>
+				<h2>1. Genel Bakış</h2>
+				<p>
+					Ciftci Workshop LED Controller uygulaması ("Uygulama"), LED şerit ve aydınlatma
+					sistemlerini Bluetooth üzerinden kontrol etmek amacıyla geliştirilmiştir.
+					Kullanıcılarımızın gizliliğine saygı duyuyor ve kişisel verilerin korunmasını
+					önemsiyoruz.
+				</p>
+
+				<div class="highlight">
+					<strong>Özet:</strong> Bu uygulama kişisel veri toplamaz, saklamaz veya
+					üçüncü taraflarla paylaşmaz.
+				</div>
+
+				<h2>2. Toplanan Veriler</h2>
+				<p>Bu uygulama aşağıdaki bilgileri <strong>yalnızca cihazınızda yerel olarak</strong> kullanır:</p>
+				<ul>
+					<li><strong>Bluetooth Bilgileri:</strong> Yakındaki Bluetooth cihazlarının adları ve adresleri yalnızca bağlantı kurmak amacıyla taranır. Bu bilgiler herhangi bir sunucuya gönderilmez.</li>
+					<li><strong>Uygulama Tercihleri:</strong> Favori animasyonlar ve kullanıcı ayarları yalnızca cihazınızda (SharedPreferences) saklanır.</li>
+					<li><strong>Arka Plan Görseli:</strong> Seçtiğiniz arka plan görseli yalnızca cihazınızda saklanır.</li>
+				</ul>
+
+				<h2>3. Toplanmayan Veriler</h2>
+				<p>Bu uygulama aşağıdaki verileri <strong>toplamaz ve hiçbir şekilde erişmez</strong>:</p>
+				<ul>
+					<li>Ad, soyad, e-posta adresi veya telefon numarası gibi kişisel bilgiler</li>
+					<li>Konum verileri (konum izni yalnızca Android'de Bluetooth taraması için gereklidir ve konum bilgisi kaydedilmez)</li>
+					<li>Kullanım istatistikleri veya analitik veriler</li>
+					<li>Fotoğraf, video veya medya dosyaları</li>
+					<li>Finansal bilgiler</li>
+				</ul>
+
+				<h2>4. Bluetooth Kullanımı</h2>
+				<p>
+					Uygulama, LED kontrolcüsüne bağlanmak için Bluetooth Low Energy (BLE) ve/veya
+					Classic Bluetooth teknolojisini kullanır. Bluetooth bağlantısı yalnızca LED
+					kontrolcüsüne komut göndermek amacıyla kullanılır. Bluetooth üzerinden toplanan
+					hiçbir veri saklanmaz veya üçüncü taraflarla paylaşılmaz.
+				</p>
+
+				<h2>5. Kamera ve Galeri Erişimi</h2>
+				<p>
+					Uygulama, arka plan görseli seçimi için kamera ve galeri erişimi isteyebilir.
+					Bu erişim yalnızca kullanıcının seçtiği görseli arka plan olarak ayarlamak
+					içindir. Fotoğraflarınız herhangi bir sunucuya yüklenmez.
+				</p>
+
+				<h2>6. Üçüncü Taraf Hizmetleri</h2>
+				<p>
+					Bu uygulama üçüncü taraf analitik, reklam veya izleme hizmeti kullanmaz.
+					Uygulama tamamen çevrimdışı çalışır ve internet bağlantısı gerektirmez
+					(Google Fonts hariç, ilk yüklemede font indirmek için internet gerekebilir).
+				</p>
+
+				<h2>7. Veri Güvenliği</h2>
+				<p>
+					Tüm veriler yalnızca cihazınızda saklandığından, verilerinizin güvenliği
+					cihazınızın güvenlik ayarlarına bağlıdır. Uygulamayı sildiğinizde tüm
+					yerel veriler de silinir.
+				</p>
+
+				<h2>8. Çocukların Gizliliği</h2>
+				<p>
+					Bu uygulama çocuklara yönelik değildir ve bilerek 13 yaşın altındaki
+					çocuklardan kişisel bilgi toplamaz.
+				</p>
+
+				<h2>9. Değişiklikler</h2>
+				<p>
+					Bu gizlilik politikası zaman zaman güncellenebilir. Değişiklikler bu
+					sayfada yayınlanacaktır. Uygulamayı kullanmaya devam etmeniz, güncellenmiş
+					politikayı kabul ettiğiniz anlamına gelir.
+				</p>
+
+				<h2>10. İletişim</h2>
+				<p>
+					Gizlilik politikamız hakkında sorularınız varsa bizimle iletişime geçebilirsiniz:
+				</p>
+				<ul>
+					<li><strong>Geliştirici:</strong> Ciftci Workshop</li>
+					<li><strong>E-posta:</strong> <a href="mailto:ciftciworkshop@gmail.com">ciftciworkshop@gmail.com</a></li>
+				</ul>
+
+				<div class="footer">
+					&copy; 2026 Ciftci Workshop. Tüm hakları saklıdır.
+				</div>
+				<button onclick="this.parentElement.parentElement.style.display='none'"
+						style="background:#ff4081; color:white; border:none; padding:10px 24px;
+		                   border-radius:8px; cursor:pointer;">
+					Kapat
+				</button>
+			</div>
 		</div>
 		<p>&copy; 2024 Çiftçi Workshop. Tüm Hakları Saklıdır.</p>
 	</footer>
@@ -414,6 +483,7 @@
 </body>
 
 </html>
+
 
 
 
