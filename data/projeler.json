@@ -5,6 +5,20 @@
   },
   "projeler": [
     {
+      "id": "p1783973210081",
+      "marka": "Suzuki",
+      "model": "Swift",
+      "kasa": "Swift",
+      "aciklama": "Açılış animasyonlu ve dinamik kayar sinyalli full led stop tasarımı",
+      "hizmet": "Stop Tasarımı",
+      "fotolar": [
+        "studies-img/suzuki-swift-1783973215564-1.jpg",
+        "studies-img/suzuki-swift-1783973217245-2.jpg",
+        "studies-img/suzuki-swift-1783973218786-3.jpg",
+        "studies-img/suzuki-swift-1783973220416-4.jpg"
+      ]
+    },
+    {
       "id": "p1783972657297",
       "marka": "Opel",
       "model": "Astra",
