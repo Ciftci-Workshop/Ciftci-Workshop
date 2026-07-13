@@ -1,0 +1,56 @@
+{
+  "kapaklar": {},
+  "projeler": [
+    {
+      "id": "p1",
+      "marka": "Fiat",
+      "model": "Marea",
+      "aciklama": "Dörtlü LED far dönüşümü",
+      "hizmet": "Far Modifikasyonu",
+      "fotolar": [
+        "studies-img/1.jpg"
+      ]
+    },
+    {
+      "id": "p2",
+      "marka": "Honda",
+      "model": "Civic",
+      "aciklama": "Tam genişlik RGB stop tasarımı",
+      "hizmet": "Stop Tasarımı",
+      "fotolar": [
+        "studies-img/2.jpg"
+      ]
+    },
+    {
+      "id": "p3",
+      "marka": "BMW",
+      "model": "3 Serisi",
+      "kasa": "E90",
+      "aciklama": "Angel eyes far uygulaması",
+      "hizmet": "Far Modifikasyonu",
+      "fotolar": [
+        "studies-img/3.jpg"
+      ]
+    },
+    {
+      "id": "p4",
+      "marka": "Fiat",
+      "model": "Marea",
+      "aciklama": "Atölye önü — özel stoplar iş başında",
+      "hizmet": "Stop Tasarımı",
+      "fotolar": [
+        "studies-img/4.jpg"
+      ]
+    },
+    {
+      "id": "p5",
+      "marka": "Renault",
+      "model": "Megane",
+      "aciklama": "RGB ışık barı, akıcı sinyal",
+      "hizmet": "Stop Tasarımı",
+      "fotolar": [
+        "studies-img/5.jpg"
+      ]
+    }
+  ]
+}
