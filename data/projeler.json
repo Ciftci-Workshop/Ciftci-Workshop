@@ -55,5 +55,9 @@
         "studies-img/5.jpg"
       ]
     }
-  ]
+  ],
+  "hero": {
+    "foto": "studies-img/3.jpg",
+    "yazi": "BMW E90 FAR YENİLEME"
+  }
 }
