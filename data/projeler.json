@@ -5,6 +5,26 @@
   },
   "projeler": [
     {
+      "id": "p1783972304140",
+      "marka": "Renault",
+      "model": "Megane",
+      "kasa": "Megane 4",
+      "aciklama": "Açılış animasyonlu dinamik kayar sinyalli Rgb kontrollü far çalışmaları",
+      "hizmet": "Far Modifikasyonu",
+      "fotolar": [
+        "studies-img/renault-megane-1783972319094-1.jpg",
+        "studies-img/renault-megane-1783972320960-2.jpg",
+        "studies-img/renault-megane-1783972322511-3.jpg",
+        "studies-img/renault-megane-1783972324344-4.jpg",
+        "studies-img/renault-megane-1783972326484-5.jpg",
+        "studies-img/renault-megane-1783972327917-6.jpg",
+        "studies-img/renault-megane-1783972329557-7.jpg",
+        "studies-img/renault-megane-1783972331311-8.jpg",
+        "studies-img/renault-megane-1783972332961-9.jpg",
+        "studies-img/renault-megane-1783972334373-10.jpg"
+      ]
+    },
+    {
       "id": "p1",
       "marka": "Fiat",
       "model": "Marea",
