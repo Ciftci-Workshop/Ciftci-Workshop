@@ -200,6 +200,17 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			<div id="proje-listesi"></div>
 		</div>
 
+		<!-- Ana sayfa hero (en üstteki büyük fotoğraf) -->
+		<div class="panel-kart">
+			<h2>Ana Sayfa Görseli <span class="mini">EN ÜSTTEKİ BÜYÜK FOTOĞRAF</span></h2>
+			<p class="ipucu" style="margin:0 0 6px">Ziyaretçinin ilk gördüğü tam ekran fotoğraf. Projelerdeki fotoğraflardan birini seç.</p>
+			<div id="hero-secimler" class="kapak-secimler" style="margin-bottom:14px"></div>
+			<div class="form-satir">
+				<label for="f-hero-yazi">Köşe yazısı <span style="text-transform:none;letter-spacing:0">(sağ altta görünür — örn: HONDA CIVIC — RGB STOP)</span></label>
+				<input class="girdi" id="f-hero-yazi" placeholder="HONDA CIVIC — RGB STOP">
+			</div>
+		</div>
+
 		<!-- Marka kapak fotoğrafları -->
 		<div class="panel-kart">
 			<h2>Marka Kapakları <span class="mini">ANA SAYFADAKİ KARTLAR</span></h2>
@@ -234,7 +245,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		imgDir: 'studies-img'
 	};
 
-	const YEDEK_VERI = { kapaklar: {}, projeler: [
+	const YEDEK_VERI = { hero: { foto: "studies-img/2.jpg", yazi: "HONDA CIVIC — RGB STOP" }, kapaklar: {}, projeler: [
 		{ id:"p1", marka:"Fiat",    model:"Marea",    aciklama:"Dörtlü LED far dönüşümü",             hizmet:"Far Modifikasyonu", fotolar:["studies-img/1.jpg"] },
 		{ id:"p2", marka:"Honda",   model:"Civic",    aciklama:"Tam genişlik RGB stop tasarımı",       hizmet:"Stop Tasarımı",     fotolar:["studies-img/2.jpg"] },
 		{ id:"p3", marka:"BMW",     model:"3 Serisi", kasa:"E90", aciklama:"Angel eyes far uygulaması", hizmet:"Far Modifikasyonu", fotolar:["studies-img/3.jpg"] },
@@ -313,6 +324,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 
 	function veriDuzelt(v) { // eski şemadan gelen veriyi de kabul et
 		v.kapaklar = v.kapaklar || {};
+		v.hero = v.hero || { foto: '', yazi: '' };
 		v.projeler.forEach(p => { p.fotolar = fotolarOf(p); delete p.foto; });
 		return v;
 	}
@@ -401,6 +413,11 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 	});
 	$('f-model').addEventListener('change', () => {
 		$('yeni-model-kutu').classList.toggle('gizli', $('f-model').value !== '__yeni');
+	});
+
+	// Hero köşe yazısı: yazdıkça veriye işlenir
+	$('f-hero-yazi').addEventListener('input', () => {
+		if (veri) veri.hero.yazi = $('f-hero-yazi').value;
 	});
 
 	/* ---------- Fotoğraflar: seçilince tarayıcıda küçült ----------
@@ -545,6 +562,29 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		}));
 
 		kapakCiz();
+		heroCiz();
+	}
+
+	/* ---------- Ana sayfa hero seçici ----------
+	   En üstteki büyük fotoğrafı ve köşe yazısını belirler.
+	   Tüm projelerdeki fotoğraflardan biri seçilebilir. */
+	function heroCiz() {
+		const tumFotolar = veri.projeler.flatMap(p => fotolarOf(p));
+		const secili = veri.hero.foto && tumFotolar.includes(veri.hero.foto)
+			? veri.hero.foto : tumFotolar[0];
+		$('hero-secimler').innerHTML = tumFotolar.map((f, i) =>
+			`<img src="${gorselSrc(f)}" data-ix="${i}" class="${f === secili ? 'secili' : ''}" alt="">`
+		).join('');
+		$('hero-secimler').querySelectorAll('img').forEach(img => {
+			img.addEventListener('click', () => {
+				veri.hero.foto = tumFotolar[+img.dataset.ix];
+				heroCiz();
+			});
+		});
+		// Yazı kutusu ilk çizimde doldurulur; sonra kullanıcı yazdıkça veriye işlenir
+		if ($('f-hero-yazi').value === '' && document.activeElement !== $('f-hero-yazi')) {
+			$('f-hero-yazi').value = veri.hero.yazi || '';
+		}
 	}
 
 	/* ---------- Marka kapak seçici ----------
