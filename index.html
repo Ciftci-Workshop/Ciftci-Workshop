@@ -38,7 +38,7 @@
 
 	<!-- HERO: işin kendisi arka planda, söz kısa ve net -->
 	<section class="hero">
-		<div class="hero-bg" style="background-image:url('studies-img/2.jpg')" role="img" aria-label="RGB stop tasarımlı Honda Civic"></div>
+		<div class="hero-bg" id="hero-bg" role="img" aria-label="Çiftçi Workshop projesi"></div>
 		<div class="container hero-icerik">
 			<p class="eyebrow">Bursa · Özel Otomotiv Aydınlatma</p>
 			<h1>Işık Bizim <span class="vurgu">İşimiz</span></h1>
@@ -51,7 +51,7 @@
 				<a href="https://wa.me/905386806976?text=Merhaba!%20Arac%C4%B1m%20i%C3%A7in%20far%2Fstop%20projesi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="btn btn-ghost" target="_blank" rel="noopener">WhatsApp'tan Yaz</a>
 			</div>
 		</div>
-		<p class="hero-kunye">HONDA CIVIC — RGB STOP</p>
+		<p class="hero-kunye" id="hero-kunye">HONDA CIVIC — RGB STOP</p>
 	</section>
 
 	<!-- MARKALAR: verisi data/projeler.json'dan gelir, admin panelinden yönetilir -->
@@ -137,7 +137,7 @@
 					<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.523 15.341c-.551 0-.999-.448-.999-1s.448-.999.999-.999c.551 0 .999.448.999.999 0 .552-.448 1-.999 1m-11.046 0c-.551 0-.999-.448-.999-1s.448-.999.999-.999c.551 0 .999.448.999.999 0 .552-.448 1-.999 1m11.405-6.02l1.997-3.459a.416.416 0 00-.152-.568.416.416 0 00-.568.152l-2.022 3.503C15.59 8.244 13.853 7.851 12 7.851s-3.59.393-5.137 1.099L4.841 5.447a.416.416 0 00-.568-.152.416.416 0 00-.152.568l1.997 3.459C2.689 11.187.343 14.659 0 18.761h24c-.344-4.102-2.689-7.574-6.118-9.44"/></svg>
 					<span>Android İçin İndir</span>
 				</a>
-				<p class="uyg-spec">v4.0.4+2 &middot; 50 MB &middot; Android 8.0+</p>
+				<p class="uyg-spec">v4.0.2+1 &middot; 44 MB &middot; Android 8.0+</p>
 			</div>
 		</div>
 	</section>
@@ -203,7 +203,7 @@
 			{ id:"p3", marka:"BMW",     model:"3 Serisi", kasa:"E90",           aciklama:"Angel eyes far uygulaması",            hizmet:"Far Modifikasyonu", fotolar:["studies-img/3.jpg"] },
 			{ id:"p4", marka:"Fiat",    model:"Marea", aciklama:"Atölye önü — özel stoplar iş başında", hizmet:"Stop Tasarımı",     fotolar:["studies-img/4.jpg"] },
 			{ id:"p5", marka:"Renault", model:"Megane",             aciklama:"RGB ışık barı, akıcı sinyal",          hizmet:"Stop Tasarımı",     fotolar:["studies-img/5.jpg"] }
-		], kapaklar: {} };
+		], kapaklar: {}, hero: { foto: "studies-img/2.jpg", yazi: "HONDA CIVIC — RGB STOP" } };
 
 		// Önizleme dosyasında fotoğraflar gömülü gelir; F() yolu ona çevirir.
 		const F = s => (window.IMG_B64 && window.IMG_B64[s]) || s;
@@ -237,6 +237,12 @@
 
 		// --- Marka rayı: projelerden markalar türetilir, kart olarak dizilir
 		veriYukle().then(veri => {
+			// --- Hero: panelden seçilen fotoğraf ve yazı (yoksa 2.jpg / varsayılan)
+			const hero = veri.hero || {};
+			const heroFoto = hero.foto || 'studies-img/2.jpg';
+			document.getElementById('hero-bg').style.backgroundImage = `url('${F(heroFoto)}')`;
+			if (hero.yazi != null) document.getElementById('hero-kunye').textContent = hero.yazi;
+
 			const KAPAKLAR = veri.kapaklar || {};
 			const ilkFoto = p => (p.fotolar && p.fotolar[0]) || p.foto;
 			// Panelde kapak seçildiyse onu, silinmişse markanın ilk fotoğrafını kullan
