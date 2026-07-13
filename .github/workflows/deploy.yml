@@ -1,20 +1,41 @@
+# Çiftçi Workshop — GitHub Pages yayınlama
+# Statik site (HTML/CSS/JS), derleme gerektirmez: repo kökü olduğu gibi yayınlanır.
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main  # veya kullandığınız ana dal adı
+    branches: [main]
+  workflow_dispatch:   # Actions sekmesinden elle de tetikleyebilirsin
+
+# Pages'e yazma izni: 128 hatasının çözümü tam olarak burası
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Aynı anda tek yayın çalışsın (üst üste kayıt gelirse karışmasın)
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Depoyu al
+        uses: actions/checkout@v4
 
-      - name: Build and deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+      - name: Pages'i hazırla
+        uses: actions/configure-pages@v5
+
+      - name: Site dosyalarını paketle
+        uses: actions/upload-pages-artifact@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: /  # veya web sitesinin dosyalarının bulunduğu klasörün adı
+          path: .          # repo kökündeki her şey (index.html, css, data, studies-img...)
+
+      - name: Yayınla
+        id: deployment
+        uses: actions/deploy-pages@v4
