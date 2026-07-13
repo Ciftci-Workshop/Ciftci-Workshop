@@ -1,7 +1,8 @@
 {
   "kapaklar": {
     "Fiat": "studies-img/4.jpg",
-    "Honda": "studies-img/2.jpg"
+    "Honda": "studies-img/2.jpg",
+    "Renault": "studies-img/renault-megane-1783972322511-3.jpg"
   },
   "projeler": [
     {
@@ -97,16 +98,6 @@
       "hizmet": "Stop Tasarımı",
       "fotolar": [
         "studies-img/4.jpg"
-      ]
-    },
-    {
-      "id": "p5",
-      "marka": "Renault",
-      "model": "Megane",
-      "aciklama": "RGB ışık barı, akıcı sinyal",
-      "hizmet": "Stop Tasarımı",
-      "fotolar": [
-        "studies-img/5.jpg"
       ]
     }
   ],
