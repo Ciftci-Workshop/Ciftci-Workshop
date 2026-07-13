@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Galeri — Çiftçi Workshop</title>
+	<meta name="description" content="Çiftçi Workshop projeleri: marka, model ve hizmet bazında far ve stop dönüşümleri.">
+	<meta name="theme-color" content="#0A0B0E">
+	<link rel="icon" type="image/png" href="img/Ciftci-Workshop-Blackbg.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style-css.css">
+</head>
+<body>
+<!-- PREVIEW:START -->
+
+	<header class="topbar scrolled galeri-bar">
+		<a class="brand" href="index.html" aria-label="Ana sayfa">
+			<img src="img/Ciftci-Workshop-Blackbg.png" alt="Çiftçi Workshop">
+		</a>
+		<nav>
+			<a href="index.html">Ana Sayfa</a>
+			<a href="galeri.html" class="aktif">Galeri</a>
+			<a href="index.html#iletisim">İletişim</a>
+		</nav>
+	</header>
+
+	<main class="container">
+		<div class="galeri-bas">
+			<p class="eyebrow">Projeler</p>
+			<h1 class="h2">Galeri</h1>
+			<p class="sayi" id="proje-sayisi"></p>
+
+			<!-- Arama: marka, model, kasa kodu, açıklama — hepsinde arar -->
+			<div class="arama-kutu">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+				<input type="search" id="arama" placeholder="Ara: marka, model, kasa kodu..." autocomplete="off">
+			</div>
+		</div>
+
+		<!-- Filtreler: hepsi verideki projelerden otomatik oluşur -->
+		<div class="filtreler" id="filtreler" aria-label="Marka filtresi"></div>
+		<div class="filtreler model-filtreler" id="model-filtreler" aria-label="Model filtresi"></div>
+		<div class="filtreler hizmet-filtreler" id="hizmet-filtreler" aria-label="Hizmet filtresi"></div>
+
+		<div class="galeri-grid" id="galeri-grid"></div>
+	</main>
+
+	<!-- Lightbox: fotoğrafı büyüt, ok/kaydırma ile tüm fotoğraflarda gez -->
+	<div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+		<button class="lb-btn lb-kapat" id="lb-kapat" aria-label="Kapat">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+		</button>
+		<button class="lb-btn lb-onceki" id="lb-onceki" aria-label="Önceki">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+		</button>
+		<button class="lb-btn lb-sonraki" id="lb-sonraki" aria-label="Sonraki">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+		</button>
+		<div class="lb-ic">
+			<img id="lb-img" src="" alt="">
+			<div class="lb-alt">
+				<span class="lb-info">
+					<span class="lb-baslik" id="lb-baslik"></span>
+					<span class="pe-kasa" id="lb-kasa" hidden></span>
+					<span class="lb-sayac" id="lb-sayac" hidden></span>
+				</span>
+				<span class="lb-desc" id="lb-desc"></span>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	(function () {
+		const YEDEK_VERI = { kapaklar: {}, projeler: [
+			{ id:"p1", marka:"Fiat",    model:"Marea",    aciklama:"Dörtlü LED far dönüşümü",             hizmet:"Far Modifikasyonu", fotolar:["studies-img/1.jpg"] },
+			{ id:"p2", marka:"Honda",   model:"Civic",    aciklama:"Tam genişlik RGB stop tasarımı",       hizmet:"Stop Tasarımı",     fotolar:["studies-img/2.jpg"] },
+			{ id:"p3", marka:"BMW",     model:"3 Serisi", kasa:"E90", aciklama:"Angel eyes far uygulaması", hizmet:"Far Modifikasyonu", fotolar:["studies-img/3.jpg"] },
+			{ id:"p4", marka:"Fiat",    model:"Marea",    aciklama:"Atölye önü — özel stoplar iş başında", hizmet:"Stop Tasarımı",     fotolar:["studies-img/4.jpg"] },
+			{ id:"p5", marka:"Renault", model:"Megane",   aciklama:"RGB ışık barı, akıcı sinyal",          hizmet:"Stop Tasarımı",     fotolar:["studies-img/5.jpg"] }
+		]};
+
+		const F = s => (window.IMG_B64 && window.IMG_B64[s]) || s;
+		const fotolarOf = p => (p.fotolar && p.fotolar.length ? p.fotolar : (p.foto ? [p.foto] : []));
+
+		// Hizmet filtrelerinin sıralaması (veride olmayan gösterilmez)
+		const HIZMET_SIRA = ['Far Modifikasyonu', 'Far Yenileme (Parlatma)', 'Stop Tasarımı', 'Cam İşleme', 'Özel Üretim', 'Diğer'];
+
+		async function veriYukle() {
+			if (window.CW_DATA) return window.CW_DATA;
+			try {
+				const r = await fetch('data/projeler.json', { cache: 'no-store' });
+				if (!r.ok) throw new Error(r.status);
+				return await r.json();
+			} catch (e) { return YEDEK_VERI; }
+		}
+
+		let projeler = [];
+		let gorunen = [];
+		let lbListe = [];             // görünen projelerin TÜM fotoğrafları, düz liste
+		let aktifMarka = 'Tümü';
+		let aktifModel = 'Tümü';
+		let aktifHizmet = 'Tümü';
+		let aramaMetni = '';
+		let lbIndex = 0;
+
+		const grid = document.getElementById('galeri-grid');
+		const markaKutu = document.getElementById('filtreler');
+		const modelKutu = document.getElementById('model-filtreler');
+		const hizmetKutu = document.getElementById('hizmet-filtreler');
+		const sayac = document.getElementById('proje-sayisi');
+
+		const modelEtiket = p => p.model + (p.kasa ? ' ' + p.kasa : '');
+		const basligi = p => p.marka + ' ' + p.model;
+		const buyuk = s => s.toLocaleUpperCase('tr-TR');
+
+		veriYukle().then(veri => {
+			projeler = veri.projeler;
+
+			const istenen = new URLSearchParams(location.search).get('marka');
+			const markalar = [...new Set(projeler.map(p => p.marka))];
+			if (istenen && markalar.includes(istenen)) aktifMarka = istenen;
+
+			markaFiltreleriKur(markalar);
+			modelFiltreleriKur();
+			hizmetFiltreleriKur();
+			ciz();
+		});
+
+		function chipSatiri(kutu, etiket, degerler, aktif, tiklama, bosGizle) {
+			if (bosGizle) { kutu.innerHTML = ''; return; }
+			kutu.innerHTML = '<span class="chip-etiket">' + etiket + '</span>' +
+				degerler.map(d =>
+					`<button class="chip ${d.deger === aktif ? 'aktif' : ''}" data-deger="${d.deger}">${d.yazi}</button>`
+				).join('');
+			kutu.querySelectorAll('.chip').forEach(chip => {
+				chip.addEventListener('click', () => {
+					kutu.querySelectorAll('.chip').forEach(c => c.classList.toggle('aktif', c === chip));
+					tiklama(chip.dataset.deger);
+				});
+			});
+		}
+
+		function markaFiltreleriKur(markalar) {
+			chipSatiri(markaKutu, 'MARKA',
+				['Tümü', ...markalar].map(m => ({ deger: m, yazi: m })),
+				aktifMarka,
+				deger => {
+					aktifMarka = deger;
+					aktifModel = 'Tümü'; // marka değişince model sıfırlanır
+					try {
+						const url = aktifMarka === 'Tümü' ? 'galeri.html'
+							: 'galeri.html?marka=' + encodeURIComponent(aktifMarka);
+						history.replaceState(null, '', url);
+					} catch (e) {}
+					modelFiltreleriKur();
+					ciz();
+				});
+		}
+
+		function modelFiltreleriKur() {
+			// Marka seçiliyse o markanın modelleri hep görünür
+			if (aktifMarka === 'Tümü') { modelKutu.innerHTML = ''; return; }
+			const modeller = [...new Set(
+				projeler.filter(p => p.marka === aktifMarka).map(modelEtiket)
+			)];
+			chipSatiri(modelKutu, 'MODEL',
+				['Tümü', ...modeller].map(m => ({ deger: m, yazi: m === 'Tümü' ? 'Tüm Modeller' : m })),
+				aktifModel,
+				deger => { aktifModel = deger; ciz(); });
+		}
+
+		function hizmetFiltreleriKur() {
+			const eldekiler = [...new Set(projeler.map(p => p.hizmet))];
+			const sirali = [
+				...HIZMET_SIRA.filter(h => eldekiler.includes(h)),
+				...eldekiler.filter(h => !HIZMET_SIRA.includes(h))
+			];
+			chipSatiri(hizmetKutu, 'HİZMET',
+				['Tümü', ...sirali].map(h => ({ deger: h, yazi: h })),
+				aktifHizmet,
+				deger => { aktifHizmet = deger; ciz(); });
+		}
+
+		document.getElementById('arama').addEventListener('input', e => {
+			aramaMetni = e.target.value.trim().toLowerCase();
+			ciz();
+		});
+
+		function ciz() {
+			gorunen = projeler.filter(p => {
+				if (aktifMarka !== 'Tümü' && p.marka !== aktifMarka) return false;
+				if (aktifModel !== 'Tümü' && modelEtiket(p) !== aktifModel) return false;
+				if (aktifHizmet !== 'Tümü' && p.hizmet !== aktifHizmet) return false;
+				if (aramaMetni) {
+					const metin = [p.marka, p.model, p.kasa, p.aciklama, p.hizmet]
+						.join(' ').toLowerCase();
+					if (!metin.includes(aramaMetni)) return false;
+				}
+				return true;
+			});
+
+			let etiket = gorunen.length + ' PROJE';
+			if (aktifMarka !== 'Tümü') etiket += ' · ' + buyuk(aktifMarka);
+			if (aktifModel !== 'Tümü') etiket += ' · ' + buyuk(aktifModel);
+			if (aktifHizmet !== 'Tümü') etiket += ' · ' + buyuk(aktifHizmet);
+			sayac.textContent = etiket;
+
+			if (!gorunen.length) {
+				grid.innerHTML = '<p class="bos-mesaj">' + (aramaMetni
+					? 'Aramana uyan proje bulunamadı.'
+					: 'Bu filtrede henüz proje yok.') + '</p>';
+				lbListe = [];
+				return;
+			}
+
+			// Lightbox listesi: her projenin tüm fotoğrafları arka arkaya
+			lbListe = [];
+			const kartlar = gorunen.map(p => {
+				const fs = fotolarOf(p);
+				const bas = lbListe.length; // bu projenin ilk fotoğrafının düz listedeki yeri
+				fs.forEach((f, fi) => lbListe.push({ p, f, fi, n: fs.length }));
+				return `
+				<button class="proje" data-i="${bas}" aria-label="${basligi(p)} — büyüt">
+					<img src="${F(fs[0])}" alt="${basligi(p)} — ${p.aciklama}" loading="lazy">
+					${fs.length > 1 ? `<span class="foto-sayi">${fs.length} FOTO</span>` : ''}
+					<span class="proje-desc">${p.aciklama}</span>
+					<span class="proje-etiket">
+						<span class="pe-baslik">${buyuk(basligi(p))}</span>
+						${p.kasa ? `<span class="pe-kasa">${p.kasa}</span>` : ''}
+					</span>
+				</button>`;
+			});
+			grid.innerHTML = kartlar.join('');
+
+			grid.querySelectorAll('.proje').forEach(el =>
+				el.addEventListener('click', () => lbAc(+el.dataset.i)));
+		}
+
+		// ---------- Lightbox ----------
+		const lb = document.getElementById('lightbox');
+		const lbImg = document.getElementById('lb-img');
+		const lbBaslik = document.getElementById('lb-baslik');
+		const lbKasa = document.getElementById('lb-kasa');
+		const lbSayac = document.getElementById('lb-sayac');
+		const lbDesc = document.getElementById('lb-desc');
+
+		function lbAc(i) { lbIndex = i; lbGoster(); lb.classList.add('acik'); document.body.style.overflow = 'hidden'; }
+		function lbKapat() { lb.classList.remove('acik'); document.body.style.overflow = ''; }
+		function lbGoster() {
+			const k = lbListe[lbIndex];
+			lbImg.src = F(k.f);
+			lbImg.alt = basligi(k.p);
+			lbBaslik.textContent = basligi(k.p);
+			lbKasa.hidden = !k.p.kasa;
+			lbKasa.textContent = k.p.kasa || '';
+			lbSayac.hidden = k.n < 2;
+			lbSayac.textContent = (k.fi + 1) + '/' + k.n;
+			lbDesc.textContent = k.p.aciklama;
+		}
+		function lbGez(yon) { lbIndex = (lbIndex + yon + lbListe.length) % lbListe.length; lbGoster(); }
+
+		document.getElementById('lb-kapat').addEventListener('click', lbKapat);
+		document.getElementById('lb-onceki').addEventListener('click', () => lbGez(-1));
+		document.getElementById('lb-sonraki').addEventListener('click', () => lbGez(1));
+		lb.addEventListener('click', e => { if (e.target === lb) lbKapat(); });
+
+		addEventListener('keydown', e => {
+			if (!lb.classList.contains('acik')) return;
+			if (e.key === 'Escape') lbKapat();
+			if (e.key === 'ArrowLeft') lbGez(-1);
+			if (e.key === 'ArrowRight') lbGez(1);
+		});
+
+		let dokunusX = null;
+		lb.addEventListener('touchstart', e => dokunusX = e.touches[0].clientX, { passive: true });
+		lb.addEventListener('touchend', e => {
+			if (dokunusX === null) return;
+			const fark = e.changedTouches[0].clientX - dokunusX;
+			if (Math.abs(fark) > 50) lbGez(fark < 0 ? 1 : -1);
+			dokunusX = null;
+		}, { passive: true });
+	})();
+	</script>
+
+<!-- PREVIEW:END -->
+</body>
+</html>

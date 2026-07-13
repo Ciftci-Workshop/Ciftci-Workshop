@@ -3,494 +3,290 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Çiftçi Workshop - Automotive Lighting Design</title>
-	<link rel="stylesheet" type="text/css" href="css/style-css.css" />
+	<title>Çiftçi Workshop — Araca Özel Far &amp; Stop | Bursa</title>
+	<meta name="description" content="Bursa'da araca özel LED far ve stop: tasarım, üretim ve yazılım tek atölyede. Marka marka projeler, dinamik sinyal ve mobil uygulama.">
+	<meta name="theme-color" content="#0A0B0E">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Çiftçi Workshop — Araca Özel Far &amp; Stop">
+	<meta property="og:description" content="Işık bizim işimiz. Tasarımı biz çizer, elektroniği biz kurar, yazılımı biz yazarız.">
+	<meta property="og:url" content="https://ciftci-workshop.github.io/Ciftci-Workshop/">
+	<meta property="og:image" content="https://ciftci-workshop.github.io/Ciftci-Workshop/img/Ciftci-Workshop-Whitebg.png">
 	<link rel="icon" type="image/png" href="img/Ciftci-Workshop-Blackbg.png">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-	<style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #3a6155;
-            border-radius: 16px;
-            padding: 40px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        h1 {
-            color: #ff4081;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 32px;
-        }
-
-        h2 {
-            color: #ff4081;
-            font-size: 20px;
-            margin-top: 32px;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(255,64,129,0.2);
-        }
-
-        p {
-            margin-bottom: 16px;
-        }
-
-        ul {
-            margin-left: 24px;
-            margin-bottom: 16px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .highlight {
-            background: rgba(255,64,129,0.08);
-            border-left: 3px solid #ff4081;
-            padding: 16px;
-            border-radius: 0 8px 8px 0;
-            margin: 16px 0;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: #666;
-            font-size: 13px;
-        }
-
-        a {
-            color: #ff4081;
-            text-decoration: none;
-        }
-
-            a:hover {
-                text-decoration: underline;
-            }
-	</style>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style-css.css">
 </head>
 <body>
-	<nav class="navbar">
-		<div class="brand"><a href="#ana"><img style="height:50px;width:150px;" src="img/Ciftci-Workshop-Whitebg.png" /></a></div>
-		<div class="hamburger">
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-		<ul class="nav-menu">
-			<li><a href="#ana">Ana Sayfa</a></li>
-			<li><a href="#hakkimizda">Hakkımızda</a></li>
-			<li><a href="#galeri">Galeri</a></li>
-			<li><a href="#hizmetler">Hizmetler</a></li>
-			<li><a href="#uygulama" class="app-badge" style="color:white;"><i class="fab fa-android"></i> Uygulama</a></li>
-			<li><a href="#iletisim">İletişim</a></li>
-		</ul>
-	</nav>
+<!-- PREVIEW:START -->
 
-	<section id="ana" class="hero-section">
-		<div class="hero-content">
-			<div class="hero-line"></div>
-			<p class="hero-subtitle">Automotive Lighting</p>
-			<h1 class="hero-title">Ciftci Workshop</h1>
-			<a href="#galeri" class="explore-btn">Keşfet</a>
-		</div>
-	</section>
+	<header class="topbar">
+		<a class="brand" href="index.html" aria-label="Ana sayfa">
+			<img src="img/Ciftci-Workshop-Blackbg.png" alt="Çiftçi Workshop">
+		</a>
+		<button class="hamburger" aria-label="Menü" aria-expanded="false">
+			<span></span><span></span><span></span>
+		</button>
+		<nav>
+			<a href="galeri.html">Galeri</a>
+			<a href="#markalar">Markalar</a>
+			<a href="#hizmetler">Hizmetler</a>
+			<a href="#uygulama">Uygulama</a>
+			<a href="#iletisim">İletişim</a>
+		</nav>
+	</header>
 
-	<section id="hakkimizda" class="about-section">
-		<div class="about-container">
-			<div class="about-text fade-in">
-				<h2>Işık ile Tasarımın Buluştuğu Yer</h2>
-				<p>Ciftci Workshop olarak, otomotiv aydınlatma sistemlerinde tutkuyla ve özenle hizmet veriyoruz. Her araç için özel tasarlanmış far ve stop sistemleri ile aracınızı benzersiz kılıyoruz.</p>
-				<p>Modern teknoloji ve geleneksel işçiliği harmanlayarak, sektörde fark yaratan projeler üretiyoruz.</p>
-			</div>
-			<div class="stats">
-				<div class="stat-item fade-in">
-					<div class="stat-number">150+</div>
-					<div class="stat-label">Tamamlanan Proje</div>
-				</div>
-				<div class="stat-item fade-in">
-					<div class="stat-number">5+</div>
-					<div class="stat-label">Yıllık Deneyim</div>
-				</div>
-				<div class="stat-item fade-in">
-					<div class="stat-number">89%</div>
-					<div class="stat-label">Müşteri Memnuniyeti</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section id="galeri" class="gallery-section">
-		<div class="section-header">
-			<h2>Projelerimiz</h2>
-		</div>
-		<div class="gallery-masonry">
-			<div class="gallery-image">
-				<img src="studies-img/1.jpg" alt="Far Modifikasyonu">
-				<div class="image-overlay">
-					<h3>Eskiden Yeniye Dönüşüm</h3>
-					<p>Premium Far Tasarımı</p>
-				</div>
-			</div>
-			<div class="gallery-image">
-				<img src="studies-img/2.jpg" alt="Stop Lambası">
-				<div class="image-overlay">
-					<h3>Eskiden Yeniye Dönüşüm</h3>
-					<p>Özel Stop Tasarımı</p>
-				</div>
-			</div>
-			<div class="gallery-image">
-				<img src="studies-img/3.jpg" alt="Spor Araç">
-				<div class="image-overlay">
-					<h3>Eskiden Yeniye Dönüşüm</h3>
-					<p>Performans Aydınlatma</p>
-				</div>
-			</div>
-			<div class="gallery-image">
-				<img src="studies-img/4.jpg" alt="Lüks Araç">
-				<div class="image-overlay">
-					<h3>Eskiden Yeniye Dönüşüm</h3>
-					<p>Premium Koleksiyon</p>
-				</div>
-			</div>
-			<div class="gallery-image">
-				<img src="studies-img/5.jpg" alt="SUV">
-				<div class="image-overlay">
-					<h3>Eskiden Yeniye Dönüşüm</h3>
-					<p>Komple LED Dönüşüm</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section id="hizmetler" class="services-section">
-		<div class="section-header">
-			<h2 style="color: #fff;">Hizmetlerimiz</h2>
-			<p style="color: #999;">Neler Yapıyoruz</p>
-		</div>
-		<div class="services-grid">
-			<div class="service-box fade-in">
-				<div class="service-number">01</div>
-				<h3>Far Modifikasyonu</h3>
-				<p>LED, Xenon ve Matrix LED teknolojileri ile orijinal farlarınızı modern sistemlere dönüştürüyoruz.</p>
-			</div>
-			<div class="service-box fade-in">
-				<div class="service-number">02</div>
-				<h3>Stop Tasarımı</h3>
-				<p>Dinamik akıcı sinyal ve özel animasyonlarla benzersiz stop lambası tasarımları üretiyoruz.</p>
-			</div>
-			<div class="service-box fade-in">
-				<div class="service-number">03</div>
-				<h3>Özel Üretim</h3>
-				<p>Sıfırdan tasarım ve üretim hizmeti ile hayal ettiğiniz projelerinizi gerçeğe dönüştürüyoruz.</p>
-			</div>
-			<div class="service-box fade-in">
-				<div class="service-number">04</div>
-				<h3>Cam İşleme</h3>
-				<p>Stop camlarında şeffaflaştırma işlemi uyguluyoruz.</p>
-			</div>
-			<div class="service-box fade-in">
-				<div class="service-number">05</div>
-				<h3>Parlatma</h3>
-				<p>Sararmış ve matlaşmış farları yeniden parlak hale getiriyoruz.</p>
-			</div>
-		</div>
-	</section>
-
-	<section id="uygulama" class="app-download-section">
-		<div class="app-content">
-			<div class="app-icon">
-				<i class="fab fa-android"></i>
-			</div>
-			<h2 class="app-title">Mobil Uygulamamızı İndirin</h2>
-			<p class="app-description">
-				LED kontrolünüzü telefonunuzdan yapın! Bluetooth ile bağlanın,
-				renkler ve animasyonlar arasından seçim yapın.
+	<!-- HERO: işin kendisi arka planda, söz kısa ve net -->
+	<section class="hero">
+		<div class="hero-bg" style="background-image:url('studies-img/2.jpg')" role="img" aria-label="RGB stop tasarımlı Honda Civic"></div>
+		<div class="container hero-icerik">
+			<p class="eyebrow">Bursa · Özel Otomotiv Aydınlatma</p>
+			<h1>Işık Bizim <span class="vurgu">İşimiz</span></h1>
+			<p class="lede">
+				Araca özel far ve stop. Tasarımı biz çizer, elektroniği biz kurar,
+				yazılımı biz yazarız — kontrol de cebinizde.
 			</p>
+			<div class="hero-cta">
+				<a href="galeri.html" class="btn btn-primary">Galeriye Gir</a>
+				<a href="https://wa.me/905386806976?text=Merhaba!%20Arac%C4%B1m%20i%C3%A7in%20far%2Fstop%20projesi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="btn btn-ghost" target="_blank" rel="noopener">WhatsApp'tan Yaz</a>
+			</div>
+		</div>
+		<p class="hero-kunye">HONDA CIVIC — RGB STOP</p>
+	</section>
 
-			<a href="https://github.com/Ciftci-Workshop/Ciftci-Workshop/releases/download/v4.0.2%2B1/app-release.apk" class="download-btn" download>
-				<i class="fab fa-android"></i>
-				<span>Android İçin İndir</span>
-			</a>
-
-			<div class="app-features">
-				<div class="feature-item">
-					<i class="fab fa-bluetooth"></i>
-					<h4>Bluetooth Bağlantı</h4>
-					<p>Kablosuz kontrol</p>
+	<!-- MARKALAR: verisi data/projeler.json'dan gelir, admin panelinden yönetilir -->
+	<section id="markalar">
+		<div class="container">
+			<div class="markalar-bas">
+				<div>
+					<p class="eyebrow">Markalar</p>
+					<h2 class="h2">Aracının Markasını Seç</h2>
+					<p class="lede">Hangi araçlara ne yaptığımızı marka marka gez.</p>
 				</div>
-				<div class="feature-item">
-					<i class="fas fa-palette"></i>
-					<h4>Renk Seçimi</h4>
-					<p>Sınırsız renk seçeneği</p>
-				</div>
-				<div class="feature-item">
-					<i class="fas fa-mobile-alt"></i>
-					<h4>Kolay Kullanım</h4>
-					<p>Basit arayüz</p>
-				</div>
-				<div class="feature-item">
-					<i class="fas fa-magic"></i>
-					<h4>Açılış Animasyonları</h4>
-					<p>Kişiye Özel</p>
-				</div>
-				<div class="feature-item">
-					<i class="fas fa-magic"></i>
-					<h4>Dinamik Sinyal Modları</h4>
-					<p>Her Araca Uygun</p>
-				</div>
-				<div class="feature-item">
-					<i class="fas fa-magic"></i>
-					<h4>Animasyonlar</h4>
-					<p>Özel Efektler</p>
+				<div class="rail-oklar">
+					<button class="rail-ok" data-yon="-1" aria-label="Geri kaydır">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+					</button>
+					<button class="rail-ok" data-yon="1" aria-label="İleri kaydır">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+					</button>
 				</div>
 			</div>
+			<div class="marka-rail" id="marka-rail" aria-label="Marka listesi"></div>
+		</div>
+	</section>
 
-			<div class="app-info">
-				<p><i class="fas fa-info-circle"></i> Sürüm 4.0.2+1 | Boyut: 44+MB | Android 8.0+</p>
+	<section id="hizmetler" class="hizmetler">
+		<div class="container">
+			<p class="eyebrow">Hizmetler</p>
+			<h2 class="h2">Neler Yapıyoruz</h2>
+			<p class="lede">Tek parça değişimden komple dönüşüme, ışıkla ilgili her iş.</p>
+
+			<div class="hizmet-grid">
+				<div class="hizmet-kart fade-in">
+					<h3>Far Modifikasyonu</h3>
+					<p>LED, Xenon ve Matrix teknolojileriyle orijinal farlarınızı modern sistemlere dönüştürüyoruz.</p>
+				</div>
+				<div class="hizmet-kart fade-in">
+					<h3>Stop Tasarımı</h3>
+					<p>Akıcı dinamik sinyal ve kişiye özel animasyonlarla benzersiz stop lambaları üretiyoruz.</p>
+				</div>
+				<div class="hizmet-kart fade-in">
+					<h3>Özel Üretim</h3>
+					<p>Sıfırdan tasarım ve üretim: hayalinizdeki proje neyse, çizip hayata geçiriyoruz.</p>
+				</div>
+				<div class="hizmet-kart fade-in">
+					<h3>Cam İşleme</h3>
+					<p>Stop camlarında şeffaflaştırma işlemi uyguluyoruz.</p>
+				</div>
+				<div class="hizmet-kart fade-in">
+					<h3>Parlatma</h3>
+					<p>Sararmış ve matlaşmış farlara ilk günkü netliğini geri kazandırıyoruz.</p>
+				</div>
+				<div class="hizmet-kart cta-kart fade-in">
+					<p>Aklında farklı bir şey mi var? Fotoğrafı at, konuşalım.</p>
+					<a href="https://wa.me/905386806976?text=Merhaba!%20Akl%C4%B1mda%20bir%20proje%20var%2C%20konu%C5%9Fabilir%20miyiz%3F" class="btn btn-primary btn-kucuk" target="_blank" rel="noopener">WhatsApp'tan Sor</a>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<section id="iletisim" class="contact-section">
-		<div class="contact-wrapper">
-			<div class="contact-info-box">
-				<h2>İletişime Geçin</h2>
-				<div class="contact-detail">
-					<h4>Lokasyon</h4>
-					<p>Yunuseli, Bursa, Türkiye</p>
-				</div>
-				<div class="contact-detail">
-					<h4>Telefon</h4>
-					<p>+90 538 680 6976</p>
-				</div>
-				<div class="contact-detail">
-					<h4>E-posta</h4>
-					<p>ciftciworkshopoffical@gmail.com</p>
-				</div>
-				<div class="contact-detail">
-					<h4>Instagram</h4>
-					<p>@ciftci_workshop</p>
+	<section id="uygulama">
+		<div class="container uygulama-ic">
+			<div class="telefon fade-in" aria-hidden="true">
+				<div class="ekran">
+					<span class="ekran-baslik">CW LED CONTROLLER</span>
+					<div class="led-serit"></div>
+					<div class="led-serit k2"></div>
+					<div class="led-serit k3"></div>
 				</div>
 			</div>
-			<form class="form-box">
-				<div class="input-group">
-					<input type="text" placeholder="Adınız Soyadınız" required>
+			<div>
+				<p class="eyebrow">Ciftci Workshop LED Controller</p>
+				<h2 class="h2">Işıklar Cebinizde</h2>
+				<p class="lede">Yaptığımız sistemleri kendi uygulamamızla siz yönetirsiniz:</p>
+				<ul class="ozellik-listesi">
+					<li><span><strong>Bluetooth bağlantı</strong> — BLE ve Classic desteği, internet gerekmez.</span></li>
+					<li><span><strong>Sınırsız renk</strong> — istediğiniz tonu seçin, anında uygulansın.</span></li>
+					<li><span><strong>Açılış animasyonları</strong> — aracınız sizi kişiye özel karşılasın.</span></li>
+					<li><span><strong>Dinamik sinyal modları</strong> — her araca uygun akıcı sinyaller.</span></li>
+					<li><span><strong>Animasyon kütüphanesi</strong> — onlarca hazır efekt.</span></li>
+					<li><span><strong>Gizlilik</strong> — verileriniz cihazınızda kalır, sunucuya gitmez.</span></li>
+				</ul>
+				<a href="https://github.com/Ciftci-Workshop/Ciftci-Workshop/releases/download/v4.0.2%2B1/app-release.apk" class="btn btn-primary" download>
+					<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.523 15.341c-.551 0-.999-.448-.999-1s.448-.999.999-.999c.551 0 .999.448.999.999 0 .552-.448 1-.999 1m-11.046 0c-.551 0-.999-.448-.999-1s.448-.999.999-.999c.551 0 .999.448.999.999 0 .552-.448 1-.999 1m11.405-6.02l1.997-3.459a.416.416 0 00-.152-.568.416.416 0 00-.568.152l-2.022 3.503C15.59 8.244 13.853 7.851 12 7.851s-3.59.393-5.137 1.099L4.841 5.447a.416.416 0 00-.568-.152.416.416 0 00-.152.568l1.997 3.459C2.689 11.187.343 14.659 0 18.761h24c-.344-4.102-2.689-7.574-6.118-9.44"/></svg>
+					<span>Android İçin İndir</span>
+				</a>
+				<p class="uyg-spec">v4.0.2+1 &middot; 44 MB &middot; Android 8.0+</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="iletisim" class="iletisim">
+		<div class="container iletisim-ic">
+			<div class="fade-in">
+				<p class="eyebrow">İletişim</p>
+				<h2 class="h2">Projeni Konuşalım</h2>
+				<p class="lede">Aracının fotoğrafını gönder, aklındakini anlat. Ne yapılabileceğini, süreci ve fiyatı netçe söyleyelim.</p>
+				<a href="https://wa.me/905386806976?text=Merhaba!%20Arac%C4%B1m%20i%C3%A7in%20far%2Fstop%20projesi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="btn btn-primary" target="_blank" rel="noopener">
+					<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+					<span>WhatsApp'tan Yaz</span>
+				</a>
+			</div>
+			<div class="bilgi-satirlar fade-in">
+				<a class="bilgi" href="tel:+905386806976">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.8 2.1z"/></svg>
+					<span><span class="bilgi-label">Telefon</span><span class="bilgi-value">+90 538 680 69 76</span></span>
+				</a>
+				<a class="bilgi" href="mailto:ciftciworkshopoffical@gmail.com">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+					<span><span class="bilgi-label">E-posta</span><span class="bilgi-value">ciftciworkshopoffical@gmail.com</span></span>
+				</a>
+				<a class="bilgi" href="https://www.instagram.com/ciftci_workshop" target="_blank" rel="noopener">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+					<span><span class="bilgi-label">Instagram</span><span class="bilgi-value">@ciftci_workshop</span></span>
+				</a>
+				<div class="bilgi">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="2.6"/></svg>
+					<span><span class="bilgi-label">Adres</span><span class="bilgi-value">Yunuseli, Bursa / Türkiye</span></span>
 				</div>
-				<div class="input-group">
-					<input type="email" placeholder="E-posta Adresiniz" required>
-				</div>
-				<div class="input-group">
-					<input type="tel" placeholder="Telefon Numaranız" required>
-				</div>
-				<div class="input-group">
-					<textarea placeholder="Mesajınız" required></textarea>
-				</div>
-				<button type="submit" class="send-btn">Gönder</button>
-			</form>
+			</div>
 		</div>
 	</section>
 
 	<footer class="footer">
-		<div class="social-icons">
-			<a href="https://www.instagram.com/ciftci_workshop" target="_blank"><i class="fab fa-instagram"></i></a>
-			<a href="https://wa.me/905386806976"><i class="fab fa-whatsapp"></i></a>
-			<a href="mailto:ciftciworkshopoffical@gmail.com"><i class="fas fa-envelope"></i></a>
+		<img src="img/Ciftci-Workshop-Blackbg.png" alt="Çiftçi Workshop">
+		<div class="sosyal">
+			<a href="https://www.instagram.com/ciftci_workshop" target="_blank" rel="noopener" aria-label="Instagram">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+			</a>
+			<a href="https://wa.me/905386806976" target="_blank" rel="noopener" aria-label="WhatsApp">
+				<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+			</a>
+			<a href="mailto:ciftciworkshopoffical@gmail.com" aria-label="E-posta">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+			</a>
 		</div>
-		<a href="#" onclick="document.getElementById('gizlilikPopup').style.display='flex'">
-
-			Gizlilik Politikası
-		</a>
-
-		<div id="gizlilikPopup" onclick="this.style.display='none'"
-			 style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-		            background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
-			<div onclick="event.stopPropagation()"
-				 style="background:#1a1a2e; border-radius:16px; padding:30px; max-width:600px;
-		              max-height:80vh; overflow-y:auto; color:#e0e0e0; margin:20px;">
-				<h2 style="color:#ff4081;">Gizlilik Politikası</h2>
-				<p class="subtitle">Ciftci Workshop LED Controller &mdash; Son güncelleme: 19 Şubat 2026</p>
-				<h1>Gizlilik Politikası</h1>
-				<h2>1. Genel Bakış</h2>
-				<p>
-					Ciftci Workshop LED Controller uygulaması ("Uygulama"), LED şerit ve aydınlatma
-					sistemlerini Bluetooth üzerinden kontrol etmek amacıyla geliştirilmiştir.
-					Kullanıcılarımızın gizliliğine saygı duyuyor ve kişisel verilerin korunmasını
-					önemsiyoruz.
-				</p>
-
-				<div class="highlight">
-					<strong>Özet:</strong> Bu uygulama kişisel veri toplamaz, saklamaz veya
-					üçüncü taraflarla paylaşmaz.
-				</div>
-
-				<h2>2. Toplanan Veriler</h2>
-				<p>Bu uygulama aşağıdaki bilgileri <strong>yalnızca cihazınızda yerel olarak</strong> kullanır:</p>
-				<ul>
-					<li><strong>Bluetooth Bilgileri:</strong> Yakındaki Bluetooth cihazlarının adları ve adresleri yalnızca bağlantı kurmak amacıyla taranır. Bu bilgiler herhangi bir sunucuya gönderilmez.</li>
-					<li><strong>Uygulama Tercihleri:</strong> Favori animasyonlar ve kullanıcı ayarları yalnızca cihazınızda (SharedPreferences) saklanır.</li>
-					<li><strong>Arka Plan Görseli:</strong> Seçtiğiniz arka plan görseli yalnızca cihazınızda saklanır.</li>
-				</ul>
-
-				<h2>3. Toplanmayan Veriler</h2>
-				<p>Bu uygulama aşağıdaki verileri <strong>toplamaz ve hiçbir şekilde erişmez</strong>:</p>
-				<ul>
-					<li>Ad, soyad, e-posta adresi veya telefon numarası gibi kişisel bilgiler</li>
-					<li>Konum verileri (konum izni yalnızca Android'de Bluetooth taraması için gereklidir ve konum bilgisi kaydedilmez)</li>
-					<li>Kullanım istatistikleri veya analitik veriler</li>
-					<li>Fotoğraf, video veya medya dosyaları</li>
-					<li>Finansal bilgiler</li>
-				</ul>
-
-				<h2>4. Bluetooth Kullanımı</h2>
-				<p>
-					Uygulama, LED kontrolcüsüne bağlanmak için Bluetooth Low Energy (BLE) ve/veya
-					Classic Bluetooth teknolojisini kullanır. Bluetooth bağlantısı yalnızca LED
-					kontrolcüsüne komut göndermek amacıyla kullanılır. Bluetooth üzerinden toplanan
-					hiçbir veri saklanmaz veya üçüncü taraflarla paylaşılmaz.
-				</p>
-
-				<h2>5. Kamera ve Galeri Erişimi</h2>
-				<p>
-					Uygulama, arka plan görseli seçimi için kamera ve galeri erişimi isteyebilir.
-					Bu erişim yalnızca kullanıcının seçtiği görseli arka plan olarak ayarlamak
-					içindir. Fotoğraflarınız herhangi bir sunucuya yüklenmez.
-				</p>
-
-				<h2>6. Üçüncü Taraf Hizmetleri</h2>
-				<p>
-					Bu uygulama üçüncü taraf analitik, reklam veya izleme hizmeti kullanmaz.
-					Uygulama tamamen çevrimdışı çalışır ve internet bağlantısı gerektirmez
-					(Google Fonts hariç, ilk yüklemede font indirmek için internet gerekebilir).
-				</p>
-
-				<h2>7. Veri Güvenliği</h2>
-				<p>
-					Tüm veriler yalnızca cihazınızda saklandığından, verilerinizin güvenliği
-					cihazınızın güvenlik ayarlarına bağlıdır. Uygulamayı sildiğinizde tüm
-					yerel veriler de silinir.
-				</p>
-
-				<h2>8. Çocukların Gizliliği</h2>
-				<p>
-					Bu uygulama çocuklara yönelik değildir ve bilerek 13 yaşın altındaki
-					çocuklardan kişisel bilgi toplamaz.
-				</p>
-
-				<h2>9. Değişiklikler</h2>
-				<p>
-					Bu gizlilik politikası zaman zaman güncellenebilir. Değişiklikler bu
-					sayfada yayınlanacaktır. Uygulamayı kullanmaya devam etmeniz, güncellenmiş
-					politikayı kabul ettiğiniz anlamına gelir.
-				</p>
-
-				<h2>10. İletişim</h2>
-				<p>
-					Gizlilik politikamız hakkında sorularınız varsa bizimle iletişime geçebilirsiniz:
-				</p>
-				<ul>
-					<li><strong>Geliştirici:</strong> Ciftci Workshop</li>
-					<li><strong>E-posta:</strong> <a href="mailto:ciftciworkshop@gmail.com">ciftciworkshop@gmail.com</a></li>
-				</ul>
-
-				<div class="footer">
-					&copy; 2026 Ciftci Workshop. Tüm hakları saklıdır.
-				</div>
-				<button onclick="this.parentElement.parentElement.style.display='none'"
-						style="background:#ff4081; color:white; border:none; padding:10px 24px;
-		                   border-radius:8px; cursor:pointer;">
-					Kapat
-				</button>
-			</div>
-		</div>
-		<p>&copy; 2024 Çiftçi Workshop. Tüm Hakları Saklıdır.</p>
+		<p class="footer-legal">
+			<span>&copy; 2026 Çiftçi Workshop. Tüm hakları saklıdır.</span>
+			<a href="privacy-policy.html">Gizlilik Politikası</a>
+		</p>
 	</footer>
 
 	<script>
-		// Navbar scroll effect
-		window.addEventListener('scroll', () => {
-			const navbar = document.querySelector('.navbar');
-			if (window.scrollY > 100) {
-				navbar.classList.add('scrolled');
-			} else {
-				navbar.classList.remove('scrolled');
-			}
-		});
+	(function () {
+		// --- Veri: önce data/projeler.json denenir; olmazsa gömülü yedek kullanılır.
+		// Böylece dosyayı internetsiz, çift tıklayıp açsan bile site çalışır.
+		const YEDEK_VERI = { projeler: [
+			{ id:"p1", marka:"Fiat",    model:"Marea",              aciklama:"Dörtlü LED far dönüşümü",             hizmet:"Far Modifikasyonu", fotolar:["studies-img/1.jpg"] },
+			{ id:"p2", marka:"Honda",   model:"Civic",              aciklama:"Tam genişlik RGB stop tasarımı",       hizmet:"Stop Tasarımı",     fotolar:["studies-img/2.jpg"] },
+			{ id:"p3", marka:"BMW",     model:"3 Serisi", kasa:"E90",           aciklama:"Angel eyes far uygulaması",            hizmet:"Far Modifikasyonu", fotolar:["studies-img/3.jpg"] },
+			{ id:"p4", marka:"Fiat",    model:"Marea", aciklama:"Atölye önü — özel stoplar iş başında", hizmet:"Stop Tasarımı",     fotolar:["studies-img/4.jpg"] },
+			{ id:"p5", marka:"Renault", model:"Megane",             aciklama:"RGB ışık barı, akıcı sinyal",          hizmet:"Stop Tasarımı",     fotolar:["studies-img/5.jpg"] }
+		], kapaklar: {} };
 
-		// Smooth scroll
-		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-			anchor.addEventListener('click', function (e) {
-				e.preventDefault();
-				const target = document.querySelector(this.getAttribute('href'));
-				if (target) {
-					target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				}
-			});
-		});
+		// Önizleme dosyasında fotoğraflar gömülü gelir; F() yolu ona çevirir.
+		const F = s => (window.IMG_B64 && window.IMG_B64[s]) || s;
 
-		// Fade in animation on scroll
-		const observerOptions = {
-			threshold: 0.1,
-			rootMargin: '0px 0px -100px 0px'
-		};
+		async function veriYukle() {
+			if (window.CW_DATA) return window.CW_DATA;
+			try {
+				const r = await fetch('data/projeler.json', { cache: 'no-store' });
+				if (!r.ok) throw new Error(r.status);
+				return await r.json();
+			} catch (e) { return YEDEK_VERI; }
+		}
 
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					entry.target.classList.add('visible');
-				}
-			});
-		}, observerOptions);
+		// --- Üst bar: kaydırınca koyu zemine oturur
+		const topbar = document.querySelector('.topbar');
+		addEventListener('scroll', () => topbar.classList.toggle('scrolled', scrollY > 40), { passive: true });
 
-		document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-		// Form submission
-		document.querySelector('.form-box').addEventListener('submit', (e) => {
-			e.preventDefault();
-			alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
-		});
-		// Hamburger Menu Toggle
+		// --- Hamburger menü
 		const hamburger = document.querySelector('.hamburger');
-		const navMenu = document.querySelector('.nav-menu');
-
+		const nav = document.querySelector('.topbar nav');
 		hamburger.addEventListener('click', () => {
-			hamburger.classList.toggle('active');
-			navMenu.classList.toggle('active');
+			const acik = nav.classList.toggle('acik');
+			hamburger.classList.toggle('active', acik);
+			hamburger.setAttribute('aria-expanded', acik);
+			document.body.style.overflow = acik ? 'hidden' : '';
+		});
+		nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+			nav.classList.remove('acik'); hamburger.classList.remove('active');
+			document.body.style.overflow = '';
+		}));
+
+		// --- Marka rayı: projelerden markalar türetilir, kart olarak dizilir
+		veriYukle().then(veri => {
+			const KAPAKLAR = veri.kapaklar || {};
+			const ilkFoto = p => (p.fotolar && p.fotolar[0]) || p.foto;
+			// Panelde kapak seçildiyse onu, silinmişse markanın ilk fotoğrafını kullan
+			const kapakSec = (marka, ps) => {
+				const k = KAPAKLAR[marka];
+				if (k && ps.some(p => (p.fotolar || [p.foto]).includes(k))) return k;
+				return ilkFoto(ps[0]);
+			};
+			const rail = document.getElementById('marka-rail');
+			const gruplar = {};
+			veri.projeler.forEach(p => (gruplar[p.marka] ??= []).push(p));
+
+			rail.innerHTML = Object.entries(gruplar).map(([marka, ps]) => `
+				<a class="marka-kart fade-in" href="galeri.html?marka=${encodeURIComponent(marka)}">
+					<img src="${F(kapakSec(marka, ps))}" alt="${marka} projeleri" loading="lazy">
+					<div class="marka-alt">
+						<span class="marka-ad">${marka}</span>
+						<span class="marka-sayi">${ps.length} PROJE</span>
+					</div>
+				</a>`).join('');
+
+			gozlemBaslat(); // yeni eklenen kartlar da animasyona girsin
 		});
 
-		// Menü linklerine tıklayınca menüyü kapat
-		document.querySelectorAll('.nav-menu a').forEach(link => {
-			link.addEventListener('click', () => {
-				hamburger.classList.remove('active');
-				navMenu.classList.remove('active');
+		// Ray okları
+		document.querySelectorAll('.rail-ok').forEach(btn => {
+			btn.addEventListener('click', () => {
+				document.getElementById('marka-rail')
+					.scrollBy({ left: btn.dataset.yon * 300, behavior: 'smooth' });
 			});
 		});
+
+		// --- Kaydırdıkça görünme (hareket azaltma tercihine saygılı)
+		const azHareket = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		function gozlemBaslat() {
+			const hedefler = document.querySelectorAll('.fade-in:not(.visible)');
+			if (azHareket || !('IntersectionObserver' in window)) {
+				hedefler.forEach(el => el.classList.add('visible')); return;
+			}
+			const obs = new IntersectionObserver(girisler => {
+				girisler.forEach(g => {
+					if (g.isIntersecting) { g.target.classList.add('visible'); obs.unobserve(g.target); }
+				});
+			}, { threshold: .12, rootMargin: '0px 0px -50px 0px' });
+			hedefler.forEach(el => obs.observe(el));
+		}
+		gozlemBaslat();
+	})();
 	</script>
+
+<!-- PREVIEW:END -->
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-

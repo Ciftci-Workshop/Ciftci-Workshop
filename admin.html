@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yönetim Paneli — Çiftçi Workshop</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0B0E">
+<link rel="icon" type="image/png" href="img/Ciftci-Workshop-Blackbg.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Panel kendi stilini taşır: siteden bağımsız, tek dosya çalışır. */
+:root{--gece:#0A0B0E;--karbon:#14161B;--cizgi:#262932;--beyaz:#F4F5F7;--gri:#9BA1AB;--gri-koyu:#6B7078;--kirmizi:#E8352A;--amber:#FFB000;--f-govde:'Barlow','Segoe UI',sans-serif;--f-mono:'IBM Plex Mono','Consolas',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-govde);background:var(--gece);color:var(--gri);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+.admin-govde{max-width:860px;margin:0 auto;padding:36px 18px 110px}
+.admin-logo{height:30px;margin-bottom:8px}
+.sayfa-baslik{color:var(--beyaz);font-size:22px;font-weight:600;margin-bottom:4px}
+.geri{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu)}
+.geri:hover{color:var(--amber)}
+.panel-kart{background:var(--karbon);border:1px solid var(--cizgi);border-radius:14px;padding:24px;margin-top:18px}
+.panel-kart h2{color:var(--beyaz);font-size:16px;font-weight:600;margin-bottom:14px}
+.panel-kart h2 .mini{font-family:var(--f-mono);font-size:10.5px;color:var(--gri-koyu);letter-spacing:.12em;margin-left:8px;font-weight:400}
+.form-satir{display:grid;gap:6px;margin-bottom:14px}
+.form-satir label{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gri-koyu)}
+.girdi{width:100%;background:var(--gece);color:var(--beyaz);border:1px solid var(--cizgi);border-radius:8px;padding:12px 14px;font:15px var(--f-govde);transition:border-color .25s}
+.girdi:focus{outline:none;border-color:var(--amber)}
+textarea.girdi{resize:vertical;min-height:64px}
+.form-ikili{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.form-ikili{grid-template-columns:1fr}}
+.ipucu{font-size:13px;color:var(--gri-koyu);margin-top:10px}
+.ipucu a{color:var(--amber);text-decoration:underline;text-underline-offset:2px}
+details{margin-top:12px}
+summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:13px 24px;border-radius:7px;border:1px solid transparent;transition:.25s}
+.btn-primary{background:var(--kirmizi);color:#fff}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;filter:none}
+.btn-cizgili{border-color:var(--cizgi);color:var(--gri);background:none}
+.btn-cizgili:hover{color:var(--beyaz);border-color:var(--gri-koyu)}
+.btn-tehlike{border-color:rgba(232,53,42,.5);color:var(--kirmizi);background:none}
+.btn-tehlike:hover{background:rgba(232,53,42,.12)}
+.btn-kucuk{padding:9px 14px;font-size:11px}
+.rozet{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;padding:5px 12px;border-radius:999px;border:1px solid var(--cizgi)}
+.rozet.demo{color:var(--amber);border-color:rgba(255,176,0,.4)}
+.rozet.canli{color:#2ECC71;border-color:rgba(46,204,113,.4)}
+.admin-ust{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-ust .sag{display:flex;gap:8px;flex-wrap:wrap}
+.proje-satir{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--cizgi);border-radius:10px;margin-bottom:10px;background:var(--gece)}
+.proje-satir img{width:58px;height:58px;object-fit:cover;border-radius:8px;flex-shrink:0;background:#000}
+.proje-satir .bilgiler{flex:1;min-width:120px}
+.proje-satir .baslik{color:var(--beyaz);font-weight:600;font-size:15px}
+.proje-satir .alt{font-size:12.5px;color:var(--gri-koyu)}
+.proje-satir .islemler{display:flex;gap:8px}
+@media(max-width:560px){.proje-satir{flex-wrap:wrap}}
+.durum{font-family:var(--f-mono);font-size:12.5px;padding:12px 15px;border-radius:8px;margin-top:14px;display:none;word-break:break-word}
+.durum.goster{display:block}
+.durum.iyi{background:rgba(46,204,113,.1);color:#2ECC71;border:1px solid rgba(46,204,113,.3)}
+.durum.kotu{background:rgba(232,53,42,.1);color:var(--kirmizi);border:1px solid rgba(232,53,42,.3)}
+.durum.bekle{background:rgba(255,176,0,.08);color:var(--amber);border:1px solid rgba(255,176,0,.3)}
+.gizli{display:none!important}
+/* Çoklu fotoğraf şeridi */
+.foto-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.foto-strip .fs{position:relative}
+.fs img{width:74px;height:74px;object-fit:cover;border-radius:8px;border:1px solid var(--cizgi)}
+.fs button{position:absolute;top:-7px;right:-7px;width:21px;height:21px;border-radius:50%;background:var(--kirmizi);color:#fff;border:0;font-size:12px;line-height:1;display:grid;place-items:center}
+.fs .kapak-isaret{position:absolute;left:3px;bottom:3px;font:600 8px var(--f-mono);letter-spacing:.08em;background:rgba(10,11,14,.8);color:var(--amber);padding:2px 5px;border-radius:3px}
+/* Marka kapak seçici */
+.kapak-satir{padding:14px 0;border-bottom:1px solid var(--cizgi)}
+.kapak-satir:last-child{border-bottom:0;padding-bottom:0}
+.kapak-ad{color:var(--beyaz);font-weight:600;font-size:14px;margin-bottom:9px}
+.kapak-secimler{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
+.kapak-secimler img{width:66px;height:66px;object-fit:cover;border-radius:8px;border:2px solid var(--cizgi);cursor:pointer;flex:0 0 auto;transition:border-color .2s}
+.kapak-secimler img.secili{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+</style>
+</head>
+<body>
+<div class="admin-govde">
+
+	<img class="admin-logo" src="img/Ciftci-Workshop-Blackbg.png" alt="Çiftçi Workshop" onerror="this.style.display='none'">
+	<p class="sayfa-baslik">Yönetim Paneli</p>
+	<a class="geri" href="index.html">&larr; Siteye dön</a>
+
+	<!-- ============ GİRİŞ ============ -->
+	<div class="panel-kart" id="giris-kart">
+		<h2>Bağlan <span class="mini">GITHUB TOKEN</span></h2>
+		<div class="form-satir">
+			<label for="token">Kişisel erişim token'ı</label>
+			<input class="girdi" type="password" id="token" placeholder="github_pat_... veya ghp_..." autocomplete="off">
+		</div>
+		<button class="btn btn-primary" id="btn-baglan">Bağlan</button>
+		<button class="btn btn-cizgili" id="btn-demo">Demo Modda Gez</button>
+		<p class="ipucu">
+			Token yalnızca <strong>bu tarayıcıda</strong> saklanır, hiçbir sunucuya gönderilmez —
+			panel doğrudan GitHub ile konuşur.
+		</p>
+		<details>
+			<summary>Token nasıl alınır?</summary>
+			<p class="ipucu">
+				<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>
+				adresinden "Fine-grained token" oluştur: Only select repositories &rarr;
+				<strong>Ciftci-Workshop</strong> &rarr; Repository permissions &rarr;
+				<strong>Contents: Read and write</strong>. Oluşan token'ı buraya yapıştır.
+			</p>
+		</details>
+		<details>
+			<summary>Gelişmiş ayarlar (repo)</summary>
+			<div class="form-ikili" style="margin-top:10px">
+				<div class="form-satir"><label>Kullanıcı / Organizasyon</label><input class="girdi" id="ayar-owner"></div>
+				<div class="form-satir"><label>Repo</label><input class="girdi" id="ayar-repo"></div>
+				<div class="form-satir"><label>Branch</label><input class="girdi" id="ayar-branch"></div>
+				<div class="form-satir"><label>Veri dosyası</label><input class="girdi" id="ayar-data"></div>
+			</div>
+		</details>
+		<div class="durum" id="giris-durum"></div>
+	</div>
+
+	<!-- ============ PANEL ============ -->
+	<div id="panel" class="gizli">
+
+		<div class="panel-kart admin-ust">
+			<span class="rozet" id="mod-rozet"></span>
+			<div class="sag">
+				<button class="btn btn-cizgili btn-kucuk" id="btn-json">JSON İndir</button>
+				<button class="btn btn-cizgili btn-kucuk" id="btn-cikis">Çıkış</button>
+			</div>
+		</div>
+
+		<!-- Proje ekleme / düzenleme -->
+		<div class="panel-kart">
+			<h2 id="form-baslik">Yeni Proje</h2>
+
+			<div class="form-ikili">
+				<div class="form-satir">
+					<label for="f-marka">Marka</label>
+					<select class="girdi" id="f-marka"></select>
+				</div>
+				<div class="form-satir gizli" id="yeni-marka-kutu">
+					<label for="f-yeni-marka">Yeni marka adı</label>
+					<input class="girdi" id="f-yeni-marka" placeholder="örn: Volkswagen">
+				</div>
+			</div>
+
+			<div class="form-ikili">
+				<div class="form-satir">
+					<label for="f-model">Model</label>
+					<select class="girdi" id="f-model"></select>
+				</div>
+				<div class="form-satir gizli" id="yeni-model-kutu">
+					<label for="f-yeni-model">Yeni model adı</label>
+					<input class="girdi" id="f-yeni-model" placeholder="örn: Golf 7">
+				</div>
+			</div>
+
+			<div class="form-ikili">
+				<div class="form-satir">
+					<label for="f-kasa">Kasa kodu <span style="text-transform:none;letter-spacing:0">(opsiyonel — E90, MK7, EK gibi)</span></label>
+					<input class="girdi" id="f-kasa" placeholder="örn: E90">
+				</div>
+				<div class="form-satir">
+					<label for="f-hizmet">Hizmet</label>
+					<select class="girdi" id="f-hizmet">
+						<option>Far Modifikasyonu</option>
+						<option>Far Yenileme (Parlatma)</option>
+						<option>Stop Tasarımı</option>
+						<option>Cam İşleme</option>
+						<option>Özel Üretim</option>
+						<option>Diğer</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-satir">
+				<label for="f-foto">Fotoğraflar <span style="text-transform:none;letter-spacing:0">(birden çok seçebilirsin, ilki kapak olur)</span></label>
+				<input class="girdi" type="file" id="f-foto" accept="image/*" multiple>
+			</div>
+			<div class="foto-strip" id="foto-strip"></div>
+
+			<div class="form-satir" style="margin-top:14px">
+				<label for="f-aciklama">Kısa açıklama</label>
+				<textarea class="girdi" id="f-aciklama" placeholder="örn: Dinamik sinyalli LED stop dönüşümü"></textarea>
+			</div>
+
+			<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+				<button class="btn btn-primary" id="btn-ekle">Projeyi Ekle</button>
+				<button class="btn btn-cizgili gizli" id="btn-vazgec">Vazgeç</button>
+			</div>
+			<div class="durum" id="form-durum"></div>
+		</div>
+
+		<!-- Proje listesi -->
+		<div class="panel-kart">
+			<h2>Projeler <span class="mini" id="liste-sayi"></span></h2>
+			<div id="proje-listesi"></div>
+		</div>
+
+		<!-- Marka kapak fotoğrafları -->
+		<div class="panel-kart">
+			<h2>Marka Kapakları <span class="mini">ANA SAYFADAKİ KARTLAR</span></h2>
+			<p class="ipucu" style="margin:0 0 6px">Her markanın ana sayfa kartında hangi fotoğrafın görüneceğini seç.</p>
+			<div id="kapak-listesi"></div>
+		</div>
+
+		<!-- Yayınlama -->
+		<div class="panel-kart" id="yayin-kart">
+			<h2>Yayınla</h2>
+			<p class="ipucu" id="yayin-aciklama"></p>
+			<button class="btn btn-primary" id="btn-kaydet" style="margin-top:12px">GitHub'a Kaydet &amp; Yayınla</button>
+			<div class="durum" id="kayit-durum"></div>
+		</div>
+
+	</div>
+</div>
+
+<script>
+(function () {
+	/* =====================================================
+	   AYARLAR & DURUM
+	   Panelin tek gerçeği `veri` nesnesi:
+	   { kapaklar: {Marka: fotoYolu}, projeler: [...] }
+	   Tüm ekleme/silme önce burada olur; "Yayınla" GitHub'a yazar.
+	   ===================================================== */
+	const VARSAYILAN_AYAR = {
+		owner: 'Ciftci-Workshop',
+		repo: 'Ciftci-Workshop',
+		branch: 'main',
+		dataPath: 'data/projeler.json',
+		imgDir: 'studies-img'
+	};
+
+	const YEDEK_VERI = { kapaklar: {}, projeler: [
+		{ id:"p1", marka:"Fiat",    model:"Marea",    aciklama:"Dörtlü LED far dönüşümü",             hizmet:"Far Modifikasyonu", fotolar:["studies-img/1.jpg"] },
+		{ id:"p2", marka:"Honda",   model:"Civic",    aciklama:"Tam genişlik RGB stop tasarımı",       hizmet:"Stop Tasarımı",     fotolar:["studies-img/2.jpg"] },
+		{ id:"p3", marka:"BMW",     model:"3 Serisi", kasa:"E90", aciklama:"Angel eyes far uygulaması", hizmet:"Far Modifikasyonu", fotolar:["studies-img/3.jpg"] },
+		{ id:"p4", marka:"Fiat",    model:"Marea",    aciklama:"Atölye önü — özel stoplar iş başında", hizmet:"Stop Tasarımı",     fotolar:["studies-img/4.jpg"] },
+		{ id:"p5", marka:"Renault", model:"Megane",   aciklama:"RGB ışık barı, akıcı sinyal",          hizmet:"Stop Tasarımı",     fotolar:["studies-img/5.jpg"] }
+	]};
+
+	let ayar = { ...VARSAYILAN_AYAR, ...JSON.parse(localStorage.getItem('cw_ayar') || '{}') };
+	let token = localStorage.getItem('cw_token') || '';
+	let mod = null;            // 'canli' | 'demo'
+	let veri = null;
+	let jsonSha = null;        // GitHub'da dosyayı güncellemek için gereken parmak izi
+	let duzenlenenId = null;
+	let formFotolar = [];      // formdaki fotoğraflar (yol veya dataURL karışık olabilir)
+
+	const $ = id => document.getElementById(id);
+	const F = s => (window.IMG_B64 && window.IMG_B64[s]) || s; // önizleme dosyası için
+	const fotolarOf = p => (p.fotolar && p.fotolar.length ? p.fotolar : (p.foto ? [p.foto] : []));
+	const gorselSrc = s => s.startsWith('data:') ? s : F(s);
+
+	/* ---------- Küçük yardımcılar ---------- */
+	const b64Yaz = s => btoa(unescape(encodeURIComponent(s)));       // UTF-8 metni base64'e
+	const b64Oku = s => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
+
+	function slug(s) { // "Honda Civic" -> "honda-civic" (dosya adı için)
+		const tr = { 'ç':'c','Ç':'c','ğ':'g','Ğ':'g','ı':'i','İ':'i','ö':'o','Ö':'o','ş':'s','Ş':'s','ü':'u','Ü':'u' };
+		return s.replace(/[çÇğĞıİöÖşŞüÜ]/g, c => tr[c])
+			.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+	}
+
+	function durum(id, mesaj, tur) {
+		const el = $(id);
+		el.textContent = mesaj;
+		el.className = 'durum goster ' + tur;
+		if (tur === 'iyi') setTimeout(() => el.classList.remove('goster'), 6000);
+	}
+
+	/* ---------- GitHub API ---------- */
+	async function api(yol, secenek = {}) {
+		const r = await fetch('https://api.github.com' + yol, {
+			...secenek,
+			headers: {
+				'Authorization': 'Bearer ' + token,
+				'Accept': 'application/vnd.github+json',
+				...(secenek.headers || {})
+			}
+		});
+		if (!r.ok) {
+			const detay = await r.json().catch(() => ({}));
+			throw new Error(r.status + ' — ' + (detay.message || 'GitHub hatası'));
+		}
+		return r.json();
+	}
+
+	const dosyaYolu = p => `/repos/${ayar.owner}/${ayar.repo}/contents/${p}`;
+
+	/* =====================================================
+	   GİRİŞ
+	   ===================================================== */
+	$('ayar-owner').value = ayar.owner;
+	$('ayar-repo').value = ayar.repo;
+	$('ayar-branch').value = ayar.branch;
+	$('ayar-data').value = ayar.dataPath;
+	if (token) $('token').value = token;
+
+	function ayarOku() {
+		ayar = {
+			...ayar,
+			owner: $('ayar-owner').value.trim() || VARSAYILAN_AYAR.owner,
+			repo: $('ayar-repo').value.trim() || VARSAYILAN_AYAR.repo,
+			branch: $('ayar-branch').value.trim() || VARSAYILAN_AYAR.branch,
+			dataPath: $('ayar-data').value.trim() || VARSAYILAN_AYAR.dataPath
+		};
+		localStorage.setItem('cw_ayar', JSON.stringify(ayar));
+	}
+
+	function veriDuzelt(v) { // eski şemadan gelen veriyi de kabul et
+		v.kapaklar = v.kapaklar || {};
+		v.projeler.forEach(p => { p.fotolar = fotolarOf(p); delete p.foto; });
+		return v;
+	}
+
+	$('btn-baglan').addEventListener('click', async () => {
+		token = $('token').value.trim();
+		if (!token) return durum('giris-durum', 'Token boş olamaz.', 'kotu');
+		ayarOku();
+		durum('giris-durum', 'GitHub\'a bağlanılıyor...', 'bekle');
+		try {
+			const dosya = await api(dosyaYolu(ayar.dataPath) + '?ref=' + ayar.branch);
+			veri = veriDuzelt(JSON.parse(b64Oku(dosya.content)));
+			jsonSha = dosya.sha;
+			localStorage.setItem('cw_token', token);
+			mod = 'canli';
+			panelAc();
+		} catch (e) {
+			durum('giris-durum', 'Bağlanamadı: ' + e.message, 'kotu');
+		}
+	});
+
+	$('btn-demo').addEventListener('click', async () => {
+		mod = 'demo';
+		if (window.CW_DATA) {
+			veri = veriDuzelt(structuredClone(window.CW_DATA)); // önizleme verisi
+		} else {
+			try {
+				const r = await fetch('data/projeler.json', { cache: 'no-store' });
+				veri = veriDuzelt(r.ok ? await r.json() : structuredClone(YEDEK_VERI));
+			} catch (e) { veri = veriDuzelt(structuredClone(YEDEK_VERI)); }
+		}
+		panelAc();
+	});
+
+	/* =====================================================
+	   PANEL
+	   ===================================================== */
+	function panelAc() {
+		$('giris-kart').classList.add('gizli');
+		$('panel').classList.remove('gizli');
+
+		const rozet = $('mod-rozet');
+		if (mod === 'canli') {
+			rozet.textContent = 'CANLI — ' + ayar.owner + '/' + ayar.repo;
+			rozet.className = 'rozet canli';
+			$('yayin-aciklama').textContent =
+				'Kaydet dediğinde değişiklikler repoya işlenir; GitHub Actions siteyi 1-2 dakika içinde günceller.';
+		} else {
+			rozet.textContent = 'DEMO — değişiklikler kaydedilmez';
+			rozet.className = 'rozet demo';
+			$('yayin-aciklama').textContent =
+				'Demo moddasın: her şeyi deneyebilirsin ama GitHub\'a yazılmaz. Gerçek kayıt için token ile bağlan.';
+			$('btn-kaydet').disabled = true;
+		}
+		markaSecenekleri();
+		modelSecenekleri();
+		listeCiz();
+	}
+
+	const markalar = () => [...new Set(veri.projeler.map(p => p.marka))];
+	const markaModelleri = m => [...new Set(veri.projeler.filter(p => p.marka === m).map(p => p.model))];
+
+	function markaSecenekleri(secili) {
+		$('f-marka').innerHTML =
+			markalar().map(m => `<option>${m}</option>`).join('') +
+			`<option value="__yeni">+ Yeni marka ekle</option>`;
+		if (secili) $('f-marka').value = secili;
+		$('yeni-marka-kutu').classList.toggle('gizli', $('f-marka').value !== '__yeni');
+	}
+
+	// Model listesi seçili markaya bağlı: marka altında modeller
+	function modelSecenekleri(secili) {
+		const marka = $('f-marka').value;
+		const modeller = marka === '__yeni' ? [] : markaModelleri(marka);
+		$('f-model').innerHTML =
+			modeller.map(m => `<option>${m}</option>`).join('') +
+			`<option value="__yeni">+ Yeni model ekle</option>`;
+		if (secili && modeller.includes(secili)) $('f-model').value = secili;
+		if (!modeller.length) $('f-model').value = '__yeni';
+		$('yeni-model-kutu').classList.toggle('gizli', $('f-model').value !== '__yeni');
+	}
+
+	$('f-marka').addEventListener('change', () => {
+		$('yeni-marka-kutu').classList.toggle('gizli', $('f-marka').value !== '__yeni');
+		modelSecenekleri();
+	});
+	$('f-model').addEventListener('change', () => {
+		$('yeni-model-kutu').classList.toggle('gizli', $('f-model').value !== '__yeni');
+	});
+
+	/* ---------- Fotoğraflar: seçilince tarayıcıda küçült ----------
+	   Telefon fotoğrafları 5-8 MB olur; canvas ile 1400px'e indirip
+	   %82 kalitede JPEG'e çeviriyoruz. Birden çok seçilebilir. */
+	function kucult(dosya) {
+		return new Promise(coz => {
+			const img = new Image();
+			img.onload = () => {
+				const enBuyuk = 1400;
+				const oran = Math.min(1, enBuyuk / Math.max(img.width, img.height));
+				const tuval = document.createElement('canvas');
+				tuval.width = Math.round(img.width * oran);
+				tuval.height = Math.round(img.height * oran);
+				tuval.getContext('2d').drawImage(img, 0, 0, tuval.width, tuval.height);
+				URL.revokeObjectURL(img.src);
+				coz(tuval.toDataURL('image/jpeg', 0.82));
+			};
+			img.src = URL.createObjectURL(dosya);
+		});
+	}
+
+	$('f-foto').addEventListener('change', async () => {
+		for (const dosya of $('f-foto').files) {
+			formFotolar.push(await kucult(dosya));
+			fotoStripCiz();
+		}
+		$('f-foto').value = ''; // aynı dosya tekrar seçilebilsin
+	});
+
+	function fotoStripCiz() {
+		$('foto-strip').innerHTML = formFotolar.map((s, i) => `
+			<span class="fs">
+				<img src="${gorselSrc(s)}" alt="">
+				${i === 0 ? '<span class="kapak-isaret">KAPAK</span>' : ''}
+				<button type="button" data-cikar="${i}" aria-label="Fotoğrafı çıkar">&times;</button>
+			</span>`).join('');
+		$('foto-strip').querySelectorAll('[data-cikar]').forEach(b =>
+			b.addEventListener('click', () => {
+				formFotolar.splice(+b.dataset.cikar, 1);
+				fotoStripCiz();
+			}));
+	}
+
+	/* ---------- Ekle / Güncelle ---------- */
+	$('btn-ekle').addEventListener('click', () => {
+		let marka = $('f-marka').value;
+		if (marka === '__yeni') marka = $('f-yeni-marka').value.trim();
+		let model = $('f-model').value;
+		if (model === '__yeni') model = $('f-yeni-model').value.trim();
+		const kasa = $('f-kasa').value.trim();
+		const aciklama = $('f-aciklama').value.trim();
+
+		if (!marka || !model) return durum('form-durum', 'Marka ve model zorunlu.', 'kotu');
+		if (!formFotolar.length) return durum('form-durum', 'En az bir fotoğraf seç.', 'kotu');
+
+		if (duzenlenenId) {
+			const p = veri.projeler.find(x => x.id === duzenlenenId);
+			Object.assign(p, { marka, model, kasa, aciklama, hizmet: $('f-hizmet').value, fotolar: [...formFotolar] });
+			durum('form-durum', 'Proje güncellendi. Yayınlamayı unutma.', 'iyi');
+		} else {
+			veri.projeler.unshift({
+				id: 'p' + Date.now(),
+				marka, model, kasa, aciklama,
+				hizmet: $('f-hizmet').value,
+				fotolar: [...formFotolar] // yayınlanınca gerçek dosya yollarına dönüşür
+			});
+			durum('form-durum', 'Proje eklendi. Yayınlamayı unutma.', 'iyi');
+		}
+		formuTemizle();
+		markaSecenekleri();
+		modelSecenekleri();
+		listeCiz();
+	});
+
+	$('btn-vazgec').addEventListener('click', formuTemizle);
+
+	function formuTemizle() {
+		duzenlenenId = null;
+		formFotolar = [];
+		fotoStripCiz();
+		$('f-model').value = '';
+		$('f-kasa').value = '';
+		$('f-aciklama').value = '';
+		$('f-yeni-marka').value = '';
+		$('f-yeni-model').value = '';
+		$('f-foto').value = '';
+		$('yeni-marka-kutu').classList.add('gizli');
+		$('yeni-model-kutu').classList.add('gizli');
+		$('form-baslik').textContent = 'Yeni Proje';
+		$('btn-ekle').textContent = 'Projeyi Ekle';
+		$('btn-vazgec').classList.add('gizli');
+		modelSecenekleri();
+	}
+
+	/* ---------- Liste ---------- */
+	function listeCiz() {
+		$('liste-sayi').textContent = veri.projeler.length + ' KAYIT';
+		$('proje-listesi').innerHTML = veri.projeler.map(p => {
+			const fs = fotolarOf(p);
+			return `
+			<div class="proje-satir">
+				<img src="${gorselSrc(fs[0])}" alt="">
+				<div class="bilgiler">
+					<div class="baslik">${p.marka} ${p.model}${p.kasa ? ' · ' + p.kasa : ''}</div>
+					<div class="alt">${p.hizmet}${fs.length > 1 ? ' · ' + fs.length + ' foto' : ''}${p.aciklama ? ' · ' + p.aciklama : ''}</div>
+				</div>
+				<div class="islemler">
+					<button class="btn btn-cizgili btn-kucuk" data-duzenle="${p.id}">Düzenle</button>
+					<button class="btn btn-tehlike btn-kucuk" data-sil="${p.id}">Sil</button>
+				</div>
+			</div>`; }).join('');
+
+		document.querySelectorAll('[data-sil]').forEach(b => b.addEventListener('click', () => {
+			const p = veri.projeler.find(x => x.id === b.dataset.sil);
+			if (!confirm(`"${p.marka} ${p.model}" silinsin mi?`)) return;
+			veri.projeler = veri.projeler.filter(x => x.id !== b.dataset.sil);
+			markaSecenekleri();
+			modelSecenekleri();
+			listeCiz();
+		}));
+
+		document.querySelectorAll('[data-duzenle]').forEach(b => b.addEventListener('click', () => {
+			const p = veri.projeler.find(x => x.id === b.dataset.duzenle);
+			duzenlenenId = p.id;
+			markaSecenekleri(p.marka);
+			modelSecenekleri(p.model);
+			if (!markaModelleri(p.marka).includes(p.model)) {
+				$('f-model').value = '__yeni';
+				$('f-yeni-model').value = p.model;
+				$('yeni-model-kutu').classList.remove('gizli');
+			}
+			$('f-kasa').value = p.kasa || '';
+			$('f-aciklama').value = p.aciklama || '';
+			$('f-hizmet').value = p.hizmet;
+			formFotolar = [...fotolarOf(p)];
+			fotoStripCiz();
+			$('form-baslik').textContent = 'Projeyi Düzenle: ' + p.marka + ' ' + p.model;
+			$('btn-ekle').textContent = 'Güncelle';
+			$('btn-vazgec').classList.remove('gizli');
+			scrollTo({ top: 0, behavior: 'smooth' });
+		}));
+
+		kapakCiz();
+	}
+
+	/* ---------- Marka kapak seçici ----------
+	   Ana sayfadaki marka kartında görünen fotoğrafı belirler.
+	   Seçim yoksa markanın ilk projesinin ilk fotoğrafı kullanılır. */
+	function kapakCiz() {
+		const kutu = $('kapak-listesi');
+		kutu.innerHTML = markalar().map(m => {
+			const fotolar = veri.projeler
+				.filter(p => p.marka === m)
+				.flatMap(p => fotolarOf(p));
+			const secili = veri.kapaklar[m] && fotolar.includes(veri.kapaklar[m])
+				? veri.kapaklar[m] : fotolar[0];
+			return `
+			<div class="kapak-satir">
+				<div class="kapak-ad">${m}</div>
+				<div class="kapak-secimler">
+					${fotolar.map(f => `<img src="${gorselSrc(f)}" data-marka="${m}" data-foto="${f.startsWith('data:') ? '' : f}" data-ix="${fotolar.indexOf(f)}" class="${f === secili ? 'secili' : ''}" alt="">`).join('')}
+				</div>
+			</div>`; }).join('');
+
+		kutu.querySelectorAll('img').forEach(img => {
+			img.addEventListener('click', () => {
+				const m = img.dataset.marka;
+				// dataURL'ler data- özniteliğine sığmaz; diziden index ile bul
+				const fotolar = veri.projeler.filter(p => p.marka === m).flatMap(p => fotolarOf(p));
+				veri.kapaklar[m] = fotolar[+img.dataset.ix];
+				kapakCiz();
+			});
+		});
+	}
+
+	/* ---------- Yayınla: fotoğrafları + JSON'u GitHub'a yaz ---------- */
+	$('btn-kaydet').addEventListener('click', async () => {
+		if (mod !== 'canli') return;
+		const btn = $('btn-kaydet');
+		btn.disabled = true;
+		try {
+			// 1) Henüz yüklenmemiş (data: ile duran) fotoğrafları tek tek yükle
+			const isler = [];
+			veri.projeler.forEach(p => p.fotolar.forEach((f, i) => {
+				if (f.startsWith('data:')) isler.push({ p, i });
+			}));
+			let no = 0;
+			for (const is of isler) {
+				no++;
+				durum('kayit-durum', `Fotoğraf yükleniyor ${no}/${isler.length}...`, 'bekle');
+				const eski = is.p.fotolar[is.i];
+				const ad = `${ayar.imgDir}/${slug(is.p.marka + '-' + is.p.model)}-${Date.now()}-${no}.jpg`;
+				await api(dosyaYolu(ad), {
+					method: 'PUT',
+					body: JSON.stringify({
+						message: 'Foto: ' + is.p.marka + ' ' + is.p.model + ' (admin paneli)',
+						content: eski.split(',')[1], // dataURL'in base64 kısmı
+						branch: ayar.branch
+					})
+				});
+				is.p.fotolar[is.i] = ad;
+				// Kapak olarak bu fotoğraf seçildiyse yolu güncelle
+				for (const mk of Object.keys(veri.kapaklar)) {
+					if (veri.kapaklar[mk] === eski) veri.kapaklar[mk] = ad;
+				}
+			}
+
+			// 2) JSON'un güncel sha'sını al (arada değişmiş olabilir), sonra yaz
+			durum('kayit-durum', 'Proje listesi kaydediliyor...', 'bekle');
+			try {
+				const guncel = await api(dosyaYolu(ayar.dataPath) + '?ref=' + ayar.branch);
+				jsonSha = guncel.sha;
+			} catch (e) { jsonSha = null; } // dosya hiç yoksa ilk kez oluşturulur
+
+			await api(dosyaYolu(ayar.dataPath), {
+				method: 'PUT',
+				body: JSON.stringify({
+					message: 'Projeler güncellendi (admin paneli)',
+					content: b64Yaz(JSON.stringify(veri, null, 2)),
+					branch: ayar.branch,
+					...(jsonSha ? { sha: jsonSha } : {})
+				})
+			});
+
+			listeCiz();
+			durum('kayit-durum', 'Yayınlandı! Site 1-2 dakika içinde güncellenir.', 'iyi');
+		} catch (e) {
+			durum('kayit-durum', 'Hata: ' + e.message, 'kotu');
+		} finally {
+			btn.disabled = false;
+		}
+	});
+
+	/* ---------- JSON indir (yedek yol / manuel yükleme) ---------- */
+	$('btn-json').addEventListener('click', () => {
+		const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = 'projeler.json';
+		a.click();
+		URL.revokeObjectURL(a.href);
+	});
+
+	/* ---------- Çıkış ---------- */
+	$('btn-cikis').addEventListener('click', () => {
+		if (mod === 'canli' && !confirm('Token bu tarayıcıdan silinsin mi?')) return;
+		localStorage.removeItem('cw_token');
+		location.reload();
+	});
+
+	// Önizleme dosyasında panel doğrudan demo modda açılır
+	if (window.CW_DEMO_BASLAT) $('btn-demo').click();
+})();
+</script>
+</body>
+</html>
