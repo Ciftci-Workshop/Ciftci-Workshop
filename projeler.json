@@ -1,5 +1,7 @@
 {
-  "kapaklar": {},
+  "kapaklar": {
+    "Fiat": "studies-img/4.jpg"
+  },
   "projeler": [
     {
       "id": "p1",
