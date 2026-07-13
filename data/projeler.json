@@ -5,17 +5,6 @@
   },
   "projeler": [
     {
-      "id": "p1783968535090",
-      "marka": "BMW",
-      "model": "4 Serisi",
-      "kasa": "f82",
-      "aciklama": "",
-      "hizmet": "Far Modifikasyonu",
-      "fotolar": [
-        "studies-img/bmw-4-serisi-1783968540276-1.jpg"
-      ]
-    },
-    {
       "id": "p1",
       "marka": "Fiat",
       "model": "Marea",
