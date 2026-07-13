@@ -5,6 +5,26 @@
   },
   "projeler": [
     {
+      "id": "p1783972657297",
+      "marka": "Opel",
+      "model": "Astra",
+      "kasa": "G kasa",
+      "aciklama": "Açılış animasyonlu dinamik kayar sinyalli Rgb pixel animasyonlu far tasarımı",
+      "hizmet": "Far Modifikasyonu",
+      "fotolar": [
+        "studies-img/opel-astra-1783972666670-1.jpg",
+        "studies-img/opel-astra-1783972668499-2.jpg",
+        "studies-img/opel-astra-1783972669822-3.jpg",
+        "studies-img/opel-astra-1783972671259-4.jpg",
+        "studies-img/opel-astra-1783972672980-5.jpg",
+        "studies-img/opel-astra-1783972674435-6.jpg",
+        "studies-img/opel-astra-1783972676071-7.jpg",
+        "studies-img/opel-astra-1783972677712-8.jpg",
+        "studies-img/opel-astra-1783972679350-9.jpg",
+        "studies-img/opel-astra-1783972681089-10.jpg"
+      ]
+    },
+    {
       "id": "p1783972304140",
       "marka": "Renault",
       "model": "Megane",
