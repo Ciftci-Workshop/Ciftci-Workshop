@@ -1,23 +1,30 @@
 {
   "kapaklar": {
     "Fiat": "studies-img/4.jpg",
-    "Honda": "studies-img/2.jpg"
+    "Honda": "studies-img/2.jpg",
+    "Renault": "studies-img/renault-megane-1783972322511-3.jpg"
   },
   "projeler": [
     {
-      "id": "p1783973605116",
-      "marka": "Mercedes",
-      "model": "E Serisi",
-      "kasa": "W123",
-      "aciklama": "Kırmızı animasyonsuz stop tasarımı",
+      "id": "p1783974064693",
+      "marka": "Renault",
+      "model": "Megane",
+      "kasa": "Megane 4",
+      "aciklama": "Açılış animasyonlu dinamik kayar sinyalli Rgb pixel kayar animasyonlu stop tasarımı",
       "hizmet": "Stop Tasarımı",
       "fotolar": [
-        "studies-img/mercedes-e-serisi-1783973621917-1.jpg",
-        "studies-img/mercedes-e-serisi-1783973623662-2.jpg",
-        "studies-img/mercedes-e-serisi-1783973625403-3.jpg",
-        "studies-img/mercedes-e-serisi-1783973626630-4.jpg",
-        "studies-img/mercedes-e-serisi-1783973627960-5.jpg",
-        "studies-img/mercedes-e-serisi-1783973630321-6.jpg"
+        "studies-img/renault-megane-1783974068410-1.jpg",
+        "studies-img/renault-megane-1783974070119-2.jpg",
+        "studies-img/renault-megane-1783974071347-3.jpg",
+        "studies-img/renault-megane-1783974072575-4.jpg",
+        "studies-img/renault-megane-1783974073804-5.jpg",
+        "studies-img/renault-megane-1783974075033-6.jpg",
+        "studies-img/renault-megane-1783974076262-7.jpg",
+        "studies-img/renault-megane-1783974077798-8.jpg",
+        "studies-img/renault-megane-1783974079541-9.jpg",
+        "studies-img/renault-megane-1783974081177-10.jpg",
+        "studies-img/renault-megane-1783974083022-11.jpg",
+        "studies-img/renault-megane-1783974084761-12.jpg"
       ]
     },
     {
@@ -113,16 +120,6 @@
       "hizmet": "Stop Tasarımı",
       "fotolar": [
         "studies-img/4.jpg"
-      ]
-    },
-    {
-      "id": "p5",
-      "marka": "Renault",
-      "model": "Megane",
-      "aciklama": "RGB ışık barı, akıcı sinyal",
-      "hizmet": "Stop Tasarımı",
-      "fotolar": [
-        "studies-img/5.jpg"
       ]
     }
   ],
