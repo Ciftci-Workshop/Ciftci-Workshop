@@ -60,6 +60,7 @@
 		</button>
 		<div class="lb-ic">
 			<img id="lb-img" src="" alt="">
+			<div class="lb-video-sar" id="lb-video-sar" hidden></div>
 			<div class="lb-alt">
 				<span class="lb-info">
 					<span class="lb-baslik" id="lb-baslik"></span>
@@ -83,6 +84,24 @@
 
 		const F = s => (window.IMG_B64 && window.IMG_B64[s]) || s;
 		const fotolarOf = p => (p.fotolar && p.fotolar.length ? p.fotolar : (p.foto ? [p.foto] : []));
+
+		// Video linkini oynatılabilir gömme adresine çevir.
+		// YouTube ve Instagram linklerini tanır; .mp4 dosyalarını da destekler.
+		function videoEmbed(url) {
+			if (!url) return null;
+			// YouTube: watch?v=, youtu.be/, shorts/
+			let m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+			if (m) return { tip: 'iframe', src: 'https://www.youtube.com/embed/' + m[1] };
+			// Instagram: reel veya post
+			m = url.match(/instagram\.com\/(?:reel|p|tv)\/([\w-]+)/);
+			if (m) return { tip: 'iframe', src: 'https://www.instagram.com/p/' + m[1] + '/embed' };
+			// Doğrudan mp4/webm dosyası (repoya yüklenmiş ya da dış link)
+			if (/\.(mp4|webm|mov)(\?|$)/i.test(url) || url.startsWith('data:video')) {
+				return { tip: 'video', src: F(url) };
+			}
+			// Tanınmadıysa iframe olarak dene (vimeo vb. çoğu embed'i kabul eder)
+			return { tip: 'iframe', src: url };
+		}
 
 		// Hizmet filtrelerinin sıralaması (veride olmayan gösterilmez)
 		const HIZMET_SIRA = ['Far Modifikasyonu', 'Far Yenileme (Parlatma)', 'Stop Tasarımı', 'Cam İşleme', 'Özel Üretim', 'Diğer'];
@@ -215,15 +234,19 @@
 				return;
 			}
 
-			// Lightbox listesi: her projenin tüm fotoğrafları arka arkaya
+			// Lightbox listesi: her projenin (varsa videosu +) tüm fotoğrafları arka arkaya
 			lbListe = [];
 			const kartlar = gorunen.map(p => {
 				const fs = fotolarOf(p);
-				const bas = lbListe.length; // bu projenin ilk fotoğrafının düz listedeki yeri
-				fs.forEach((f, fi) => lbListe.push({ p, f, fi, n: fs.length }));
+				const vid = videoEmbed(p.video);
+				const bas = lbListe.length; // bu projenin lightbox'taki ilk öğesinin yeri
+				if (vid) lbListe.push({ p, video: vid, tur: 'video', n: fs.length + 1, fi: 0 });
+				fs.forEach((f, fi) => lbListe.push({ p, f, tur: 'foto', fi: fi + (vid ? 1 : 0), n: fs.length + (vid ? 1 : 0) }));
 				return `
-				<button class="proje" data-i="${bas}" aria-label="${basligi(p)} — büyüt">
+				<button class="proje" data-i="${bas}" aria-label="${basligi(p)} — ${vid ? 'videoyu oynat' : 'büyüt'}">
 					<img src="${F(fs[0])}" alt="${basligi(p)} — ${p.aciklama}" loading="lazy">
+					${vid ? `<span class="video-rozet"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>VİDEO</span>
+						<span class="oynat-ikon"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>` : ''}
 					${fs.length > 1 ? `<span class="foto-sayi">${fs.length} FOTO</span>` : ''}
 					<span class="proje-desc">${p.aciklama}</span>
 					<span class="proje-etiket">
@@ -241,17 +264,31 @@
 		// ---------- Lightbox ----------
 		const lb = document.getElementById('lightbox');
 		const lbImg = document.getElementById('lb-img');
+		const lbVideoSar = document.getElementById('lb-video-sar');
 		const lbBaslik = document.getElementById('lb-baslik');
 		const lbKasa = document.getElementById('lb-kasa');
 		const lbSayac = document.getElementById('lb-sayac');
 		const lbDesc = document.getElementById('lb-desc');
 
 		function lbAc(i) { lbIndex = i; lbGoster(); lb.classList.add('acik'); document.body.style.overflow = 'hidden'; }
-		function lbKapat() { lb.classList.remove('acik'); document.body.style.overflow = ''; }
+		function lbKapat() { lb.classList.remove('acik'); document.body.style.overflow = ''; lbVideoSar.innerHTML = ''; }
 		function lbGoster() {
 			const k = lbListe[lbIndex];
-			lbImg.src = F(k.f);
-			lbImg.alt = basligi(k.p);
+			lbVideoSar.innerHTML = ''; // önceki videoyu durdur (iframe/video temizlenir)
+			if (k.tur === 'video') {
+				lbImg.hidden = true;
+				lbVideoSar.hidden = false;
+				if (k.video.tip === 'iframe') {
+					lbVideoSar.innerHTML = `<iframe src="${k.video.src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+				} else {
+					lbVideoSar.innerHTML = `<video src="${k.video.src}" controls autoplay playsinline></video>`;
+				}
+			} else {
+				lbVideoSar.hidden = true;
+				lbImg.hidden = false;
+				lbImg.src = F(k.f);
+				lbImg.alt = basligi(k.p);
+			}
 			lbBaslik.textContent = basligi(k.p);
 			lbKasa.hidden = !k.p.kasa;
 			lbKasa.textContent = k.p.kasa || '';
