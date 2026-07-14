@@ -108,6 +108,11 @@ section { padding: clamp(70px, 9vw, 120px) 0; }
     position: absolute; inset: 0; z-index: -2;
     background-size: cover; background-position: center 30%;
 }
+.hero-video {
+    position: absolute; inset: 0; z-index: -2;
+    width: 100%; height: 100%; object-fit: cover;
+    display: none; /* JS video varsa açar */
+}
 /* Metin okunabilsin + sayfaya yumuşak geçsin diye katmanlı karartma */
 .hero::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
@@ -481,3 +486,16 @@ textarea.girdi { resize: vertical; min-height: 70px; }
 /* ---------- Çoklu fotoğraf rozeti ve lightbox sayacı ---------- */
 .foto-sayi { position: absolute; top: 12px; right: 12px; z-index: 2; font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; padding: 4px 9px; border-radius: 4px; background: rgba(10,11,14,.72); color: var(--beyaz); border: 1px solid var(--cizgi); backdrop-filter: blur(4px); }
 .lb-sayac { font-family: var(--f-mono); font-size: 11px; color: var(--gri-koyu); }
+
+/* ---------- Proje video rozeti (kartta ▶) ---------- */
+.video-rozet { position: absolute; top: 12px; left: 12px; z-index: 2; display: flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; padding: 5px 10px 5px 8px; border-radius: 4px; background: rgba(232,53,42,.9); color: #fff; }
+.video-rozet svg { width: 11px; height: 11px; }
+/* Kart ortasında büyük oynat ikonu (video varsa) */
+.oynat-ikon { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; }
+.oynat-ikon span { width: 54px; height: 54px; border-radius: 50%; background: rgba(10,11,14,.55); border: 2px solid rgba(255,255,255,.85); display: grid; place-items: center; transition: transform .25s, background .25s; }
+.proje:hover .oynat-ikon span { transform: scale(1.1); background: rgba(232,53,42,.85); }
+.oynat-ikon svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+
+/* ---------- Lightbox: video oynatıcı ---------- */
+.lb-video-sar { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16/9; margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden; }
+.lb-video-sar iframe, .lb-video-sar video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
