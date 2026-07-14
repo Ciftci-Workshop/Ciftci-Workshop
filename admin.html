@@ -187,6 +187,11 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				<textarea class="girdi" id="f-aciklama" placeholder="örn: Dinamik sinyalli LED stop dönüşümü"></textarea>
 			</div>
 
+			<div class="form-satir">
+				<label for="f-video">Video linki <span style="text-transform:none;letter-spacing:0">(opsiyonel — YouTube / Instagram linki yapıştır)</span></label>
+				<input class="girdi" id="f-video" placeholder="https://youtu.be/... veya instagram.com/reel/...">
+			</div>
+
 			<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
 				<button class="btn btn-primary" id="btn-ekle">Projeyi Ekle</button>
 				<button class="btn btn-cizgili gizli" id="btn-vazgec">Vazgeç</button>
@@ -200,11 +205,16 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			<div id="proje-listesi"></div>
 		</div>
 
-		<!-- Ana sayfa hero (en üstteki büyük fotoğraf) -->
+		<!-- Ana sayfa hero (en üstteki büyük fotoğraf/video) -->
 		<div class="panel-kart">
-			<h2>Ana Sayfa Görseli <span class="mini">EN ÜSTTEKİ BÜYÜK FOTOĞRAF</span></h2>
-			<p class="ipucu" style="margin:0 0 6px">Ziyaretçinin ilk gördüğü tam ekran fotoğraf. Projelerdeki fotoğraflardan birini seç.</p>
+			<h2>Ana Sayfa Görseli <span class="mini">EN ÜSTTEKİ BÜYÜK ALAN</span></h2>
+			<p class="ipucu" style="margin:0 0 6px">Ziyaretçinin ilk gördüğü tam ekran alan. Fotoğraf seç veya kısa bir tanıtım videosu yükle.</p>
 			<div id="hero-secimler" class="kapak-secimler" style="margin-bottom:14px"></div>
+			<div class="form-satir">
+				<label for="f-hero-video">Tanıtım videosu <span style="text-transform:none;letter-spacing:0">(opsiyonel — sessiz döngü oynar, en fazla 8 MB)</span></label>
+				<input class="girdi" type="file" id="f-hero-video" accept="video/*">
+				<div id="hero-video-durum" class="ipucu" style="margin-top:6px"></div>
+			</div>
 			<div class="form-satir">
 				<label for="f-hero-yazi">Köşe yazısı <span style="text-transform:none;letter-spacing:0">(sağ altta görünür — örn: HONDA CIVIC — RGB STOP)</span></label>
 				<input class="girdi" id="f-hero-yazi" placeholder="HONDA CIVIC — RGB STOP">
@@ -470,18 +480,19 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		if (model === '__yeni') model = $('f-yeni-model').value.trim();
 		const kasa = $('f-kasa').value.trim();
 		const aciklama = $('f-aciklama').value.trim();
+		const video = $('f-video').value.trim();
 
 		if (!marka || !model) return durum('form-durum', 'Marka ve model zorunlu.', 'kotu');
 		if (!formFotolar.length) return durum('form-durum', 'En az bir fotoğraf seç.', 'kotu');
 
 		if (duzenlenenId) {
 			const p = veri.projeler.find(x => x.id === duzenlenenId);
-			Object.assign(p, { marka, model, kasa, aciklama, hizmet: $('f-hizmet').value, fotolar: [...formFotolar] });
+			Object.assign(p, { marka, model, kasa, aciklama, video, hizmet: $('f-hizmet').value, fotolar: [...formFotolar] });
 			durum('form-durum', 'Proje güncellendi. Yayınlamayı unutma.', 'iyi');
 		} else {
 			veri.projeler.unshift({
 				id: 'p' + Date.now(),
-				marka, model, kasa, aciklama,
+				marka, model, kasa, aciklama, video,
 				hizmet: $('f-hizmet').value,
 				fotolar: [...formFotolar] // yayınlanınca gerçek dosya yollarına dönüşür
 			});
@@ -502,6 +513,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		$('f-model').value = '';
 		$('f-kasa').value = '';
 		$('f-aciklama').value = '';
+		$('f-video').value = '';
 		$('f-yeni-marka').value = '';
 		$('f-yeni-model').value = '';
 		$('f-foto').value = '';
@@ -523,7 +535,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				<img src="${gorselSrc(fs[0])}" alt="">
 				<div class="bilgiler">
 					<div class="baslik">${p.marka} ${p.model}${p.kasa ? ' · ' + p.kasa : ''}</div>
-					<div class="alt">${p.hizmet}${fs.length > 1 ? ' · ' + fs.length + ' foto' : ''}${p.aciklama ? ' · ' + p.aciklama : ''}</div>
+					<div class="alt">${p.hizmet}${fs.length > 1 ? ' · ' + fs.length + ' foto' : ''}${p.video ? ' · ▶ video' : ''}${p.aciklama ? ' · ' + p.aciklama : ''}</div>
 				</div>
 				<div class="islemler">
 					<button class="btn btn-cizgili btn-kucuk" data-duzenle="${p.id}">Düzenle</button>
@@ -552,6 +564,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			}
 			$('f-kasa').value = p.kasa || '';
 			$('f-aciklama').value = p.aciklama || '';
+			$('f-video').value = p.video || '';
 			$('f-hizmet').value = p.hizmet;
 			formFotolar = [...fotolarOf(p)];
 			fotoStripCiz();
@@ -572,20 +585,49 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		const tumFotolar = veri.projeler.flatMap(p => fotolarOf(p));
 		const secili = veri.hero.foto && tumFotolar.includes(veri.hero.foto)
 			? veri.hero.foto : tumFotolar[0];
+		// Video seçiliyse fotoğrafların hiçbiri "seçili" görünmesin
+		const videoAktif = !!veri.hero.video;
 		$('hero-secimler').innerHTML = tumFotolar.map((f, i) =>
-			`<img src="${gorselSrc(f)}" data-ix="${i}" class="${f === secili ? 'secili' : ''}" alt="">`
+			`<img src="${gorselSrc(f)}" data-ix="${i}" class="${!videoAktif && f === secili ? 'secili' : ''}" alt="">`
 		).join('');
 		$('hero-secimler').querySelectorAll('img').forEach(img => {
 			img.addEventListener('click', () => {
 				veri.hero.foto = tumFotolar[+img.dataset.ix];
+				veri.hero.video = ''; // fotoğraf seçilince video kaldırılır
 				heroCiz();
 			});
 		});
-		// Yazı kutusu ilk çizimde doldurulur; sonra kullanıcı yazdıkça veriye işlenir
+		// Video durumu
+		const vd = $('hero-video-durum');
+		if (veri.hero.video) {
+			const yeni = veri.hero.video.startsWith('data:');
+			vd.innerHTML = `▶ Video ${yeni ? 'seçildi (yayınlanınca yüklenecek)' : 'yüklü'}. <a href="#" id="hero-video-sil" style="color:var(--kirmizi)">Kaldır</a>`;
+			vd.querySelector('#hero-video-sil').addEventListener('click', e => {
+				e.preventDefault(); veri.hero.video = ''; heroCiz();
+			});
+		} else {
+			vd.textContent = 'Şu an video yok — fotoğraf gösteriliyor.';
+		}
 		if ($('f-hero-yazi').value === '' && document.activeElement !== $('f-hero-yazi')) {
 			$('f-hero-yazi').value = veri.hero.yazi || '';
 		}
 	}
+
+	// Hero video yükleme: 8 MB sınırı, dataURL olarak tutulur
+	$('f-hero-video').addEventListener('change', () => {
+		const dosya = $('f-hero-video').files[0];
+		if (!dosya) return;
+		const MB = dosya.size / (1024 * 1024);
+		if (MB > 8) {
+			durum('form-durum', `Video çok büyük (${MB.toFixed(1)} MB). En fazla 8 MB olmalı. Daha kısa/düşük çözünürlüklü bir video dene, ya da YouTube linki kullan.`, 'kotu');
+			$('f-hero-video').value = '';
+			return;
+		}
+		const okuyucu = new FileReader();
+		okuyucu.onload = () => { veri.hero.video = okuyucu.result; heroCiz(); };
+		okuyucu.readAsDataURL(dosya);
+		$('f-hero-video').value = '';
+	});
 
 	/* ---------- Marka kapak seçici ----------
 	   Ana sayfadaki marka kartında görünen fotoğrafı belirler.
@@ -633,7 +675,8 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				no++;
 				durum('kayit-durum', `Fotoğraf yükleniyor ${no}/${isler.length}...`, 'bekle');
 				const eski = is.p.fotolar[is.i];
-				const ad = `${ayar.imgDir}/${slug(is.p.marka + '-' + is.p.model)}-${Date.now()}-${no}.jpg`;
+				const klasor = ayar.imgDir ? ayar.imgDir + '/' : '';
+				const ad = `${klasor}${slug(is.p.marka + '-' + is.p.model)}-${Date.now()}-${no}.jpg`;
 				await api(dosyaYolu(ad), {
 					method: 'PUT',
 					body: JSON.stringify({
@@ -647,6 +690,23 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				for (const mk of Object.keys(veri.kapaklar)) {
 					if (veri.kapaklar[mk] === eski) veri.kapaklar[mk] = ad;
 				}
+			}
+
+			// 1b) Hero videosu yeni yüklendiyse (data: ile duruyorsa) onu da yükle
+			if (veri.hero && veri.hero.video && veri.hero.video.startsWith('data:')) {
+				durum('kayit-durum', 'Tanıtım videosu yükleniyor...', 'bekle');
+				const uzanti = (veri.hero.video.match(/^data:video\/(\w+)/) || [,'mp4'])[1];
+				const klasor = ayar.imgDir ? ayar.imgDir + '/' : '';
+				const ad = `${klasor}hero-video-${Date.now()}.${uzanti}`;
+				await api(dosyaYolu(ad), {
+					method: 'PUT',
+					body: JSON.stringify({
+						message: 'Hero videosu (admin paneli)',
+						content: veri.hero.video.split(',')[1],
+						branch: ayar.branch
+					})
+				});
+				veri.hero.video = ad;
 			}
 
 			// 2) JSON'un güncel sha'sını al (arada değişmiş olabilir), sonra yaz
