@@ -16,6 +16,12 @@
     --amber: #FFB000;
     --plaka-mavi: #0A3D91;
 
+    /* ---- HERO AYARLARI: sadece bu 4 sayıyı değiştir ---- */
+    --hero-blur: 20px;          /* arka planın bulanıklığı — düşür: daha net */
+    --hero-parlaklik: .8;       /* arka planın parlaklığı — düşür: daha koyu */
+    --hero-doygunluk: 1.15;     /* arka planın renk canlılığı */
+    --hero-erime: 7%;          /* fotoğrafın kenarından eriyen pay — düşür: fotoğraf daha net biter */
+
     --f-display: 'Archivo Black', 'Arial Black', sans-serif;
     --f-govde: 'Barlow', 'Segoe UI', sans-serif;
     --f-mono: 'IBM Plex Mono', 'Consolas', monospace;
@@ -109,7 +115,7 @@ section { padding: clamp(70px, 9vw, 120px) 0; }
 .hero-blur {
     position: absolute; inset: 0; z-index: -3;
     background-size: cover; background-position: center;
-    filter: blur(34px) saturate(1.15) brightness(.8);
+    filter: blur(var(--hero-blur)) saturate(var(--hero-doygunluk)) brightness(var(--hero-parlaklik));
     transform: scale(1.15);   /* bulanıklığın kenarda soluk iz bırakmaması için */
 }
 .hero-bg {
@@ -121,13 +127,13 @@ section { padding: clamp(70px, 9vw, 120px) 0; }
    Maske ölçüsü/konumu JS'te fotoğrafınkiyle aynı yapılır. */
 .hero-bg.yumusak {
     -webkit-mask-image:
-        linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
-        linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+        linear-gradient(to right, transparent 0, #000 var(--hero-erime), #000 calc(100% - var(--hero-erime)), transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 var(--hero-erime), #000 calc(100% - var(--hero-erime)), transparent 100%);
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-composite: source-in;
     mask-image:
-        linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
-        linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+        linear-gradient(to right, transparent 0, #000 var(--hero-erime), #000 calc(100% - var(--hero-erime)), transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 var(--hero-erime), #000 calc(100% - var(--hero-erime)), transparent 100%);
     mask-repeat: no-repeat;
     mask-composite: intersect;
 }
