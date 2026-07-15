@@ -103,6 +103,7 @@ section { padding: clamp(70px, 9vw, 120px) 0; }
     display: flex; align-items: flex-end;
     padding: 0 0 clamp(56px, 8vh, 90px);
     isolation: isolate;
+    overflow: hidden; /* yakınlaştırılan görsel taşmasın */
 }
 .hero-bg {
     position: absolute; inset: 0; z-index: -2;
@@ -312,6 +313,7 @@ a.bilgi:hover .bilgi-value, a.bilgi:hover svg { color: var(--amber); }
 
 /* ---------- Lightbox ---------- */
 .lightbox {
+    --lb-h: 72vh;              /* video/foto için yükseklik bütçesi (alt bilgiye yer kalsın) */
     position: fixed; inset: 0; z-index: 200;
     background: rgba(5,6,8,.94);
     display: none; align-items: center; justify-content: center;
@@ -319,7 +321,7 @@ a.bilgi:hover .bilgi-value, a.bilgi:hover svg { color: var(--amber); }
 }
 .lightbox.acik { display: flex; }
 .lb-ic { max-width: 900px; width: 100%; max-height: 92vh; display: flex; flex-direction: column; gap: 14px; }
-.lb-ic img { max-height: 74vh; width: auto; max-width: 100%; margin: 0 auto; border-radius: 10px; object-fit: contain; }
+.lb-ic img { max-height: var(--lb-h, 72vh); width: auto; max-width: 100%; margin: 0 auto; border-radius: 10px; object-fit: contain; }
 .lb-alt { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .lb-desc { color: var(--gri); font-size: 14.5px; flex: 1; min-width: 200px; }
 .lb-btn {
@@ -426,7 +428,14 @@ textarea.girdi { resize: vertical; min-height: 70px; }
     .topbar nav a { font-size: 16px; }
     .hero-kunye { display: none; }
     .filtreler { top: 56px; }
-    .lb-onceki { left: 8px; } .lb-sonraki { right: 8px; }
+    /* Lightbox mobil: oklar videonun üstüne binmesin, alt köşelere insin */
+    .lightbox { --lb-h: 62vh; padding: 12px 12px 68px; }
+    .lb-btn { width: 42px; height: 42px; }
+    .lb-onceki, .lb-sonraki { top: auto; bottom: 12px; transform: none; }
+    .lb-onceki { left: 12px; } .lb-sonraki { right: 12px; }
+    .lb-kapat { top: 12px; right: 12px; }
+    .lb-alt { justify-content: center; text-align: center; }
+    .lb-desc { min-width: 0; font-size: 13.5px; }
 }
 
 @media (max-width: 560px) {
@@ -497,5 +506,18 @@ textarea.girdi { resize: vertical; min-height: 70px; }
 .oynat-ikon svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
 
 /* ---------- Lightbox: video oynatıcı ---------- */
-.lb-video-sar { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16/9; margin: 0 auto; background: #000; border-radius: 10px; overflow: hidden; }
+/* ---------- Lightbox: video oynatıcı ----------
+   Kutu, videonun oranına göre şekillenir (--oran) ve asla ekranı taşmaz:
+   genişlik, yükseklik bütçesinden (--lb-h) hesaplanır. */
+.lb-video-sar {
+    --oran: 1.777;                                  /* JS video tipine göre değiştirir */
+    position: relative;
+    aspect-ratio: var(--oran);
+    width: min(100%, calc(var(--lb-h, 72vh) * var(--oran)));
+    max-width: 900px;
+    margin: 0 auto;
+    background: #000; border-radius: 10px; overflow: hidden;
+}
 .lb-video-sar iframe, .lb-video-sar video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* Instagram kartı 326px'in altında bozuluyor — daralmasına izin verme */
+.lb-video-sar.insta { min-width: min(326px, 100%); background: #14161B; }
