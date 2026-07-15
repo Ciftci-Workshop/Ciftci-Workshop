@@ -256,8 +256,21 @@
 				if (!W || !H || !heroImg.naturalWidth) return;
 				const dolduran = Math.max(W / heroImg.naturalWidth, H / heroImg.naturalHeight);
 				const olcek = dolduran * (kZ / 100);
-				heroBg.style.backgroundSize =
-					`${Math.round(heroImg.naturalWidth * olcek)}px ${Math.round(heroImg.naturalHeight * olcek)}px`;
+				const gW = Math.round(heroImg.naturalWidth * olcek);
+				const gH = Math.round(heroImg.naturalHeight * olcek);
+				heroBg.style.backgroundSize = `${gW}px ${gH}px`;
+				// Fotoğraf ekranı doldurmuyorsa kenarlarını bulanık zemine erit.
+				// Maske, fotoğrafın tam üstüne oturmalı — ölçü/konum onunla aynı.
+				const bosluk = gW < W - 1 || gH < H - 1;
+				heroBg.classList.toggle('yumusak', bosluk);
+				if (bosluk) {
+					const olcu = `${gW}px ${gH}px`;
+					const konum = `${kX}% ${kY}%`;
+					heroBg.style.maskSize = olcu;
+					heroBg.style.webkitMaskSize = olcu;
+					heroBg.style.maskPosition = konum;
+					heroBg.style.webkitMaskPosition = konum;
+				}
 			}
 			heroImg.onload = kadrajUygula;
 			heroImg.src = F(heroFoto);
