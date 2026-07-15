@@ -81,7 +81,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 /* Hero canlı önizleme: sitedeki hero'nun kırpma davranışını birebir taklit eder */
 .hero-onizleme{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--cizgi);background:#000;overflow:hidden}
 .ho-blur{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(14px) saturate(1.15) brightness(.8);transform:scale(1.15)}
-.ho-gorsel.yumusak{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);-webkit-mask-repeat:no-repeat;-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);mask-repeat:no-repeat;mask-composite:intersect}
+.ho-gorsel.yumusak{--hero-erime:7%;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 var(--hero-erime),#000 calc(100% - var(--hero-erime)),transparent 100%),linear-gradient(to bottom,transparent 0,#000 var(--hero-erime),#000 calc(100% - var(--hero-erime)),transparent 100%);-webkit-mask-repeat:no-repeat;-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 var(--hero-erime),#000 calc(100% - var(--hero-erime)),transparent 100%),linear-gradient(to bottom,transparent 0,#000 var(--hero-erime),#000 calc(100% - var(--hero-erime)),transparent 100%);mask-repeat:no-repeat;mask-composite:intersect}
 .ho-gorsel{position:absolute;inset:0;background-repeat:no-repeat;background-position:center 30%;background-size:cover}
 .hero-onizleme::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,.85),transparent 55%);pointer-events:none}
 .ho-etiket{position:absolute;left:8px;bottom:7px;z-index:2;font:600 9px var(--f-mono);letter-spacing:.14em;color:var(--amber)}
@@ -91,6 +91,21 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 .slider-ad{flex:0 0 58px;font:11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gri-koyu)}
 .slider-satir .konum-slider{flex:1;margin-top:0;min-width:0}
 .slider-deger{flex:0 0 44px;text-align:right;font:12px var(--f-mono);color:var(--beyaz)}
+/* Açılır alt bölümler: panel kalabalık görünmesin, istenince açılsın */
+.alt-bolum{margin-top:10px;border:1px solid var(--cizgi);border-radius:10px;background:var(--gece);overflow:hidden}
+.alt-bolum>summary{list-style:none;cursor:pointer;padding:13px 15px;font:600 13px var(--f-govde);color:var(--beyaz);display:flex;align-items:center;gap:8px;user-select:none}
+.alt-bolum>summary::-webkit-details-marker{display:none}
+.alt-bolum>summary::before{content:'▸';color:var(--gri-koyu);font-size:11px;transition:transform .2s;flex:0 0 auto}
+.alt-bolum[open]>summary::before{transform:rotate(90deg)}
+.alt-bolum[open]>summary{border-bottom:1px solid var(--cizgi)}
+.alt-bolum>summary:hover{background:rgba(255,255,255,.02)}
+.ozet-not{margin-left:auto;font:10.5px var(--f-mono);letter-spacing:.08em;color:var(--gri-koyu);font-weight:400}
+.alt-ic{padding:15px}
+.alt-ic .form-satir:last-child{margin-bottom:0}
+/* Açma/kapama anahtarı */
+.anahtar{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14.5px;color:var(--beyaz)}
+.anahtar input{width:17px;height:17px;accent-color:var(--amber);cursor:pointer;flex:0 0 auto}
+#blur-ayarlar.kapali{opacity:.35;pointer-events:none}
 </style>
 </head>
 <body>
@@ -222,43 +237,84 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		<!-- Ana sayfa hero (en üstteki büyük fotoğraf/video) -->
 		<div class="panel-kart">
 			<h2>Ana Sayfa Görseli <span class="mini">EN ÜSTTEKİ BÜYÜK ALAN</span></h2>
-			<p class="ipucu" style="margin:0 0 6px">Ziyaretçinin ilk gördüğü tam ekran alan. Fotoğraf seç veya kısa bir tanıtım videosu yükle.</p>
-			<div id="hero-secimler" class="kapak-secimler" style="margin-bottom:14px"></div>
 
-			<!-- Canlı önizleme: sitedeki hero oranıyla aynı, kaydırıcılar burayı değiştirir -->
-			<div class="form-satir">
-				<label>Kadraj <span style="text-transform:none;letter-spacing:0">— kaydırıcıları çek, fotoğrafın hangi kısmı nasıl görünsün</span></label>
-				<div class="hero-onizleme" id="hero-onizleme"><div class="ho-blur" id="ho-blur"></div><div class="ho-gorsel" id="ho-gorsel"></div><span class="ho-etiket">ÖNİZLEME</span></div>
+			<!-- Önizleme hep görünür: hangi sekmeyi açarsan aç, etkisini burada görürsün -->
+			<div class="hero-onizleme" id="hero-onizleme"><div class="ho-blur" id="ho-blur"></div><div class="ho-gorsel" id="ho-gorsel"></div><span class="ho-etiket">ÖNİZLEME</span></div>
 
-				<div class="slider-satir">
-					<span class="slider-ad">Dikey</span>
-					<input type="range" id="f-hero-konum" min="0" max="100" step="1" value="30" class="konum-slider">
-					<span class="slider-deger" id="hero-konum-deger">%30</span>
+			<details class="alt-bolum" open>
+				<summary>Fotoğraf seç</summary>
+				<div class="alt-ic">
+					<div id="hero-secimler" class="kapak-secimler"></div>
 				</div>
-				<div class="slider-satir">
-					<span class="slider-ad">Yatay</span>
-					<input type="range" id="f-hero-konumx" min="0" max="100" step="1" value="50" class="konum-slider">
-					<span class="slider-deger" id="hero-konumx-deger">%50</span>
+			</details>
+
+			<details class="alt-bolum">
+				<summary>Kadraj <span class="ozet-not">konum ve boyut</span></summary>
+				<div class="alt-ic">
+					<div class="slider-satir">
+						<span class="slider-ad">Dikey</span>
+						<input type="range" id="f-hero-konum" min="0" max="100" step="1" value="30" class="konum-slider">
+						<span class="slider-deger" id="hero-konum-deger">%30</span>
+					</div>
+					<div class="slider-satir">
+						<span class="slider-ad">Yatay</span>
+						<input type="range" id="f-hero-konumx" min="0" max="100" step="1" value="50" class="konum-slider">
+						<span class="slider-deger" id="hero-konumx-deger">%50</span>
+					</div>
+					<div class="slider-satir">
+						<span class="slider-ad">Boyut</span>
+						<input type="range" id="f-hero-zoom" min="50" max="200" step="1" value="100" class="konum-slider">
+						<span class="slider-deger" id="hero-zoom-deger">%100</span>
+					</div>
+					<div class="ipucu">%100 = ekranı tam doldurur. Altına inersen fotoğrafın daha fazlası görünür.</div>
+					<button type="button" class="btn btn-cizgili btn-kucuk" id="btn-kadraj-sifirla" style="margin-top:8px">Kadrajı Sıfırla</button>
 				</div>
-				<div class="slider-satir">
-					<span class="slider-ad">Boyut</span>
-					<input type="range" id="f-hero-zoom" min="50" max="200" step="1" value="100" class="konum-slider">
-					<span class="slider-deger" id="hero-zoom-deger">%100</span>
+			</details>
+
+			<details class="alt-bolum">
+				<summary>Bulanık zemin <span class="ozet-not" id="blur-ozet"></span></summary>
+				<div class="alt-ic">
+					<label class="anahtar">
+						<input type="checkbox" id="f-hero-blur-acik" checked>
+						<span>Boşlukları fotoğrafın bulanık haliyle doldur</span>
+					</label>
+					<div class="ipucu" style="margin:6px 0 4px">Kapatırsan boşluklar düz koyu kalır.</div>
+					<div id="blur-ayarlar">
+						<div class="slider-satir">
+							<span class="slider-ad">Bulanıklık</span>
+							<input type="range" id="f-hero-blur" min="0" max="60" step="1" value="20" class="konum-slider">
+							<span class="slider-deger" id="hero-blur-deger">20px</span>
+						</div>
+						<div class="slider-satir">
+							<span class="slider-ad">Geçiş</span>
+							<input type="range" id="f-hero-erime" min="0" max="25" step="1" value="7" class="konum-slider">
+							<span class="slider-deger" id="hero-erime-deger">%7</span>
+						</div>
+						<div class="ipucu">Geçiş = fotoğrafın kenarı ne kadar eriyip zemine karışsın. %0 = keskin kenar.</div>
+					</div>
 				</div>
-				<div class="ipucu" style="margin-top:6px">%100 = ekranı tam doldurur. Altına inersen fotoğraf küçülür, kenarlarda koyu boşluk kalır.</div>
-				<div style="margin-top:8px">
-					<button type="button" class="btn btn-cizgili btn-kucuk" id="btn-kadraj-sifirla">Kadrajı Sıfırla</button>
+			</details>
+
+			<details class="alt-bolum">
+				<summary>Tanıtım videosu <span class="ozet-not" id="video-ozet"></span></summary>
+				<div class="alt-ic">
+					<div class="form-satir">
+						<label for="f-hero-video">Video dosyası <span style="text-transform:none;letter-spacing:0">(sessiz döngü oynar, en fazla 8 MB)</span></label>
+						<input class="girdi" type="file" id="f-hero-video" accept="video/*">
+						<div id="hero-video-durum" class="ipucu" style="margin-top:6px"></div>
+					</div>
 				</div>
-			</div>
-			<div class="form-satir">
-				<label for="f-hero-video">Tanıtım videosu <span style="text-transform:none;letter-spacing:0">(opsiyonel — sessiz döngü oynar, en fazla 8 MB)</span></label>
-				<input class="girdi" type="file" id="f-hero-video" accept="video/*">
-				<div id="hero-video-durum" class="ipucu" style="margin-top:6px"></div>
-			</div>
-			<div class="form-satir">
-				<label for="f-hero-yazi">Köşe yazısı <span style="text-transform:none;letter-spacing:0">(sağ altta görünür — örn: HONDA CIVIC — RGB STOP)</span></label>
-				<input class="girdi" id="f-hero-yazi" placeholder="HONDA CIVIC — RGB STOP">
-			</div>
+			</details>
+
+			<details class="alt-bolum">
+				<summary>Köşe yazısı</summary>
+				<div class="alt-ic">
+					<div class="form-satir">
+						<label for="f-hero-yazi">Sağ altta görünen yazı</label>
+						<input class="girdi" id="f-hero-yazi" placeholder="HONDA CIVIC — RGB STOP">
+					</div>
+				</div>
+			</details>
 		</div>
 
 		<!-- Marka kapak fotoğrafları -->
@@ -376,6 +432,9 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		v.kapaklar = v.kapaklar || {};
 		v.hero = v.hero || { foto: '', yazi: '' };
 		if (v.hero.konum == null) v.hero.konum = 30; // eski verilerde konum yok
+		if (v.hero.blur == null) v.hero.blur = true;
+		if (v.hero.blurMiktar == null) v.hero.blurMiktar = 20;
+		if (v.hero.erime == null) v.hero.erime = 7;
 		v.projeler.forEach(p => { p.fotolar = fotolarOf(p); delete p.foto; });
 		return v;
 	}
@@ -649,6 +708,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		} else {
 			vd.textContent = 'Şu an video yok — fotoğraf gösteriliyor.';
 		}
+		$('video-ozet').textContent = veri.hero.video ? 'VAR' : 'YOK';
 		if ($('f-hero-yazi').value === '' && document.activeElement !== $('f-hero-yazi')) {
 			$('f-hero-yazi').value = veri.hero.yazi || '';
 		}
@@ -662,18 +722,33 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		const kY = veri.hero.konum != null ? veri.hero.konum : 30;
 		const kX = veri.hero.konumX != null ? veri.hero.konumX : 50;
 		const kZ = veri.hero.zoom != null ? veri.hero.zoom : 100;
+		const blurAcik = veri.hero.blur !== false;
+		const blurPx = veri.hero.blurMiktar != null ? veri.hero.blurMiktar : 20;
+		const erime = veri.hero.erime != null ? veri.hero.erime : 7;
+
 		$('f-hero-konum').value = kY;   $('hero-konum-deger').textContent = '%' + kY;
 		$('f-hero-konumx').value = kX;  $('hero-konumx-deger').textContent = '%' + kX;
 		$('f-hero-zoom').value = kZ;    $('hero-zoom-deger').textContent = '%' + kZ;
+		$('f-hero-blur-acik').checked = blurAcik;
+		$('f-hero-blur').value = blurPx;   $('hero-blur-deger').textContent = blurPx + 'px';
+		$('f-hero-erime').value = erime;   $('hero-erime-deger').textContent = '%' + erime;
+		$('blur-ayarlar').classList.toggle('kapali', !blurAcik);
+		$('blur-ozet').textContent = blurAcik ? blurPx + 'PX' : 'KAPALI';
 
 		const gorsel = $('ho-gorsel');
 		const kaynak = veri.hero.video && !veri.hero.video.startsWith('data:')
 			? null // yüklü video: önizlemede fotoğrafı göster
 			: (veri.hero.foto || '');
 		gorsel.style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
-		$('ho-blur').style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
 		gorsel.style.backgroundPosition = `${kX}% ${kY}%`;
 		gorsel.style.transform = 'none';
+
+		// Bulanık zemin: açık/kapalı + miktar (önizleme kutusu küçük olduğu için blur oranlanır)
+		const bl = $('ho-blur');
+		bl.style.display = blurAcik ? '' : 'none';
+		bl.style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
+		bl.style.filter = `blur(${Math.max(1, Math.round(blurPx * 0.42))}px) saturate(1.15) brightness(.8)`;
+
 		// Sitedeki ile birebir aynı hesap: %100 = kutuyu tam dolduran ölçek
 		if (kaynak) {
 			const im = new Image();
@@ -684,10 +759,12 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				const olcek = dolduran * (kZ / 100);
 				const gW = Math.round(im.naturalWidth * olcek), gH = Math.round(im.naturalHeight * olcek);
 				gorsel.style.backgroundSize = `${gW}px ${gH}px`;
-				// Boşluk varsa kenarları bulanık zemine erit (sitedeki ile aynı)
+				// Kenar erimesi: sadece boşluk varsa, blur açıksa ve erime > 0 ise
 				const bosluk = gW < W - 1 || gH < H - 1;
-				gorsel.classList.toggle('yumusak', bosluk);
-				if (bosluk) {
+				const eritsin = bosluk && blurAcik && erime > 0;
+				gorsel.style.setProperty('--hero-erime', erime + '%');
+				gorsel.classList.toggle('yumusak', eritsin);
+				if (eritsin) {
 					const olcu = `${gW}px ${gH}px`, konum = `${kX}% ${kY}%`;
 					gorsel.style.maskSize = olcu; gorsel.style.webkitMaskSize = olcu;
 					gorsel.style.maskPosition = konum; gorsel.style.webkitMaskPosition = konum;
@@ -697,8 +774,9 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		}
 	}
 
-	// Üç kaydırıcı da aynı şekilde çalışır
-	[['f-hero-konum', 'konum'], ['f-hero-konumx', 'konumX'], ['f-hero-zoom', 'zoom']]
+	// Kaydırıcılar ve anahtar: hepsi veriyi güncelleyip önizlemeyi tazeler
+	[['f-hero-konum', 'konum'], ['f-hero-konumx', 'konumX'], ['f-hero-zoom', 'zoom'],
+	 ['f-hero-blur', 'blurMiktar'], ['f-hero-erime', 'erime']]
 		.forEach(([id, alan]) => {
 			$(id).addEventListener('input', () => {
 				if (!veri) return;
@@ -706,6 +784,12 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				heroOnizlemeCiz();
 			});
 		});
+
+	$('f-hero-blur-acik').addEventListener('change', () => {
+		if (!veri) return;
+		veri.hero.blur = $('f-hero-blur-acik').checked;
+		heroOnizlemeCiz();
+	});
 
 	$('btn-kadraj-sifirla').addEventListener('click', () => {
 		if (!veri) return;
