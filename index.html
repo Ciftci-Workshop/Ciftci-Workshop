@@ -245,8 +245,18 @@
 			const kY = hero.konum != null ? hero.konum : 30;   // 0 = üst, 100 = alt
 			const kX = hero.konumX != null ? hero.konumX : 50; // 0 = sol, 100 = sağ
 			const kZ = hero.zoom != null ? hero.zoom : 100;    // 100 = ekranı tam doldurur
+			const blurAcik = hero.blur !== false;              // panelden kapatılabilir
+			const blurPx = hero.blurMiktar != null ? hero.blurMiktar : 20;
+			const erime = hero.erime != null ? hero.erime : 7;
 			const heroBg = document.getElementById('hero-bg');
 			const heroVid = document.getElementById('hero-video');
+			const heroBlur = document.getElementById('hero-blur');
+
+			// Panelden gelen bulanıklık/erime ayarları (CSS varsayılanlarını ezer)
+			const heroBolum = document.querySelector('.hero');
+			heroBolum.style.setProperty('--hero-blur', blurPx + 'px');
+			heroBolum.style.setProperty('--hero-erime', erime + '%');
+			heroBlur.style.display = blurAcik ? '' : 'none';
 
 			// Boyut, "ekranı tam dolduran ölçek"in katı olarak hesaplanır.
 			// Böylece %100 tam doldurur, altına inince fotoğrafın DAHA FAZLASI görünür.
@@ -262,8 +272,9 @@
 				// Fotoğraf ekranı doldurmuyorsa kenarlarını bulanık zemine erit.
 				// Maske, fotoğrafın tam üstüne oturmalı — ölçü/konum onunla aynı.
 				const bosluk = gW < W - 1 || gH < H - 1;
-				heroBg.classList.toggle('yumusak', bosluk);
-				if (bosluk) {
+				const eritsin = bosluk && blurAcik && erime > 0;
+				heroBg.classList.toggle('yumusak', eritsin);
+				if (eritsin) {
 					const olcu = `${gW}px ${gH}px`;
 					const konum = `${kX}% ${kY}%`;
 					heroBg.style.maskSize = olcu;
@@ -279,7 +290,7 @@
 			heroBg.style.backgroundPosition = `${kX}% ${kY}%`;
 			heroBg.style.backgroundRepeat = 'no-repeat';
 			// Boşluk kalırsa fotoğrafın bulanık hali doldursun (düz karanlık yerine)
-			document.getElementById('hero-blur').style.backgroundImage = `url('${F(heroFoto)}')`;
+			heroBlur.style.backgroundImage = `url('${F(heroFoto)}')`;
 
 			// Ekran döndürülünce/boyut değişince kırpmayı yeniden hesapla
 			let zamanlayici;
