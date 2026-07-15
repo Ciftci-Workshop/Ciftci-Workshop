@@ -8,6 +8,24 @@
   },
   "projeler": [
     {
+      "id": "p1784136083032",
+      "marka": "Fiat",
+      "model": "Marea",
+      "kasa": "",
+      "aciklama": "Dinamik sinyalli açılış animasyonlu çeşitli renkli animasyonlu far tasarımı",
+      "video": "",
+      "hizmet": "Far Modifikasyonu",
+      "fotolar": [
+        "studies-img/fiat-marea-1784136263647-1.jpg",
+        "studies-img/fiat-marea-1784136265741-2.jpg",
+        "studies-img/fiat-marea-1784136267883-3.jpg",
+        "studies-img/fiat-marea-1784136269317-4.jpg",
+        "studies-img/fiat-marea-1784136270851-5.jpg",
+        "studies-img/fiat-marea-1784136272694-6.jpg",
+        "studies-img/fiat-marea-1784136275055-7.jpg"
+      ]
+    },
+    {
       "id": "p1783974064693",
       "marka": "Renault",
       "model": "Megane",
@@ -123,7 +141,7 @@
     "yazi": "HONDA FB7 - RGB TASARIM",
     "video": "",
     "konum": 78,
-    "zoom": 61,
+    "zoom": 72,
     "konumX": 50
   }
 }
