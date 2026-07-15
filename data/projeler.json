@@ -129,6 +129,9 @@
   "hero": {
     "foto": "studies-img/renault-megane-1783974068410-1.jpg",
     "yazi": "HONDA FB7 - RGB TASARIM",
-    "video": ""
+    "video": "",
+    "konum": 77,
+    "zoom": 61,
+    "konumX": 50
   }
 }
