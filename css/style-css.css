@@ -105,6 +105,13 @@ section { padding: clamp(70px, 9vw, 120px) 0; }
     isolation: isolate;
     overflow: hidden; /* yakınlaştırılan görsel taşmasın */
 }
+/* Boşluk kalırsa düz karanlık yerine fotoğrafın bulanık hali doldurur */
+.hero-blur {
+    position: absolute; inset: 0; z-index: -3;
+    background-size: cover; background-position: center;
+    filter: blur(34px) saturate(1.15) brightness(.8);
+    transform: scale(1.15);   /* bulanıklığın kenarda soluk iz bırakmaması için */
+}
 .hero-bg {
     position: absolute; inset: 0; z-index: -2;
     background-size: cover; background-position: center 30%;
