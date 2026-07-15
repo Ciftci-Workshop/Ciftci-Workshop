@@ -78,11 +78,17 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 .kapak-secimler{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
 .kapak-secimler img{width:66px;height:66px;object-fit:cover;border-radius:8px;border:2px solid var(--cizgi);cursor:pointer;flex:0 0 auto;transition:border-color .2s}
 .kapak-secimler img.secili{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
-/* Hero canlı önizleme: sitedeki hero'nun kırpma davranışını taklit eder */
-.hero-onizleme{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--cizgi);background:#000 center 30%/cover no-repeat;overflow:hidden}
-.hero-onizleme::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,.85),transparent 55%)}
+/* Hero canlı önizleme: sitedeki hero'nun kırpma davranışını birebir taklit eder */
+.hero-onizleme{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--cizgi);background:#000;overflow:hidden}
+.ho-gorsel{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat;background-position:center 30%}
+.hero-onizleme::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,.85),transparent 55%);pointer-events:none}
 .ho-etiket{position:absolute;left:8px;bottom:7px;z-index:2;font:600 9px var(--f-mono);letter-spacing:.14em;color:var(--amber)}
 .konum-slider{width:100%;margin-top:10px;accent-color:var(--amber);background:transparent}
+/* Kadraj kaydırıcı satırı: ad · çubuk · değer */
+.slider-satir{display:flex;align-items:center;gap:12px;margin-top:8px}
+.slider-ad{flex:0 0 58px;font:11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gri-koyu)}
+.slider-satir .konum-slider{flex:1;margin-top:0;min-width:0}
+.slider-deger{flex:0 0 44px;text-align:right;font:12px var(--f-mono);color:var(--beyaz)}
 </style>
 </head>
 <body>
@@ -216,12 +222,29 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			<p class="ipucu" style="margin:0 0 6px">Ziyaretçinin ilk gördüğü tam ekran alan. Fotoğraf seç veya kısa bir tanıtım videosu yükle.</p>
 			<div id="hero-secimler" class="kapak-secimler" style="margin-bottom:14px"></div>
 
-			<!-- Canlı önizleme: sitedeki hero oranıyla aynı, kaydırıcı burayı değiştirir -->
+			<!-- Canlı önizleme: sitedeki hero oranıyla aynı, kaydırıcılar burayı değiştirir -->
 			<div class="form-satir">
-				<label>Görünen kısım <span style="text-transform:none;letter-spacing:0">— kaydırıcıyı çek, fotoğrafın hangi kısmı görünsün</span></label>
-				<div class="hero-onizleme" id="hero-onizleme"><span class="ho-etiket">ÖNİZLEME</span></div>
-				<input type="range" id="f-hero-konum" min="0" max="100" step="1" value="30" class="konum-slider">
-				<div class="ipucu" style="margin-top:2px">↑ Üst &nbsp;·&nbsp; Orta &nbsp;·&nbsp; Alt ↓ <span id="hero-konum-deger" style="float:right;font-family:var(--f-mono)"></span></div>
+				<label>Kadraj <span style="text-transform:none;letter-spacing:0">— kaydırıcıları çek, fotoğrafın hangi kısmı nasıl görünsün</span></label>
+				<div class="hero-onizleme" id="hero-onizleme"><div class="ho-gorsel" id="ho-gorsel"></div><span class="ho-etiket">ÖNİZLEME</span></div>
+
+				<div class="slider-satir">
+					<span class="slider-ad">Dikey</span>
+					<input type="range" id="f-hero-konum" min="0" max="100" step="1" value="30" class="konum-slider">
+					<span class="slider-deger" id="hero-konum-deger">%30</span>
+				</div>
+				<div class="slider-satir">
+					<span class="slider-ad">Yatay</span>
+					<input type="range" id="f-hero-konumx" min="0" max="100" step="1" value="50" class="konum-slider">
+					<span class="slider-deger" id="hero-konumx-deger">%50</span>
+				</div>
+				<div class="slider-satir">
+					<span class="slider-ad">Yakınlık</span>
+					<input type="range" id="f-hero-zoom" min="100" max="200" step="1" value="100" class="konum-slider">
+					<span class="slider-deger" id="hero-zoom-deger">%100</span>
+				</div>
+				<div style="margin-top:8px">
+					<button type="button" class="btn btn-cizgili btn-kucuk" id="btn-kadraj-sifirla">Kadrajı Sıfırla</button>
+				</div>
 			</div>
 			<div class="form-satir">
 				<label for="f-hero-video">Tanıtım videosu <span style="text-transform:none;letter-spacing:0">(opsiyonel — sessiz döngü oynar, en fazla 8 MB)</span></label>
@@ -628,24 +651,39 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		heroOnizlemeCiz();
 	}
 
-	/* ---------- Hero konumu: kaydırıcı + canlı önizleme ----------
+	/* ---------- Hero kadrajı: yatay/dikey/yakınlık + canlı önizleme ----------
 	   Fotoğraflar farklı oranlarda; sabit kırpma kimini kesiyor.
-	   Kaydırıcı, fotoğrafın dikeyde hangi kısmının görüneceğini seçer. */
+	   Kaydırıcılar, fotoğrafın hangi kısmının nasıl görüneceğini seçer. */
 	function heroOnizlemeCiz() {
-		const konum = veri.hero.konum != null ? veri.hero.konum : 30;
-		$('f-hero-konum').value = konum;
-		$('hero-konum-deger').textContent = '%' + konum;
-		const kutu = $('hero-onizleme');
+		const kY = veri.hero.konum != null ? veri.hero.konum : 30;
+		const kX = veri.hero.konumX != null ? veri.hero.konumX : 50;
+		const kZ = veri.hero.zoom != null ? veri.hero.zoom : 100;
+		$('f-hero-konum').value = kY;   $('hero-konum-deger').textContent = '%' + kY;
+		$('f-hero-konumx').value = kX;  $('hero-konumx-deger').textContent = '%' + kX;
+		$('f-hero-zoom').value = kZ;    $('hero-zoom-deger').textContent = '%' + kZ;
+
+		const gorsel = $('ho-gorsel');
 		const kaynak = veri.hero.video && !veri.hero.video.startsWith('data:')
 			? null // yüklü video: önizlemede fotoğrafı göster
 			: (veri.hero.foto || '');
-		kutu.style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
-		kutu.style.backgroundPosition = `center ${konum}%`;
+		gorsel.style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
+		gorsel.style.backgroundPosition = `${kX}% ${kY}%`;
+		gorsel.style.transform = `scale(${kZ / 100})`; // sitedeki ile birebir aynı yöntem
 	}
 
-	$('f-hero-konum').addEventListener('input', () => {
+	// Üç kaydırıcı da aynı şekilde çalışır
+	[['f-hero-konum', 'konum'], ['f-hero-konumx', 'konumX'], ['f-hero-zoom', 'zoom']]
+		.forEach(([id, alan]) => {
+			$(id).addEventListener('input', () => {
+				if (!veri) return;
+				veri.hero[alan] = +$(id).value;
+				heroOnizlemeCiz();
+			});
+		});
+
+	$('btn-kadraj-sifirla').addEventListener('click', () => {
 		if (!veri) return;
-		veri.hero.konum = +$('f-hero-konum').value;
+		veri.hero.konum = 30; veri.hero.konumX = 50; veri.hero.zoom = 100;
 		heroOnizlemeCiz();
 	});
 
