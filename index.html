@@ -238,17 +238,21 @@
 
 		// --- Marka rayı: projelerden markalar türetilir, kart olarak dizilir
 		veriYukle().then(veri => {
-			// --- Hero: panelden seçilen video/fotoğraf, konum ve yazı
+			// --- Hero: panelden seçilen video/fotoğraf, kadraj (yatay/dikey/zoom) ve yazı
 			const hero = veri.hero || {};
 			const heroFoto = hero.foto || 'studies-img/2.jpg';
-			const heroKonum = (hero.konum != null ? hero.konum : 30); // 0 = üst, 100 = alt
+			const kY = hero.konum != null ? hero.konum : 30;   // 0 = üst, 100 = alt
+			const kX = hero.konumX != null ? hero.konumX : 50; // 0 = sol, 100 = sağ
+			const kZ = hero.zoom != null ? hero.zoom : 100;    // 100 = normal, 200 = 2 kat
 			const heroBg = document.getElementById('hero-bg');
 			const heroVid = document.getElementById('hero-video');
 			heroBg.style.backgroundImage = `url('${F(heroFoto)}')`; // video yüklenene kadar/olmazsa fotoğraf görünür
-			heroBg.style.backgroundPosition = `center ${heroKonum}%`;
+			heroBg.style.backgroundPosition = `${kX}% ${kY}%`;
+			heroBg.style.transform = `scale(${kZ / 100})`;
 			if (hero.video) {
 				heroVid.src = F(hero.video);
-				heroVid.style.objectPosition = `center ${heroKonum}%`;
+				heroVid.style.objectPosition = `${kX}% ${kY}%`;
+				heroVid.style.transform = `scale(${kZ / 100})`;
 				heroVid.style.display = 'block';
 				heroVid.addEventListener('error', () => { heroVid.style.display = 'none'; }); // video açılmazsa fotoğrafa düş
 			}
