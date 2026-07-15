@@ -86,21 +86,25 @@
 		const fotolarOf = p => (p.fotolar && p.fotolar.length ? p.fotolar : (p.foto ? [p.foto] : []));
 
 		// Video linkini oynatılabilir gömme adresine çevir.
-		// YouTube ve Instagram linklerini tanır; .mp4 dosyalarını da destekler.
+		// `oran` = en/boy: kutunun şeklini belirler, ekrana sığması için şart.
 		function videoEmbed(url) {
 			if (!url) return null;
-			// YouTube: watch?v=, youtu.be/, shorts/
-			let m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
-			if (m) return { tip: 'iframe', src: 'https://www.youtube.com/embed/' + m[1] };
-			// Instagram: reel veya post
+			// YouTube Shorts: dikey (9:16)
+			let m = url.match(/youtube\.com\/shorts\/([\w-]{11})/);
+			if (m) return { tip: 'iframe', src: 'https://www.youtube.com/embed/' + m[1], oran: 9 / 16 };
+			// YouTube normal: yatay (16:9)
+			m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
+			if (m) return { tip: 'iframe', src: 'https://www.youtube.com/embed/' + m[1], oran: 16 / 9 };
+			// Instagram: gömme her zaman kart olarak gelir (başlık + video + açıklama),
+			// bu Instagram'ın tasarımı; dikey bir kutu en az kırpar.
 			m = url.match(/instagram\.com\/(?:reel|p|tv)\/([\w-]+)/);
-			if (m) return { tip: 'iframe', src: 'https://www.instagram.com/p/' + m[1] + '/embed' };
-			// Doğrudan mp4/webm dosyası (repoya yüklenmiş ya da dış link)
+			if (m) return { tip: 'iframe', src: 'https://www.instagram.com/p/' + m[1] + '/embed', oran: 0.5, insta: true };
+			// Doğrudan mp4/webm dosyası — gerçek oranı yüklenince ölçülür
 			if (/\.(mp4|webm|mov)(\?|$)/i.test(url) || url.startsWith('data:video')) {
-				return { tip: 'video', src: F(url) };
+				return { tip: 'video', src: F(url), oran: 16 / 9 };
 			}
-			// Tanınmadıysa iframe olarak dene (vimeo vb. çoğu embed'i kabul eder)
-			return { tip: 'iframe', src: url };
+			// Tanınmadıysa iframe olarak dene (vimeo vb.)
+			return { tip: 'iframe', src: url, oran: 16 / 9 };
 		}
 
 		// Hizmet filtrelerinin sıralaması (veride olmayan gösterilmez)
@@ -278,10 +282,20 @@
 			if (k.tur === 'video') {
 				lbImg.hidden = true;
 				lbVideoSar.hidden = false;
+				// Kutuyu videonun oranına göre şekillendir (ekrana sığması için)
+				lbVideoSar.style.setProperty('--oran', k.video.oran);
+				lbVideoSar.classList.toggle('insta', !!k.video.insta);
 				if (k.video.tip === 'iframe') {
-					lbVideoSar.innerHTML = `<iframe src="${k.video.src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+					lbVideoSar.innerHTML = `<iframe src="${k.video.src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>`;
 				} else {
 					lbVideoSar.innerHTML = `<video src="${k.video.src}" controls autoplay playsinline></video>`;
+					// mp4'ün gerçek oranı yüklenince öğrenilir; kutuyu ona göre düzelt
+					const v = lbVideoSar.querySelector('video');
+					v.addEventListener('loadedmetadata', () => {
+						if (v.videoWidth && v.videoHeight) {
+							lbVideoSar.style.setProperty('--oran', v.videoWidth / v.videoHeight);
+						}
+					});
 				}
 			} else {
 				lbVideoSar.hidden = true;
