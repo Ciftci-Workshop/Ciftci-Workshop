@@ -126,13 +126,13 @@
   ],
   "hero": {
     "foto": "studies-img/3.jpg",
-    "yazi": "- CW DESİGN -",
+    "yazi": "HONDA FB7 - RGB TASARIM",
     "video": "",
-    "konum": 72,
-    "zoom": 100,
+    "konum": 74,
+    "zoom": 65,
     "konumX": 50,
     "blur": true,
-    "blurMiktar": 20,
-    "erime": 7
+    "blurMiktar": 8,
+    "erime": 2
   }
 }
