@@ -80,7 +80,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 .kapak-secimler img.secili{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
 /* Hero canlı önizleme: sitedeki hero'nun kırpma davranışını birebir taklit eder */
 .hero-onizleme{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--cizgi);background:#000;overflow:hidden}
-.ho-gorsel{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat;background-position:center 30%}
+.ho-gorsel{position:absolute;inset:0;background-repeat:no-repeat;background-position:center 30%;background-size:cover}
 .hero-onizleme::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,.85),transparent 55%);pointer-events:none}
 .ho-etiket{position:absolute;left:8px;bottom:7px;z-index:2;font:600 9px var(--f-mono);letter-spacing:.14em;color:var(--amber)}
 .konum-slider{width:100%;margin-top:10px;accent-color:var(--amber);background:transparent}
@@ -199,8 +199,9 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			</div>
 
 			<div class="form-satir">
-				<label for="f-video">Video linki <span style="text-transform:none;letter-spacing:0">(opsiyonel — YouTube / Instagram linki yapıştır)</span></label>
+				<label for="f-video">Video linki <span style="text-transform:none;letter-spacing:0">(opsiyonel)</span></label>
 				<input class="girdi" id="f-video" placeholder="https://youtu.be/... veya instagram.com/reel/...">
+				<div class="ipucu">YouTube linki en temiz görünür — sadece oynatıcı çıkar. Instagram linki, Instagram'ın kendi kartını (profil, beğeni, açıklama) gösterir; bunu kaldırmak Instagram'da mümkün değil.</div>
 			</div>
 
 			<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
@@ -238,10 +239,11 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 					<span class="slider-deger" id="hero-konumx-deger">%50</span>
 				</div>
 				<div class="slider-satir">
-					<span class="slider-ad">Yakınlık</span>
-					<input type="range" id="f-hero-zoom" min="100" max="200" step="1" value="100" class="konum-slider">
+					<span class="slider-ad">Boyut</span>
+					<input type="range" id="f-hero-zoom" min="50" max="200" step="1" value="100" class="konum-slider">
 					<span class="slider-deger" id="hero-zoom-deger">%100</span>
 				</div>
+				<div class="ipucu" style="margin-top:6px">%100 = ekranı tam doldurur. Altına inersen fotoğraf küçülür, kenarlarda koyu boşluk kalır.</div>
 				<div style="margin-top:8px">
 					<button type="button" class="btn btn-cizgili btn-kucuk" id="btn-kadraj-sifirla">Kadrajı Sıfırla</button>
 				</div>
@@ -668,7 +670,20 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			: (veri.hero.foto || '');
 		gorsel.style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
 		gorsel.style.backgroundPosition = `${kX}% ${kY}%`;
-		gorsel.style.transform = `scale(${kZ / 100})`; // sitedeki ile birebir aynı yöntem
+		gorsel.style.transform = 'none';
+		// Sitedeki ile birebir aynı hesap: %100 = kutuyu tam dolduran ölçek
+		if (kaynak) {
+			const im = new Image();
+			im.onload = () => {
+				const W = gorsel.clientWidth, H = gorsel.clientHeight;
+				if (!W || !H) return;
+				const dolduran = Math.max(W / im.naturalWidth, H / im.naturalHeight);
+				const olcek = dolduran * (kZ / 100);
+				gorsel.style.backgroundSize =
+					`${Math.round(im.naturalWidth * olcek)}px ${Math.round(im.naturalHeight * olcek)}px`;
+			};
+			im.src = gorselSrc(kaynak);
+		}
 	}
 
 	// Üç kaydırıcı da aynı şekilde çalışır
