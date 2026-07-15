@@ -78,6 +78,11 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 .kapak-secimler{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
 .kapak-secimler img{width:66px;height:66px;object-fit:cover;border-radius:8px;border:2px solid var(--cizgi);cursor:pointer;flex:0 0 auto;transition:border-color .2s}
 .kapak-secimler img.secili{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+/* Hero canlı önizleme: sitedeki hero'nun kırpma davranışını taklit eder */
+.hero-onizleme{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--cizgi);background:#000 center 30%/cover no-repeat;overflow:hidden}
+.hero-onizleme::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,.85),transparent 55%)}
+.ho-etiket{position:absolute;left:8px;bottom:7px;z-index:2;font:600 9px var(--f-mono);letter-spacing:.14em;color:var(--amber)}
+.konum-slider{width:100%;margin-top:10px;accent-color:var(--amber);background:transparent}
 </style>
 </head>
 <body>
@@ -210,6 +215,14 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 			<h2>Ana Sayfa Görseli <span class="mini">EN ÜSTTEKİ BÜYÜK ALAN</span></h2>
 			<p class="ipucu" style="margin:0 0 6px">Ziyaretçinin ilk gördüğü tam ekran alan. Fotoğraf seç veya kısa bir tanıtım videosu yükle.</p>
 			<div id="hero-secimler" class="kapak-secimler" style="margin-bottom:14px"></div>
+
+			<!-- Canlı önizleme: sitedeki hero oranıyla aynı, kaydırıcı burayı değiştirir -->
+			<div class="form-satir">
+				<label>Görünen kısım <span style="text-transform:none;letter-spacing:0">— kaydırıcıyı çek, fotoğrafın hangi kısmı görünsün</span></label>
+				<div class="hero-onizleme" id="hero-onizleme"><span class="ho-etiket">ÖNİZLEME</span></div>
+				<input type="range" id="f-hero-konum" min="0" max="100" step="1" value="30" class="konum-slider">
+				<div class="ipucu" style="margin-top:2px">↑ Üst &nbsp;·&nbsp; Orta &nbsp;·&nbsp; Alt ↓ <span id="hero-konum-deger" style="float:right;font-family:var(--f-mono)"></span></div>
+			</div>
 			<div class="form-satir">
 				<label for="f-hero-video">Tanıtım videosu <span style="text-transform:none;letter-spacing:0">(opsiyonel — sessiz döngü oynar, en fazla 8 MB)</span></label>
 				<input class="girdi" type="file" id="f-hero-video" accept="video/*">
@@ -335,6 +348,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 	function veriDuzelt(v) { // eski şemadan gelen veriyi de kabul et
 		v.kapaklar = v.kapaklar || {};
 		v.hero = v.hero || { foto: '', yazi: '' };
+		if (v.hero.konum == null) v.hero.konum = 30; // eski verilerde konum yok
 		v.projeler.forEach(p => { p.fotolar = fotolarOf(p); delete p.foto; });
 		return v;
 	}
@@ -611,7 +625,29 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		if ($('f-hero-yazi').value === '' && document.activeElement !== $('f-hero-yazi')) {
 			$('f-hero-yazi').value = veri.hero.yazi || '';
 		}
+		heroOnizlemeCiz();
 	}
+
+	/* ---------- Hero konumu: kaydırıcı + canlı önizleme ----------
+	   Fotoğraflar farklı oranlarda; sabit kırpma kimini kesiyor.
+	   Kaydırıcı, fotoğrafın dikeyde hangi kısmının görüneceğini seçer. */
+	function heroOnizlemeCiz() {
+		const konum = veri.hero.konum != null ? veri.hero.konum : 30;
+		$('f-hero-konum').value = konum;
+		$('hero-konum-deger').textContent = '%' + konum;
+		const kutu = $('hero-onizleme');
+		const kaynak = veri.hero.video && !veri.hero.video.startsWith('data:')
+			? null // yüklü video: önizlemede fotoğrafı göster
+			: (veri.hero.foto || '');
+		kutu.style.backgroundImage = kaynak ? `url('${gorselSrc(kaynak)}')` : 'none';
+		kutu.style.backgroundPosition = `center ${konum}%`;
+	}
+
+	$('f-hero-konum').addEventListener('input', () => {
+		if (!veri) return;
+		veri.hero.konum = +$('f-hero-konum').value;
+		heroOnizlemeCiz();
+	});
 
 	// Hero video yükleme: 8 MB sınırı, dataURL olarak tutulur
 	$('f-hero-video').addEventListener('change', () => {
