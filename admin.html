@@ -299,7 +299,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				<summary>Tanıtım videosu <span class="ozet-not" id="video-ozet"></span></summary>
 				<div class="alt-ic">
 					<div class="form-satir">
-						<label for="f-hero-video">Video dosyası <span style="text-transform:none;letter-spacing:0">(sessiz döngü oynar, en fazla 8 MB)</span></label>
+						<label for="f-hero-video">Video dosyası <span style="text-transform:none;letter-spacing:0">(sessiz döngü oynar — en fazla 25 MB, ideali 5 MB altı)</span></label>
 						<input class="girdi" type="file" id="f-hero-video" accept="video/*">
 						<div id="hero-video-durum" class="ipucu" style="margin-top:6px"></div>
 					</div>
@@ -708,7 +708,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		} else {
 			vd.textContent = 'Şu an video yok — fotoğraf gösteriliyor.';
 		}
-		$('video-ozet').textContent = veri.hero.video ? 'VAR' : 'YOK';
+		$('video-ozet').textContent = veri.hero.video ? (veri.hero.videoMB ? veri.hero.videoMB + ' MB' : 'VAR') : 'YOK';
 		if ($('f-hero-yazi').value === '' && document.activeElement !== $('f-hero-yazi')) {
 			$('f-hero-yazi').value = veri.hero.yazi || '';
 		}
@@ -797,18 +797,27 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 		heroOnizlemeCiz();
 	});
 
-	// Hero video yükleme: 8 MB sınırı, dataURL olarak tutulur
+	// Hero video yükleme: boyut kontrolü + dürüst geri bildirim
+	const VIDEO_SINIR_MB = 25;   // GitHub API pratikte bunun üstünde takılıyor
 	$('f-hero-video').addEventListener('change', () => {
 		const dosya = $('f-hero-video').files[0];
 		if (!dosya) return;
 		const MB = dosya.size / (1024 * 1024);
-		if (MB > 8) {
-			durum('form-durum', `Video çok büyük (${MB.toFixed(1)} MB). En fazla 8 MB olmalı. Daha kısa/düşük çözünürlüklü bir video dene, ya da YouTube linki kullan.`, 'kotu');
+		if (MB > VIDEO_SINIR_MB) {
+			durum('form-durum', `Video ${MB.toFixed(1)} MB — sınır ${VIDEO_SINIR_MB} MB. GitHub bu boyutta yüklemeyi reddediyor. Videoyu kısalt veya çözünürlüğünü düşür.`, 'kotu');
 			$('f-hero-video').value = '';
 			return;
 		}
+		// Boyut büyüdükçe ziyaretçi bekler — sessiz kalmak yerine söyle
+		if (MB > 8) {
+			durum('form-durum', `Video ${MB.toFixed(1)} MB. Yüklenir ama mobilde açılması yavaş olur (4G'de ~${Math.round(MB / 2.5)} sn siyah ekran). 5 MB altı önerilir.`, 'bekle');
+		} else if (MB > 4) {
+			durum('form-durum', `Video ${MB.toFixed(1)} MB — kabul edilebilir.`, 'bekle');
+		} else {
+			durum('form-durum', `Video ${MB.toFixed(1)} MB — ideal boyut.`, 'iyi');
+		}
 		const okuyucu = new FileReader();
-		okuyucu.onload = () => { veri.hero.video = okuyucu.result; heroCiz(); };
+		okuyucu.onload = () => { veri.hero.video = okuyucu.result; veri.hero.videoMB = +MB.toFixed(1); heroCiz(); };
 		okuyucu.readAsDataURL(dosya);
 		$('f-hero-video').value = '';
 	});
