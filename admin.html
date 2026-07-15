@@ -81,6 +81,7 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 /* Hero canlı önizleme: sitedeki hero'nun kırpma davranışını birebir taklit eder */
 .hero-onizleme{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;border:1px solid var(--cizgi);background:#000;overflow:hidden}
 .ho-blur{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(14px) saturate(1.15) brightness(.8);transform:scale(1.15)}
+.ho-gorsel.yumusak{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);-webkit-mask-repeat:no-repeat;-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);mask-repeat:no-repeat;mask-composite:intersect}
 .ho-gorsel{position:absolute;inset:0;background-repeat:no-repeat;background-position:center 30%;background-size:cover}
 .hero-onizleme::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,.85),transparent 55%);pointer-events:none}
 .ho-etiket{position:absolute;left:8px;bottom:7px;z-index:2;font:600 9px var(--f-mono);letter-spacing:.14em;color:var(--amber)}
@@ -681,8 +682,16 @@ summary{font-family:var(--f-mono);font-size:12px;color:var(--gri-koyu);cursor:po
 				if (!W || !H) return;
 				const dolduran = Math.max(W / im.naturalWidth, H / im.naturalHeight);
 				const olcek = dolduran * (kZ / 100);
-				gorsel.style.backgroundSize =
-					`${Math.round(im.naturalWidth * olcek)}px ${Math.round(im.naturalHeight * olcek)}px`;
+				const gW = Math.round(im.naturalWidth * olcek), gH = Math.round(im.naturalHeight * olcek);
+				gorsel.style.backgroundSize = `${gW}px ${gH}px`;
+				// Boşluk varsa kenarları bulanık zemine erit (sitedeki ile aynı)
+				const bosluk = gW < W - 1 || gH < H - 1;
+				gorsel.classList.toggle('yumusak', bosluk);
+				if (bosluk) {
+					const olcu = `${gW}px ${gH}px`, konum = `${kX}% ${kY}%`;
+					gorsel.style.maskSize = olcu; gorsel.style.webkitMaskSize = olcu;
+					gorsel.style.maskPosition = konum; gorsel.style.webkitMaskPosition = konum;
+				}
 			};
 			im.src = gorselSrc(kaynak);
 		}
