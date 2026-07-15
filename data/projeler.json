@@ -127,12 +127,13 @@
   "hero": {
     "foto": "studies-img/3.jpg",
     "yazi": "-- CW DESİGN --",
-    "video": "",
+    "video": "studies-img/hero-video-1784143845044.mp4",
     "konum": 74,
     "zoom": 65,
     "konumX": 50,
     "blur": true,
     "blurMiktar": 8,
-    "erime": 2
+    "erime": 2,
+    "videoMB": 16.5
   }
 }
