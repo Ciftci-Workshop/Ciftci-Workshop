@@ -38,6 +38,7 @@
 
 	<!-- HERO: işin kendisi arka planda, söz kısa ve net -->
 	<section class="hero">
+		<div class="hero-blur" id="hero-blur" aria-hidden="true"></div>
 		<div class="hero-bg" id="hero-bg" role="img" aria-label="Çiftçi Workshop projesi"></div>
 		<video class="hero-video" id="hero-video" autoplay muted loop playsinline></video>
 		<div class="container hero-icerik">
@@ -264,6 +265,8 @@
 			heroBg.style.backgroundImage = `url('${F(heroFoto)}')`;
 			heroBg.style.backgroundPosition = `${kX}% ${kY}%`;
 			heroBg.style.backgroundRepeat = 'no-repeat';
+			// Boşluk kalırsa fotoğrafın bulanık hali doldursun (düz karanlık yerine)
+			document.getElementById('hero-blur').style.backgroundImage = `url('${F(heroFoto)}')`;
 
 			// Ekran döndürülünce/boyut değişince kırpmayı yeniden hesapla
 			let zamanlayici;
