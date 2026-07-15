@@ -20,7 +20,7 @@
     --hero-blur: 20px;          /* arka planın bulanıklığı — düşür: daha net */
     --hero-parlaklik: .8;       /* arka planın parlaklığı — düşür: daha koyu */
     --hero-doygunluk: 1.15;     /* arka planın renk canlılığı */
-    --hero-erime: 1%;          /* fotoğrafın kenarından eriyen pay — düşür: fotoğraf daha net biter */
+    --hero-erime: 7%;          /* fotoğrafın kenarından eriyen pay — düşür: fotoğraf daha net biter */
 
     --f-display: 'Archivo Black', 'Arial Black', sans-serif;
     --f-govde: 'Barlow', 'Segoe UI', sans-serif;
