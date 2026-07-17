@@ -301,10 +301,23 @@
 
 			if (hero.video) {
 				heroVid.src = F(hero.video);
+				// Video her zaman ekranı doldurur — "Boyut" ayarı fotoğraf içindir,
+				// videoya uygulanırsa küçülüp arkadaki fotoğrafı sırıtır.
+				heroVid.style.objectFit = 'cover';
 				heroVid.style.objectPosition = `${kX}% ${kY}%`;
-				heroVid.style.transform = `scale(${kZ / 100})`;
+				heroVid.style.transform = 'none';
 				heroVid.style.display = 'block';
-				heroVid.addEventListener('error', () => { heroVid.style.display = 'none'; }); // video açılmazsa fotoğrafa düş
+				// Video oynamaya başlayınca fotoğraf/bulanık katman gereksiz
+				heroVid.addEventListener('loadeddata', () => {
+					heroBg.style.display = 'none';
+					heroBlur.style.display = 'none';
+				});
+				// Video açılmazsa fotoğrafa geri dön
+				heroVid.addEventListener('error', () => {
+					heroVid.style.display = 'none';
+					heroBg.style.display = '';
+					heroBlur.style.display = blurAcik ? '' : 'none';
+				});
 			}
 			if (hero.yazi != null) document.getElementById('hero-kunye').textContent = hero.yazi;
 
