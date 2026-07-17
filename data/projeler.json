@@ -17,7 +17,8 @@
       "hizmet": "Far Modifikasyonu",
       "fotolar": [
         "studies-img/fiat-marea-1784136265741-2.jpg",
-        "studies-img/fiat-marea-1784136267883-3.jpg"
+        "studies-img/fiat-marea-1784136267883-3.jpg",
+        "studies-img/fiat-marea-1784305630337-1.jpg"
       ]
     },
     {
@@ -120,15 +121,15 @@
     }
   ],
   "hero": {
-    "foto": "studies-img/3.jpg",
+    "foto": "studies-img/renault-megane-1783974077798-8.jpg",
     "yazi": "-- CW DESİGN --",
     "video": "",
-    "konum": 74,
-    "zoom": 65,
+    "konum": 69,
+    "zoom": 56,
     "konumX": 50,
     "blur": true,
-    "blurMiktar": 8,
-    "erime": 2,
+    "blurMiktar": 13,
+    "erime": 3,
     "videoMB": 16.5
   }
 }
